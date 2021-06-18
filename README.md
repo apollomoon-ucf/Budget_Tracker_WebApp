@@ -16,3 +16,7 @@ Output data was formatted for use in a financial web app.
 # Financial App Database left, Rough draft of returned Plaid data right:
 
 ![Screen Shot 2021-06-17 at 10 34 00 PM](https://user-images.githubusercontent.com/25870426/122497941-40a09880-cfbc-11eb-8d70-c90ab7a5fc42.png)
+
+# Example of login on html template prototype for finance app:
+
+![Screen Shot 2021-06-17 at 11 56 58 PM](https://user-images.githubusercontent.com/25870426/122504302-0806bc00-cfc8-11eb-8eb0-ae95b06a42f6.png)
