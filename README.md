@@ -15,4 +15,4 @@ Output data was formatted for use in a financial web app.
 
 # Financial App Database left, Rough draft of returned Plaid data right:
 
-![Screen Shot 2021-06-17 at 5 36 16 PM](https://user-images.githubusercontent.com/25870426/122496953-9f651280-cfba-11eb-9c92-6fe78d0867c6.png)
+![Screen Shot 2021-06-17 at 10 34 00 PM](https://user-images.githubusercontent.com/25870426/122497941-40a09880-cfbc-11eb-8d70-c90ab7a5fc42.png)
