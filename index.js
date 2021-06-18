@@ -12,6 +12,14 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
+const exphbs = require("express-handlebars");
+// setting up handlebars
+// Set handlebars middleware
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
+
+// init transactions
+var transactionResponse = {};
 
 // this will allow us to easily concatanate paths
 const path = require("path");
@@ -65,7 +73,7 @@ app.post("/token-exchange", async (req, res) => {
   //   console.log("Balance response: ");
   //   console.log(util.inspect(balanceResponse, false, null, true));
   // transaction endpoint
-  const transactionResponse = await plaidClient.getTransactions(
+  transactionResponse = await plaidClient.getTransactions(
     accessToken,
     "2018-01-01",
     "2020-02-01",
@@ -97,6 +105,10 @@ app.post("/token-exchange", async (req, res) => {
     );
     console.log("Type: " + transaction_type);
     console.log("------");
+    // res.status(200).redirect("home.hbs");
+    // res.status(200).redirect("/home");
+    // res.status(401).render("index", { message: "TEST" });
+    // res.status(401).render("/", { message: "TEST" });
     // console.log(transactionResponse.transactions[i].category[0]);
   }
   //   console.log(transactionResponse.transactions[0].category[0]);
@@ -105,10 +117,34 @@ app.post("/token-exchange", async (req, res) => {
   res.sendStatus(200);
 });
 // create route that will send the index.html and serve it
-app.get("/", async (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+app.get("/home", async (req, res) => {
+  res.sendFile(path.join(__dirname, "/index.html"));
+  // res.render("home");
+  // res.status(200).redirect("budget_profile");
+  // res.status(401).render("home", {
+  //   message: "sowwy, your email or password is incorrect :(",
+  // });
+});
+// routing to second dynamic page
+app.get("/budget_profile", function (req, res) {
+  res.render("budget_profile");
+});
+app.get("/home", function (req, res) {
+  res.render("home");
+});
+app.get("/transaction_history", function (req, res) {
+  res.render("transaction_history", {
+    message: transactionResponse,
+    // message: JSON.stringify(transactionResponse.transactions),
+  });
 });
 
+// app.get("/", function (req, res) {
+//   // res.render("home", { message: "TEST" });
+//   res.status(401).render("home", {
+//     message: "sowwy, your email or password is incorrect :(",
+//   });
+// });
 app.listen(PORT, () => {
   console.log("listening on port: ", PORT);
 });

@@ -20,3 +20,7 @@ Output data was formatted for use in a financial web app.
 # Example of login on html template prototype for finance app:
 
 ![Screen Shot 2021-06-17 at 11 56 58 PM](https://user-images.githubusercontent.com/25870426/122504302-0806bc00-cfc8-11eb-8eb0-ae95b06a42f6.png)
+
+# Example of transaction history on html template prototype for finance app:
+
+![Screen Shot 2021-06-18 at 2 18 46 PM](https://user-images.githubusercontent.com/25870426/122603271-142f5f80-d042-11eb-8537-80975eb6de3b.png)

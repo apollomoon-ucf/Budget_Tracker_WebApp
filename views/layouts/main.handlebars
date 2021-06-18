@@ -1,4 +1,4 @@
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+{{!-- <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 <script>
   (async ($) => {
@@ -34,7 +34,7 @@
       handler.open();
     });
   })(jQuery);
-</script>
+</script> --}}
 
 <!-- <h1>Link Bank Account with Plaid</h1>
 <button id="plaid-button">Connect Bank</button> -->
@@ -42,7 +42,7 @@
 
 <!DOCTYPE html>
 <html>
-<title>HOME</title>
+{{!-- <title>Finance App</title> --}}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -78,6 +78,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="/home" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Home</a>
     <a href="/budget_profile" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-money fa-fw"></i>  Budget Profile</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Investment Profile</a>
     <a href="/transaction_history" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Transaction History</a>
@@ -144,11 +145,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
   <div class="w3-container">
-    <h1>Link Bank Account with Plaid</h1>
-    <button id="plaid-button">Connect Bank</button>
-    <br/>
-    <br/>
-    <button class="w3-button w3-dark-grey">View Budget  <i class="fa fa-arrow-right"></i></button>
+    {{!-- <h1>Link Bank Account with Plaid!!!!!</h1>
+    <button id="plaid-button">Connect Bank</button> --}}
+    {{!-- <h5>Budget Details</h5> --}}
+    <p>{{{body}}}</p>
+
   </div>
   <hr>
 
