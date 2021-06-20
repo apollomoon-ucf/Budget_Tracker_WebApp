@@ -156,6 +156,21 @@ app.post("/token-exchange", async (req, res) => {
 app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname, "/index.html"));
   res.render("home");
+  transactionResponse = {};
+  budget_desired = 5000.0;
+  budget_actual = 0.0;
+  food_desired = 500.0;
+  food_actual = 0.0;
+  entertainment_desired = 500.0;
+  entertainment_actual = 0.0;
+  shopping_desired = 500.0;
+  shopping_actual = 0.0;
+  payments_desired = 3000.0;
+  payments_actual = 0.0;
+  travel_desired = 500.0;
+  travel_actual = 0.0;
+  over_under = "Budget Balanced";
+  over_under_by = 0.0;
   // res.status(200).redirect("budget_profile");
   // res.status(401).render("home", {
   //   message: "sowwy, your email or password is incorrect :(",
