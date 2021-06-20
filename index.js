@@ -194,11 +194,11 @@ app.get("/budget_profile", function (req, res) {
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
     over_or_under:
-      formatter.format(budget_desired - budget_actual) < 0
+      budget_desired - budget_actual < 0
         ? "Over budget by: "
         : "Under budget by: ",
     over_or_under_amount:
-      formatter.format(budget_desired - budget_actual) < 0
+      budget_desired - budget_actual < 0
         ? formatter.format(-1 * (budget_desired - budget_actual))
         : formatter.format(budget_desired - budget_actual),
   });
