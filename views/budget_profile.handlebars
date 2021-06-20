@@ -6,31 +6,77 @@
     class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
   >
     <tr>
-      <td></td>
-      <td></td>
+      <td>Balance Total (desired):</td>
+      <td>Balance Total (actual):</td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
+      <td>{{desired_balance}}</td>
+      <td>{{actual_balance}}</td>
     </tr>
   </table><br />
-  <button class="w3-button w3-dark-grey">More Transactions  <i
-      class="fa fa-arrow-right"
-    ></i></button>
+  {{! <h5>Budget Details</h5> }}
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Food (desired):</td>
+      <td>Food (actual) :</td>
+    </tr>
+    <tr>
+      <td>{{desired_food}}</td>
+      <td>{{actual_food}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Entertainment (desired):</td>
+      <td>Entertainment (actual):</td>
+    </tr>
+    <tr>
+      <td>{{desired_entertainment}}</td>
+      <td>{{actual_entertainment}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Shopping (desired):</td>
+      <td>Shopping (actual):</td>
+    </tr>
+    <tr>
+      <td>{{desired_shopping}}</td>
+      <td>{{actual_shopping}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Payments (desired):</td>
+      <td>Payments (actual):</td>
+    </tr>
+    <tr>
+      <td>{{desired_payments}}</td>
+      <td>{{actual_payments}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Travel (desired):</td>
+      <td>Travel (actual):</td>
+    </tr>
+    <tr>
+      <td>{{desired_travel}}</td>
+      <td>{{actual_travel}}</td>
+    </tr>
+  </table><br />
+  <h5>{{over_or_under}}: {{over_or_under_amount}}</h5><br />
+  <a href="/transaction_history" class="w3-button w3-dark-grey">View
+    Transactions  <i class="fa fa-arrow-right"></i></a>
+
 </div>

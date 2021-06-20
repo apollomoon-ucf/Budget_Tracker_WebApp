@@ -1,7 +1,7 @@
 <div class="w3-container">
   <title>Finance App - Transaction History</title>
 
-  <h1>Your Transaction History:</h1>
+  <h5>Transaction History:</h5>
 
   {{!-- <h5>
     {{#each message.transactions}} {{category}}: {{amount}}<br /> {{/each}}</h5> --}}
@@ -9,33 +9,12 @@
   <table
     class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
   >
-    <tr>
-      {{#each message.transactions}} {{category}}: ${{amount}}<br /> {{/each}}
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
+    <td>
+      {{#each message.transactions}}
+        {{category}}<br />
+        Amount: ${{amount}}<br /><br />
+      {{/each}}
+
+    </td>
   </table><br />
-  <button class="w3-button w3-dark-grey">More Transactions  <i
-      class="fa fa-arrow-right"
-    ></i></button>
 </div>

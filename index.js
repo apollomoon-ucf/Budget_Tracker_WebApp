@@ -20,6 +20,21 @@ app.set("view engine", "handlebars");
 
 // init transactions
 var transactionResponse = {};
+// init budget
+var budget_desired = 5000.0;
+var budget_actual = 0.0;
+var food_desired = 500.0;
+var food_actual = 0.0;
+var entertainment_desired = 500.0;
+var entertainment_actual = 0.0;
+var shopping_desired = 500.0;
+var shopping_actual = 0.0;
+var payments_desired = 3000.0;
+var payments_actual = 0.0;
+var travel_desired = 500.0;
+var travel_actual = 0.0;
+var over_under = "Budget Balanced";
+var over_under_by = 0.0;
 
 // this will allow us to easily concatanate paths
 const path = require("path");
@@ -75,8 +90,8 @@ app.post("/token-exchange", async (req, res) => {
   // transaction endpoint
   transactionResponse = await plaidClient.getTransactions(
     accessToken,
-    "2018-01-01",
-    "2020-02-01",
+    "2021-05-01",
+    "2021-06-01",
     {}
   );
   console.log("------");
@@ -93,7 +108,28 @@ app.post("/token-exchange", async (req, res) => {
     }
     console.log("Transaction " + i + ":");
     console.log("Category: " + transactionResponse.transactions[i].category[0]);
+    if (transactionResponse.transactions[i].category[0].includes("Food")) {
+      food_actual += transactionResponse.transactions[i].amount;
+    } else if (
+      transactionResponse.transactions[i].category[0].includes("Recreation")
+    ) {
+      entertainment_actual += transactionResponse.transactions[i].amount;
+    } else if (
+      transactionResponse.transactions[i].category[0].includes("Shop")
+    ) {
+      shopping_actual += transactionResponse.transactions[i].amount;
+    } else if (
+      transactionResponse.transactions[i].category[0].includes("Transfer") ||
+      transactionResponse.transactions[i].category[0].includes("Payment")
+    ) {
+      payments_actual += transactionResponse.transactions[i].amount;
+    } else if (
+      transactionResponse.transactions[i].category[0].includes("Travel")
+    ) {
+      travel_actual += transactionResponse.transactions[i].amount;
+    }
     console.log("Amount: $" + transactionResponse.transactions[i].amount);
+    budget_actual = budget_actual + transactionResponse.transactions[i].amount;
     console.log("Date: " + transactionResponse.transactions[i].date);
     console.log(
       "Description: " +
@@ -118,16 +154,48 @@ app.post("/token-exchange", async (req, res) => {
 });
 // create route that will send the index.html and serve it
 app.get("/home", async (req, res) => {
-  res.sendFile(path.join(__dirname, "/index.html"));
-  // res.render("home");
+  // res.sendFile(path.join(__dirname, "/index.html"));
+  res.render("home");
   // res.status(200).redirect("budget_profile");
   // res.status(401).render("home", {
   //   message: "sowwy, your email or password is incorrect :(",
   // });
 });
+// Create our number formatter.
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+// compare budget
+over_under_by = budget_desired - budget_actual;
+if (over_under_by < 0) {
+  over_under = "Over Budget by: ";
+  over_under_by *= -1;
+} else if (over_under_by > 0) {
+  over_under = "Under Budget by: ";
+}
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
-  res.render("budget_profile");
+  res.render("budget_profile", {
+    desired_balance: formatter.format(budget_desired),
+    actual_balance: formatter.format(budget_actual),
+    desired_food: formatter.format(food_desired),
+    actual_food: formatter.format(food_actual),
+    desired_entertainment: formatter.format(entertainment_desired),
+    actual_entertainment: formatter.format(entertainment_actual),
+    desired_shopping: formatter.format(shopping_desired),
+    actual_shopping: formatter.format(shopping_actual),
+    desired_payments: formatter.format(payments_desired),
+    actual_payments: formatter.format(payments_actual),
+    desired_travel: formatter.format(travel_desired),
+    actual_travel: formatter.format(travel_actual),
+    over_or_under: over_under,
+    over_or_under_amount: formatter.format(over_under_by),
+  });
 });
 app.get("/home", function (req, res) {
   res.render("home");

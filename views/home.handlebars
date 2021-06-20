@@ -1,4 +1,4 @@
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+{{! <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
 ></script>
@@ -13,7 +13,6 @@
   (error, metadata) => { console.log(error); console.log(metadata); }, onEvent:
   async (metadata) => { console.log(metadata); }, });
   $("#plaid-button").on("click", function (e) { handler.open(); }); })(jQuery);
-</script>
-
+</script> }}
 <h1>Link Bank Account with Plaid</h1>
 <button id="plaid-button">Connect Bank</button>
