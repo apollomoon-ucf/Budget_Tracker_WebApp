@@ -1,7 +1,8 @@
 # Plaid Connection
 
-Retrieving and printing financial data using the Plaid API.
-Node.js, Express, Plaid API
+Retrieving and printing financial data using the Plaid API, while building components for a fintech web app project.
+Node.js, Express, Handlebars, Plaid API, Heroku, HTML, CSS
+Link (currently in dev): https://financeappdemo.herokuapp.com
 
 Output data was formatted for use in a financial web app.
 
