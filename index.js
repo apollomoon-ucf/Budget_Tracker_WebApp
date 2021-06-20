@@ -163,7 +163,8 @@ app.post("/token-exchange", async (req, res) => {
   console.log(investmentResponse);
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
-  res.sendStatus(200);
+  // res.sendStatus(200);
+  // res.status(200).redirect("budget_profile");
 });
 // create route that will send the index.html and serve it
 app.get("/", async (req, res) => {
