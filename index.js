@@ -153,7 +153,7 @@ app.post("/token-exchange", async (req, res) => {
   res.sendStatus(200);
 });
 // create route that will send the index.html and serve it
-app.get("/home", async (req, res) => {
+app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname, "/index.html"));
   res.render("home");
   // res.status(200).redirect("budget_profile");
