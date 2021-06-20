@@ -205,6 +205,21 @@ app.get("/budget_profile", function (req, res) {
 });
 app.get("/home", function (req, res) {
   res.render("home");
+  transactionResponse = {};
+  budget_desired = 5000.0;
+  budget_actual = 0.0;
+  food_desired = 500.0;
+  food_actual = 0.0;
+  entertainment_desired = 500.0;
+  entertainment_actual = 0.0;
+  shopping_desired = 500.0;
+  shopping_actual = 0.0;
+  payments_desired = 3000.0;
+  payments_actual = 0.0;
+  travel_desired = 500.0;
+  travel_actual = 0.0;
+  over_under = "Budget Balanced";
+  over_under_by = 0.0;
 });
 app.get("/transaction_history", function (req, res) {
   res.render("transaction_history", {
