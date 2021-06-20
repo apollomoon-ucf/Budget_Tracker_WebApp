@@ -1,7 +1,7 @@
 <div class="w3-container">
-  <title>Finance App - Transaction History</title>
+  <title>Finance App - Investment Profile</title>
 
-  <h5>Transaction History:</h5>
+  <h5>Investment Details:</h5>
 
   {{!-- <h5>
     {{#each message.transactions}} {{category}}: {{amount}}<br /> {{/each}}</h5> --}}
@@ -10,11 +10,10 @@
     class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
   >
     <td>
-      {{#each transaction.transactions}}
-        {{category}}<br />
+      {{#each investment.investment_transactions}}
+        {{name}}<br />
         Amount: ${{amount}}<br /><br />
       {{/each}}
-
     </td>
   </table><br />
 </div>

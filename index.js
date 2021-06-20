@@ -20,6 +20,7 @@ app.set("view engine", "handlebars");
 
 // init transactions
 var transactionResponse = {};
+var investmentResponse = {};
 // init budget
 var budget_desired = 5000.0;
 var budget_actual = 0.0;
@@ -56,7 +57,7 @@ app.get("/create-link-token", async (req, res) => {
       client_user_id: "unique-id",
     },
     client_name: "summer knights",
-    products: ["auth", "identity", "transactions"],
+    products: ["auth", "identity", "transactions", "investments"],
     country_codes: ["US"],
     language: "en",
   });
@@ -87,6 +88,16 @@ app.post("/token-exchange", async (req, res) => {
   //   console.log("------");
   //   console.log("Balance response: ");
   //   console.log(util.inspect(balanceResponse, false, null, true));
+  //   // balance endpoint
+  investmentResponse = await plaidClient.getInvestmentTransactions(
+    accessToken,
+    "2021-05-01",
+    "2021-06-01",
+    {}
+  );
+  // console.log("------");
+  // console.log("Balance response: ");
+  // console.log(util.inspect(balanceResponse, false, null, true));
   // transaction endpoint
   transactionResponse = await plaidClient.getTransactions(
     accessToken,
@@ -145,9 +156,11 @@ app.post("/token-exchange", async (req, res) => {
     // res.status(200).redirect("/home");
     // res.status(401).render("index", { message: "TEST" });
     // res.status(401).render("/", { message: "TEST" });
-    // console.log(transactionResponse.transactions[i].category[0]);
   }
-  //   console.log(transactionResponse.transactions[0].category[0]);
+  // for (int i = 0; i < investmentResponse.investment_transactions; i++) {
+  // investmentResponse.securities
+  // }
+  console.log(investmentResponse);
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
   res.sendStatus(200);
@@ -157,6 +170,7 @@ app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname, "/index.html"));
   res.render("home");
   transactionResponse = {};
+  investmentResponse = {};
   budget_desired = 5000.0;
   budget_actual = 0.0;
   food_desired = 500.0;
@@ -186,13 +200,13 @@ var formatter = new Intl.NumberFormat("en-US", {
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 // compare budget
-over_under_by = budget_desired - budget_actual;
-if (over_under_by < 0) {
-  over_under = "Over Budget by: ";
-  over_under_by *= -1;
-} else if (over_under_by > 0) {
-  over_under = "Under Budget by: ";
-}
+// over_under_by = budget_desired - budget_actual;
+// if (over_under_by < 0) {
+//   over_under = "Over Budget by: ";
+//   over_under_by *= -1;
+// } else if (over_under_by > 0) {
+//   over_under = "Under Budget by: ";
+// }
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
   res.render("budget_profile", {
@@ -221,6 +235,7 @@ app.get("/budget_profile", function (req, res) {
 app.get("/home", function (req, res) {
   res.render("home");
   transactionResponse = {};
+  investmentResponse = {};
   budget_desired = 5000.0;
   budget_actual = 0.0;
   food_desired = 500.0;
@@ -236,10 +251,18 @@ app.get("/home", function (req, res) {
   over_under = "Budget Balanced";
   over_under_by = 0.0;
 });
+// transaction history
 app.get("/transaction_history", function (req, res) {
   res.render("transaction_history", {
-    message: transactionResponse,
+    transaction: transactionResponse,
     // message: JSON.stringify(transactionResponse.transactions),
+  });
+});
+// investment profile
+app.get("/investment_profile", function (req, res) {
+  res.render("investment_profile", {
+    investment: investmentResponse,
+    // investment: JSON.stringify(investmentResponse.investment_transactions),
   });
 });
 
