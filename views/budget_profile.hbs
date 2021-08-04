@@ -1,0 +1,211 @@
+<title>Finance App - Budget Profile</title>
+
+<div class="w3-container">
+
+  <h5>Budget Profile - Fill in data cells and press enter to calculate your
+    budget</h5>
+  <footer>(Note: Do not use commas when entering large amounts)</footer>
+
+  {{! <div id="chartdiv"></div> }}
+
+  {{! <br /> }}
+  <br />
+  <style>
+    input[type=text], select { width:75%; padding: 5% 0px; margin:15%; display:
+    inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing:
+    border-box; } #Submit { visibility: hidden; }
+  </style>
+
+  <div>
+    <form method="POST">
+      <table>
+        <tr>
+          <th style="text-align:center">Categories: </th>
+          <th style="text-align:center">Food</th>
+          <th style="text-align:center">Travel/Transportation</th>
+          <th style="text-align:center">Payments</th>
+          <th style="text-align:center">Entertainment</th>
+          <th style="text-align:center">Shopping</th>
+        </tr>
+        <tr>
+          <td style="text-align:center">Desired $: </td>
+          <td style="text-align:center"><input
+              type="text"
+              placeholder={{desired_food}}
+              name="desiredFood"
+              id="desiredFood"
+              style="text-align:center"
+            /></td>
+          <td style="text-align:center"><input
+              type="text"
+              placeholder={{desired_travel}}
+              name="desiredTravel"
+              style="text-align:center"
+            /></td>
+          <td style="text-align:center"><input
+              type="text"
+              placeholder={{desired_payments}}
+              name="desiredPayments"
+              style="text-align:center"
+            /></td>
+          <td style="text-align:center"><input
+              type="text"
+              placeholder={{desired_entertainment}}
+              name="desiredEntertainment"
+              style="text-align:center"
+            /></td>
+          <td style="text-align:center">
+            <input
+              type="text"
+              placeholder={{desired_shopping}}
+              name="desiredShopping"
+              style="text-align:center"
+            /></td>
+        </tr>
+        <tr>
+          <td style="text-align:center">Actual $: </td>
+          <td style="text-align:center">{{actual_food}}</td>
+          <td style="text-align:center">{{actual_travel}}</td>
+          <td style="text-align:center">{{actual_payments}}</td>
+          <td style="text-align:center">{{actual_entertainment}}</td>
+          <td style="text-align:center">{{actual_shopping}}</td>
+        </tr>
+
+        <tr>
+
+        </tr>
+        <td>
+          <input
+            style="text-align:center"
+            type="submit"
+            value="Submit Budget"
+            id="Submit"
+          />
+        </td>
+      </table>
+
+    </form>
+  </div>
+
+  {{! <div class="container" style="display: flex; height: 100px;">
+    <div style="width: 50%;">
+      <div id="bar_div"></div>
+    </div>
+    <div style="flex-grow: 1;">
+      <div id="pie_div"></div>
+    </div>
+  </div> }}
+
+  {{! <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> }}
+
+  {{! BEGIN MY OG TABLE }}
+  {{!-- <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <th style="text-align:left">Balance (desired):</th>
+      <th style="text-align:left">Balance (actual):</th>
+    </tr>
+    <tr>
+      <th style="text-align:left">
+        <form method="POST">
+          <input
+            type="text"
+            placeholder={{desired_balance}}
+            required
+            name="desiredBalance"
+          />
+        </form>
+      </th>
+      <th style="text-align:left">{{actual_balance}}</th>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <th style="text-align:left">Food (desired):</th>
+      <th style="text-align:left">Food (actual):</th>
+    </tr>
+    <tr>
+      <td>
+        <form>
+          <input type="numbers" id="desiredBalance" name="desiredBalance" />
+        </form>
+      </td>
+      <td>{{actual_food}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Entertainment (desired):</td>
+      <td>Entertainment (actual):</td>
+    </tr>
+    <tr>
+      <td>
+        <form>
+          <input type="numbers" id="desiredBalance" name="desiredBalance" />
+        </form>
+      </td>
+      <td>{{actual_entertainment}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Shopping (desired):</td>
+      <td>Shopping (actual):</td>
+    </tr>
+    <tr>
+      <td>
+        <form>
+          <input type="numbers" id="desiredBalance" name="desiredBalance" />
+        </form>
+      </td>
+      <td>{{actual_shopping}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Payments (desired):</td>
+      <td>Payments (actual):</td>
+    </tr>
+    <tr>
+      <td>
+        <form>
+          <input type="numbers" id="desiredBalance" name="desiredBalance" />
+        </form>
+      </td>
+      <td>{{actual_payments}}</td>
+    </tr>
+  </table><br />
+  <table
+    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+  >
+    <tr>
+      <td>Travel (desired):</td>
+      <td>Travel (actual):</td>
+    </tr>
+    <tr>
+      <td>
+        <form>
+          <input type="numbers" id="desiredBalance" name="desiredBalance" />
+        </form>
+      </td>
+      <td>{{actual_travel}}</td>
+    </tr>
+  </table><br /> --}}
+  {{! END MY OG TABLE }}
+  {{! <br /> }}
+  <footer>Target Budget: {{desired_balance}}</footer>
+  <footer>Total Spent: {{actual_balance}}</footer>
+  <footer>{{over_or_under}}{{over_or_under_amount}}</footer><br />
+  <a href="/transaction_history" class="w3-button w3-dark-grey">View
+    Transactions  <i class="fa fa-arrow-right"></i></a>
+
+</div>

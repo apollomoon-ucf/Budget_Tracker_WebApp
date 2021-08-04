@@ -10,13 +10,25 @@ const app = express();
 const bodyParser = require("body-parser");
 // use json when using the body parser
 app.use(bodyParser.json());
+app.use(express.urlencoded());
 
 const PORT = process.env.PORT || 3000;
 const exphbs = require("express-handlebars");
 // setting up handlebars
 // Set handlebars middleware
-app.engine("handlebars", exphbs());
-app.set("view engine", "handlebars");
+var hbs = exphbs.create({
+  defaultLayout: "main",
+  extname: ".hbs",
+  helpers: {
+    section: function (name, options) {
+      if (!this._sections) this._sections = {};
+      this._sections[name] = options.fn(this);
+      return null;
+    },
+  },
+});
+app.engine("hbs", hbs.engine);
+app.set("view engine", ".hbs");
 
 // init transactions
 var transactionResponse = {};
@@ -56,7 +68,7 @@ app.get("/create-link-token", async (req, res) => {
     user: {
       client_user_id: "unique-id",
     },
-    client_name: "summer knights",
+    client_name: "Finance App",
     products: ["auth", "identity", "transactions", "investments"],
     country_codes: ["US"],
     language: "en",
@@ -107,7 +119,7 @@ app.post("/token-exchange", async (req, res) => {
   );
   console.log("------");
   //   console.log("Transaction response: ");
-  console.log("Summer Knights Finance App");
+  console.log("Finance App v2");
   console.log("Transactions: ");
   var transaction_type = "other";
   for (var i = 0; i < transactionResponse.transactions.length; i++) {
@@ -161,11 +173,63 @@ app.post("/token-exchange", async (req, res) => {
   // investmentResponse.securities
   // }
   console.log(investmentResponse);
+
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
   // res.sendStatus(200);
   // res.status(200).redirect("budget_profile");
 });
+
+app.post("/budget_profile", function (req, res) {
+  budget_desired = req.body.desiredBalance
+    ? req.body.desiredBalance
+    : budget_desired;
+  food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
+  entertainment_desired = req.body.desiredEntertainment
+    ? req.body.desiredEntertainment
+    : entertainment_desired;
+  shopping_desired = req.body.desiredShopping
+    ? req.body.desiredShopping
+    : shopping_desired;
+  travel_desired = req.body.desiredTravel
+    ? req.body.desiredTravel
+    : travel_desired;
+  payments_desired = req.body.desiredPayments
+    ? req.body.desiredPayments
+    : payments_desired;
+
+  budget_desired =
+    +food_desired +
+    +entertainment_desired +
+    +shopping_desired +
+    +travel_desired +
+    +payments_desired;
+
+  res.render("budget_profile", {
+    style: "budget.css",
+    desired_balance: formatter.format(budget_desired),
+    actual_balance: formatter.format(budget_actual),
+    desired_food: formatter.format(food_desired),
+    actual_food: formatter.format(food_actual),
+    desired_entertainment: formatter.format(entertainment_desired),
+    actual_entertainment: formatter.format(entertainment_actual),
+    desired_shopping: formatter.format(shopping_desired),
+    actual_shopping: formatter.format(shopping_actual),
+    desired_payments: formatter.format(payments_desired),
+    actual_payments: formatter.format(payments_actual),
+    desired_travel: formatter.format(travel_desired),
+    actual_travel: formatter.format(travel_actual),
+    over_or_under:
+      budget_desired - budget_actual < 0
+        ? "Over budget by: "
+        : "Under budget by: ",
+    over_or_under_amount:
+      budget_desired - budget_actual < 0
+        ? formatter.format(-1 * (budget_desired - budget_actual))
+        : formatter.format(budget_desired - budget_actual),
+  });
+});
+
 // create route that will send the index.html and serve it
 app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname, "/index.html"));
@@ -210,7 +274,9 @@ var formatter = new Intl.NumberFormat("en-US", {
 // }
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
+  // budget_desired = req.body.desiredBalance;
   res.render("budget_profile", {
+    style: "budget.css",
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
     desired_food: formatter.format(food_desired),
@@ -235,22 +301,22 @@ app.get("/budget_profile", function (req, res) {
 });
 app.get("/home", function (req, res) {
   res.render("home");
-  transactionResponse = {};
-  investmentResponse = {};
-  budget_desired = 5000.0;
-  budget_actual = 0.0;
-  food_desired = 500.0;
-  food_actual = 0.0;
-  entertainment_desired = 500.0;
-  entertainment_actual = 0.0;
-  shopping_desired = 500.0;
-  shopping_actual = 0.0;
-  payments_desired = 3000.0;
-  payments_actual = 0.0;
-  travel_desired = 500.0;
-  travel_actual = 0.0;
-  over_under = "Budget Balanced";
-  over_under_by = 0.0;
+  // transactionResponse = {};
+  // investmentResponse = {};
+  // budget_desired = 0.0;
+  // budget_actual = 0.0;
+  // food_desired = 0.0;
+  // food_actual = 0.0;
+  // entertainment_desired = 0.0;
+  // entertainment_actual = 0.0;
+  // shopping_desired = 0.0;
+  // shopping_actual = 0.0;
+  // payments_desired = 0.0;
+  // payments_actual = 0.0;
+  // travel_desired = 0.0;
+  // travel_actual = 0.0;
+  // over_under = "Budget Balanced";
+  // over_under_by = 0.0;
 });
 // transaction history
 app.get("/transaction_history", function (req, res) {
@@ -263,6 +329,21 @@ app.get("/transaction_history", function (req, res) {
 app.get("/investment_profile", function (req, res) {
   res.render("investment_profile", {
     investment: investmentResponse,
+    // investment: JSON.stringify(investmentResponse.investment_transactions),
+  });
+});
+// account settings
+app.get("/account_settings", function (req, res) {
+  res.render("account_settings", {
+    // investment: investmentResponse,
+    // investment: JSON.stringify(investmentResponse.investment_transactions),
+  });
+});
+
+// user profile
+app.get("/profile", function (req, res) {
+  res.render("profile", {
+    user: "User",
     // investment: JSON.stringify(investmentResponse.investment_transactions),
   });
 });
