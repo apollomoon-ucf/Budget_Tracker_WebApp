@@ -2,9 +2,12 @@
 
 <div class="w3-container">
 
-  <h5>Budget Profile - Fill in data cells and press enter to calculate your
-    budget</h5>
-  <footer>(Note: Do not use commas when entering large amounts)</footer>
+  <h5>Budget Profile</h5>
+  <footer>Instructions: </footer>
+  <footer>Select date range, fill in data cells for your desired budget, and
+    then press enter to view how your desired budget compares with your actual
+    spending.</footer>
+  <footer>Note: Do not use commas when entering large amounts</footer>
 
   {{! <div id="chartdiv"></div> }}
 
@@ -16,76 +19,74 @@
     border-box; } #Submit { visibility: hidden; }
   </style>
 
-  <div>
-    <form method="POST">
-      <table>
-        <tr>
-          <th style="text-align:center">Categories: </th>
-          <th style="text-align:center">Food</th>
-          <th style="text-align:center">Travel/Transportation</th>
-          <th style="text-align:center">Payments</th>
-          <th style="text-align:center">Entertainment</th>
-          <th style="text-align:center">Shopping</th>
-        </tr>
-        <tr>
-          <td style="text-align:center">Desired $: </td>
-          <td style="text-align:center"><input
-              type="text"
-              placeholder={{desired_food}}
-              name="desiredFood"
-              id="desiredFood"
-              style="text-align:center"
-            /></td>
-          <td style="text-align:center"><input
-              type="text"
-              placeholder={{desired_travel}}
-              name="desiredTravel"
-              style="text-align:center"
-            /></td>
-          <td style="text-align:center"><input
-              type="text"
-              placeholder={{desired_payments}}
-              name="desiredPayments"
-              style="text-align:center"
-            /></td>
-          <td style="text-align:center"><input
-              type="text"
-              placeholder={{desired_entertainment}}
-              name="desiredEntertainment"
-              style="text-align:center"
-            /></td>
-          <td style="text-align:center">
-            <input
-              type="text"
-              placeholder={{desired_shopping}}
-              name="desiredShopping"
-              style="text-align:center"
-            /></td>
-        </tr>
-        <tr>
-          <td style="text-align:center">Actual $: </td>
-          <td style="text-align:center">{{actual_food}}</td>
-          <td style="text-align:center">{{actual_travel}}</td>
-          <td style="text-align:center">{{actual_payments}}</td>
-          <td style="text-align:center">{{actual_entertainment}}</td>
-          <td style="text-align:center">{{actual_shopping}}</td>
-        </tr>
-
-        <tr>
-
-        </tr>
-        <td>
-          <input
+  <form method="POST">
+    <table>
+      <tr>
+        <th style="text-align:center">Categories: </th>
+        <th style="text-align:center">Food</th>
+        <th style="text-align:center">Travel/Transportation</th>
+        <th style="text-align:center">Payments</th>
+        <th style="text-align:center">Entertainment</th>
+        <th style="text-align:center">Shopping</th>
+      </tr>
+      <tr>
+        <td style="text-align:center">Desired $: </td>
+        <td style="text-align:center"><input
+            type="text"
+            placeholder={{desired_food}}
+            name="desiredFood"
+            id="desiredFood"
             style="text-align:center"
-            type="submit"
-            value="Submit Budget"
-            id="Submit"
-          />
-        </td>
-      </table>
+          /></td>
+        <td style="text-align:center"><input
+            type="text"
+            placeholder={{desired_travel}}
+            name="desiredTravel"
+            style="text-align:center"
+          /></td>
+        <td style="text-align:center"><input
+            type="text"
+            placeholder={{desired_payments}}
+            name="desiredPayments"
+            style="text-align:center"
+          /></td>
+        <td style="text-align:center"><input
+            type="text"
+            placeholder={{desired_entertainment}}
+            name="desiredEntertainment"
+            style="text-align:center"
+          /></td>
+        <td style="text-align:center">
+          <input
+            type="text"
+            placeholder={{desired_shopping}}
+            name="desiredShopping"
+            style="text-align:center"
+          /></td>
+      </tr>
+      <tr>
+        <td style="text-align:center">Actual $: </td>
+        <td style="text-align:center">{{actual_food}}</td>
+        <td style="text-align:center">{{actual_travel}}</td>
+        <td style="text-align:center">{{actual_payments}}</td>
+        <td style="text-align:center">{{actual_entertainment}}</td>
+        <td style="text-align:center">{{actual_shopping}}</td>
+      </tr>
 
-    </form>
-  </div>
+      <tr>
+
+      </tr>
+      <td>
+        <input
+          style="text-align:center"
+          type="submit"
+          value="Submit Budget"
+          id="Submit"
+        />
+      </td>
+    </table>
+
+  </form>
 
   {{! <div class="container" style="display: flex; height: 100px;">
     <div style="width: 50%;">
