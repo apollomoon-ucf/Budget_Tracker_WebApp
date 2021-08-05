@@ -350,7 +350,7 @@ app.get("/account_settings", function (req, res) {
 // user profile
 app.get("/profile", function (req, res) {
   res.render("profile", {
-    user: "User",
+    user: "Username",
     // investment: JSON.stringify(investmentResponse.investment_transactions),
   });
 });
