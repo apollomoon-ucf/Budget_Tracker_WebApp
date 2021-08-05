@@ -34,17 +34,17 @@ app.set("view engine", ".hbs");
 var transactionResponse = {};
 var investmentResponse = {};
 // init budget
-var budget_desired = 5000.0;
+var budget_desired = 0.0;
 var budget_actual = 0.0;
-var food_desired = 500.0;
+var food_desired = 0.0;
 var food_actual = 0.0;
-var entertainment_desired = 500.0;
+var entertainment_desired = 0.0;
 var entertainment_actual = 0.0;
-var shopping_desired = 500.0;
+var shopping_desired = 0.0;
 var shopping_actual = 0.0;
-var payments_desired = 3000.0;
+var payments_desired = 0.0;
 var payments_actual = 0.0;
-var travel_desired = 500.0;
+var travel_desired = 0.0;
 var travel_actual = 0.0;
 var over_under = "Budget Balanced";
 var over_under_by = 0.0;
@@ -84,6 +84,7 @@ app.post("/token-exchange", async (req, res) => {
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
     publicToken
   );
+
   // call api endpoints
   //   // auth endpoint
   //   const authResponse = await plaidClient.getAuth(accessToken);
@@ -173,7 +174,6 @@ app.post("/token-exchange", async (req, res) => {
   // investmentResponse.securities
   // }
   console.log(investmentResponse);
-
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
   // res.sendStatus(200);
@@ -231,22 +231,22 @@ app.post("/budget_profile", function (req, res) {
 });
 
 // create route that will send the index.html and serve it
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, "/index.html"));
   res.render("home");
   transactionResponse = {};
   investmentResponse = {};
-  budget_desired = 5000.0;
+  budget_desired = 0.0;
   budget_actual = 0.0;
-  food_desired = 500.0;
+  food_desired = 0.0;
   food_actual = 0.0;
-  entertainment_desired = 500.0;
+  entertainment_desired = 0.0;
   entertainment_actual = 0.0;
-  shopping_desired = 500.0;
+  shopping_desired = 0.0;
   shopping_actual = 0.0;
-  payments_desired = 3000.0;
+  payments_desired = 0.0;
   payments_actual = 0.0;
-  travel_desired = 500.0;
+  travel_desired = 0.0;
   travel_actual = 0.0;
   over_under = "Budget Balanced";
   over_under_by = 0.0;
@@ -274,7 +274,30 @@ var formatter = new Intl.NumberFormat("en-US", {
 // }
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
-  // budget_desired = req.body.desiredBalance;
+  budget_desired = req.body.desiredBalance
+    ? req.body.desiredBalance
+    : budget_desired;
+  food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
+  entertainment_desired = req.body.desiredEntertainment
+    ? req.body.desiredEntertainment
+    : entertainment_desired;
+  shopping_desired = req.body.desiredShopping
+    ? req.body.desiredShopping
+    : shopping_desired;
+  travel_desired = req.body.desiredTravel
+    ? req.body.desiredTravel
+    : travel_desired;
+  payments_desired = req.body.desiredPayments
+    ? req.body.desiredPayments
+    : payments_desired;
+
+  budget_desired =
+    +food_desired +
+    +entertainment_desired +
+    +shopping_desired +
+    +travel_desired +
+    +payments_desired;
+
   res.render("budget_profile", {
     style: "budget.css",
     desired_balance: formatter.format(budget_desired),
@@ -301,22 +324,6 @@ app.get("/budget_profile", function (req, res) {
 });
 app.get("/home", function (req, res) {
   res.render("home");
-  // transactionResponse = {};
-  // investmentResponse = {};
-  // budget_desired = 0.0;
-  // budget_actual = 0.0;
-  // food_desired = 0.0;
-  // food_actual = 0.0;
-  // entertainment_desired = 0.0;
-  // entertainment_actual = 0.0;
-  // shopping_desired = 0.0;
-  // shopping_actual = 0.0;
-  // payments_desired = 0.0;
-  // payments_actual = 0.0;
-  // travel_desired = 0.0;
-  // travel_actual = 0.0;
-  // over_under = "Budget Balanced";
-  // over_under_by = 0.0;
 });
 // transaction history
 app.get("/transaction_history", function (req, res) {

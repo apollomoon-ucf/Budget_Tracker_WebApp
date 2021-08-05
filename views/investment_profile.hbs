@@ -1,7 +1,9 @@
 <div class="w3-container">
   <title>Finance App - Investment Profile</title>
 
-  <h5>Investment Details:</h5>
+  <h5>Investment Details</h5>
+  <footer>If any investment accounts are connected to the account you linked
+    with Plaid, their details will be displayed below:</footer>
   {{#section "investment_chart"}}
     <style>
       #bardiv { width: 100%; height: 500px; }
@@ -48,7 +50,7 @@
       var series1 = chart.series.push(new am4charts.ColumnSeries());
       series1.dataFields.valueY = "sales1"; series1.dataFields.dateX = "date";
       series1.yAxis = valueAxis1; series1.name = "Target Sales";
-      series1.tooltipText = "{name}\\\\\n[bold font-size: 20]${valueY}M[/]";
+      series1.tooltipText = "{name}\\\\\\\n[bold font-size: 20]${valueY}M[/]";
       series1.fill = chart.colors.getIndex(0); series1.strokeWidth = 0;
       series1.clustered = false; series1.columns.template.width =
       am4core.percent(40); var series2 = chart.series.push(new
