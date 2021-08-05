@@ -1,4 +1,4 @@
-# Budget Tracker Web App w/Plaid
+# Budget Tracker Web App w/Plaid API
 
 Retrieving and printing financial data using the Plaid API, while building components for a fintech web app project.
 Node.js, Express, Handlebars, Plaid API, Heroku, HTML, CSS
