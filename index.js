@@ -68,17 +68,20 @@ app.get("/create-link-token", async (req, res) => {
     user: {
       client_user_id: "unique-id",
     },
-    client_name: "Finance App",
+    client_name: "Budget Tracker",
     products: ["auth", "identity", "transactions", "investments"],
     country_codes: ["US"],
     language: "en",
   });
+  // res.render("budget_profile");
   // pass the created link token back to the front end
   res.json({ linkToken });
+  // res.status(200).render("budget_profile");
 });
 
 // create route after user goes to plaid link, exchanges public token for access token,
 app.post("/token-exchange", async (req, res) => {
+  // res.render("budget_profile");
   // getting the token from the request body from front end
   const { publicToken } = req.body;
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
@@ -177,7 +180,7 @@ app.post("/token-exchange", async (req, res) => {
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
   // res.sendStatus(200);
-  // res.status(200).redirect("budget_profile");
+  // res.status(200).render("budget_profile");
 });
 
 app.post("/budget_profile", function (req, res) {
