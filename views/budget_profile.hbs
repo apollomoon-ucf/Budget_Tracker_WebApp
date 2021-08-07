@@ -458,8 +458,8 @@
     google.charts.setOnLoadCallback(drawChart); function drawChart() { var data
     = google.visualization.arrayToDataTable([ ['Day', 'Desired Budget',
     'Spending'], [5, 2940, 0], [15, 2940, 1000], [25, 2940, 2058] ]); var
-    options = { title: 'Total Budget', curveType: 'function', legend: {
-    position: 'bottom' } }; var chart = new
+    options = { title: '', curveType: 'function', legend: { position: 'bottom' }
+    }; var chart = new
     google.visualization.LineChart(document.getElementById('total'));
     chart.draw(data, options); }
   </script>
