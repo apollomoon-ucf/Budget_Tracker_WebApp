@@ -141,12 +141,12 @@
   <section>
     <div class="row">
       {{! TOTAL }}
-      <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+      <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-success">64.89 %</h3>
+                <h3 class="text-success">70% of Total Budget Spent</h3>
                 <p class="mb-0">Total</p>
               </div>
               <div class="align-self-center">
@@ -154,7 +154,7 @@
               </div>
             </div>
             <div class="px-md-1">
-              <div class="progress mt-3 mb-1 rounded" style="height: 7px">
+              <div class="progress mt-3 mb-1 rounded" style="height: 17px">
                 <div
                   class="progress-bar bg-success"
                   role="progressbar"
@@ -164,19 +164,24 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="total" style="width: 100%; height: 100%"></div>
+              <div id="total" style="width: 100%; height: 350%"></div>
             </div>
           </div>
         </div>
       </div>
+
+      <br />
+      <h4 style="text-align:center">Spending per category</h4>
+
       {{! FOOD }}
       <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-warning">78 %</h3>
-                <p class="mb-0">Food</p>
+                <h4 class="text-warning">Food - $450</h4>
+                <p class="mb-0">Desired Budget: $500</p>
+                <p class="mb-0">$50 remaining</p>
               </div>
               <div class="align-self-center">
                 <i class="fas fa-mug-hot text-warning fa-3x"></i>
@@ -193,19 +198,21 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="food" style="width: 100%; height: 100%"></div>
+              {{! <div id="food" style="width: 100%; height: 100%"></div> }}
             </div>
           </div>
         </div>
       </div>
+
       {{! TRANSPORTATION }}
       <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-danger">90 %</h3>
-                <p class="mb-0">Transportation</p>
+                <h4 class="text-danger">Transportation - $250</h4>
+                <p class="mb-0">Desired Budget: $280</p>
+                <p class="mb-0">$30 remaining</p>
               </div>
               <div class="align-self-center">
                 <i class="fas fa-car text-danger fa-3x"></i>
@@ -222,7 +229,7 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="transportation" style="width: 100%; height: 100%"></div>
+              {{! <div id="transportation" style="width: 100%; height: 100%"></div> }}
             </div>
           </div>
         </div>
@@ -233,8 +240,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-success">64.89 %</h3>
-                <p class="mb-0">Shopping</p>
+                <h4 class="text-success">Shopping - $100</h4>
+                <p class="mb-0">Desired Budget: $250</p>
+                <p class="mb-0">$150 remaining</p>
               </div>
               <div class="align-self-center">
                 <i class="fas fa-wallet text-success fa-3x"></i>
@@ -251,7 +259,7 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="shopping" style="width: 100%; height: 100%"></div>
+              {{! <div id="shopping" style="width: 100%; height: 100%"></div> }}
             </div>
           </div>
         </div>
@@ -262,8 +270,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-success">64.89 %</h3>
-                <p class="mb-0">Entertainment</p>
+                <h4 class="text-success">Entertainment - $40</h4>
+                <p class="mb-0">Desired Budget: $200</p>
+                <p class="mb-0">$160 remaining</p>
               </div>
               <div class="align-self-center">
                 <i class="fas fa-tv text-success fa-3x"></i>
@@ -274,13 +283,13 @@
                 <div
                   class="progress-bar bg-success"
                   role="progressbar"
-                  style="width: 60%"
-                  aria-valuenow="60"
+                  style="width: 33%"
+                  aria-valuenow="33"
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="entertainment" style="width: 100%; height: 100%"></div>
+              {{! <div id="entertainment" style="width: 100%; height: 100%"></div> }}
             </div>
           </div>
         </div>
@@ -291,11 +300,42 @@
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h3 class="text-success">64.89 %</h3>
-                <p class="mb-0">Payments</p>
+                <h4 class="text-warning">Payments - $150</h4>
+                <p class="mb-0">Desired Budget: $210</p>
+                <p class="mb-0">$60 remaining</p>
               </div>
               <div class="align-self-center">
-                <i class="fas fa-bank text-success fa-3x"></i>
+                <i class="fas fa-bank text-warning fa-3x"></i>
+              </div>
+            </div>
+            <div class="px-md-1">
+              <div class="progress mt-3 mb-1 rounded" style="height: 7px">
+                <div
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  style="width: 80%"
+                  aria-valuenow="80"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{! Travel }}
+      <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div>
+                <h4 class="text-success">Travel - $140</h4>
+                <p class="mb-0">Desired Budget: $1500</p>
+                <p class="mb-0">$1360 remaining</p>
+              </div>
+              <div class="align-self-center">
+                <i class="fas fa-plane text-success fa-3x"></i>
               </div>
             </div>
             <div class="px-md-1">
@@ -303,13 +343,13 @@
                 <div
                   class="progress-bar bg-success"
                   role="progressbar"
-                  style="width: 60%"
-                  aria-valuenow="60"
+                  style="width: 20%"
+                  aria-valuenow="20"
                   aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="payments" style="width: 100%; height: 100%"></div>
+              {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
             </div>
           </div>
         </div>
@@ -416,10 +456,10 @@
   <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart); function drawChart() { var data
-    = google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-    ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007',
-    1000, 1100] ]); var options = { title: 'Total', curveType: 'function',
-    legend: { position: 'bottom' } }; var chart = new
+    = google.visualization.arrayToDataTable([ ['Day', 'Desired Budget',
+    'Spending'], [5, 2940, 0], [15, 2940, 1000], [25, 2940, 2058] ]); var
+    options = { title: 'Total', curveType: 'function', legend: { position:
+    'bottom' } }; var chart = new
     google.visualization.LineChart(document.getElementById('total'));
     chart.draw(data, options); }
   </script>
