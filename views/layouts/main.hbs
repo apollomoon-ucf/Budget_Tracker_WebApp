@@ -263,66 +263,11 @@ chart.scrollbarX.parent = chart.bottomAxesContainer;
 }); // end am4core.ready()
 </script>
 
-<!-- Styles -->
-<style>
-#chartdiv {
-  width: 100%;
-  height: 500px;
-}
-
-</style>
-
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-
-// Themes begin
-am4core.useTheme(am4themes_material);
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-// Create chart instance
-var chart = am4core.create("chartdiv", am4charts.PieChart);
-
-// Add data
-chart.data = [ {
-  "category": "Food",
-  "dollars": {{{actual_food}}}
-}, {
-  "category": "Entertainment",
-  "dollars": 301.9
-}, {
-  "category": "Shopping",
-  "dollars": 201.1
-}, {
-  "category": "Payments",
-  "dollars": 165.8
-}, {
-  "category": "Travel",
-  "dollars": 139.9
-},];
-
-// Add and configure Series
-var pieSeries = chart.series.push(new am4charts.PieSeries());
-pieSeries.dataFields.value = "dollars";
-pieSeries.dataFields.category = "category";
-pieSeries.slices.template.stroke = am4core.color("#fff");
-pieSeries.slices.template.strokeWidth = 2;
-pieSeries.slices.template.strokeOpacity = 1;
-
-// This creates initial animation
-pieSeries.hiddenState.properties.opacity = 1;
-pieSeries.hiddenState.properties.endAngle = -90;
-pieSeries.hiddenState.properties.startAngle = -90;
-
-}); // end am4core.ready()
-</script>
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
 
 

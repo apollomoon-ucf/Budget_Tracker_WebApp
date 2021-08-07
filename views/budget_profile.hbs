@@ -147,6 +147,8 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h3 class="text-success">70% of Total Budget Spent</h3>
+                <p class="mb-0">Target Budget: $2940</p>
+                <p class="mb-0">$882 remaining</p>
                 {{! <p class="mb-0">Total</p> }}
               </div>
               <div class="align-self-center">
@@ -164,7 +166,8 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <div id="total" style="width: 100%; height: 350%"></div>
+
+              <div id="chartdiv"></div>
             </div>
           </div>
         </div>
@@ -180,7 +183,7 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h4 class="text-warning">Food - $450</h4>
-                <p class="mb-0">Desired Budget: $500</p>
+                <p class="mb-0">Target Budget: $500</p>
                 <p class="mb-0">$50 remaining</p>
               </div>
               <div class="align-self-center">
@@ -211,7 +214,7 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h4 class="text-danger">Transportation - $250</h4>
-                <p class="mb-0">Desired Budget: $280</p>
+                <p class="mb-0">Target Budget: $280</p>
                 <p class="mb-0">$30 remaining</p>
               </div>
               <div class="align-self-center">
@@ -241,7 +244,7 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h4 class="text-success">Shopping - $100</h4>
-                <p class="mb-0">Desired Budget: $250</p>
+                <p class="mb-0">Target Budget: $250</p>
                 <p class="mb-0">$150 remaining</p>
               </div>
               <div class="align-self-center">
@@ -271,7 +274,7 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h4 class="text-success">Entertainment - $40</h4>
-                <p class="mb-0">Desired Budget: $200</p>
+                <p class="mb-0">Target Budget: $200</p>
                 <p class="mb-0">$160 remaining</p>
               </div>
               <div class="align-self-center">
@@ -301,7 +304,7 @@
             <div class="d-flex justify-content-between px-md-1">
               <div>
                 <h4 class="text-warning">Payments - $150</h4>
-                <p class="mb-0">Desired Budget: $210</p>
+                <p class="mb-0">Target Budget: $210</p>
                 <p class="mb-0">$60 remaining</p>
               </div>
               <div class="align-self-center">
@@ -330,9 +333,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div>
-                <h4 class="text-success">Travel - $140</h4>
-                <p class="mb-0">Desired Budget: $1500</p>
-                <p class="mb-0">$1360 remaining</p>
+                <h4 class="text-success">Travel - $10</h4>
+                <p class="mb-0">Desired Budget: $175</p>
+                <p class="mb-0">$165 remaining</p>
               </div>
               <div class="align-self-center">
                 <i class="fas fa-plane text-success fa-3x"></i>
@@ -457,7 +460,7 @@
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart); function drawChart() { var data
     = google.visualization.arrayToDataTable([ ['Day', 'Desired Budget',
-    'Spending'], [5, 2940, 0], [15, 2940, 1000], [25, 2940, 2058] ]); var
+    'Spending'], [5, 2940, 25], [15, 2940, 275], [25, 2940, 2058] ]); var
     options = { title: '', curveType: 'function', legend: { position: 'bottom' }
     }; var chart = new
     google.visualization.LineChart(document.getElementById('total'));
@@ -512,6 +515,32 @@
     legend: { position: 'bottom' } }; var chart = new
     google.visualization.LineChart(document.getElementById('payments'));
     chart.draw(data, options); }
+  </script>
+
+  <!-- Styles -->
+  <style>
+    #chartdiv { width: 100%; height: 150px; }
+
+  </style>
+
+  <!-- Chart code -->
+  <script>
+    am4core.ready(function() { // Themes begin
+    am4core.useTheme(am4themes_material); am4core.useTheme(am4themes_animated);
+    var chart = am4core.create("chartdiv", am4charts.PieChart); chart.data = [ {
+    "category": "Food", "dollars": 500 }, { "category": "Entertainment",
+    "dollars": 200 },{ "category": "Transportation", "dollars": 280 }, {
+    "category": "Shopping", "dollars": 100 }, { "category": "Payments",
+    "dollars": 210 }, { "category": "Travel", "dollars": 175 },]; var pieSeries
+    = chart.series.push(new am4charts.PieSeries()); pieSeries.dataFields.value =
+    "dollars"; pieSeries.dataFields.category = "category";
+    pieSeries.slices.template.stroke = am4core.color("#fff");
+    pieSeries.slices.template.strokeWidth = 2;
+    pieSeries.slices.template.strokeOpacity = 1;
+    pieSeries.hiddenState.properties.opacity = 1;
+    pieSeries.hiddenState.properties.endAngle = -90;
+    pieSeries.hiddenState.properties.startAngle = -90; }); // end
+    am4core.ready()
   </script>
 
 </div>
