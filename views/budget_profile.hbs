@@ -152,7 +152,7 @@
                 {{! <p class="mb-0">Total</p> }}
               </div>
               <div class="align-self-center">
-                <i class="fas fa-money text-success fa-3x"></i>
+                {{! <i class="fas fa-money text-success fa-3x"></i> }}
               </div>
             </div>
             <div class="px-md-1">
@@ -167,7 +167,7 @@
                 ></div>
               </div>
 
-              <div id="chartdiv"></div>
+              {{! <div id="chartdiv"></div> }}
             </div>
           </div>
         </div>
@@ -358,6 +358,30 @@
         </div>
       </div>
     </div>
+
+    <h4 style="text-align:center">Budget Visualizer</h4>
+    {{! TOTAL }}
+    <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between px-md-1">
+            <div>
+              {{! <h3 class="text-success">70% of Total Budget Spent</h3>
+              <p class="mb-0">Target Budget: $2940</p>
+              <p class="mb-0">$882 remaining</p> }}
+              {{! <p class="mb-0">Total</p> }}
+            </div>
+            <div class="align-self-center">
+              {{! <i class="fas fa-money text-success fa-3x"></i> }}
+            </div>
+          </div>
+          <div class="px-md-1">
+
+            <div id="chartdiv"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>Instructions: </footer>
@@ -519,7 +543,7 @@
 
   <!-- Styles -->
   <style>
-    #chartdiv { width: 100%; height: 150px; }
+    #chartdiv { width: 100%; height: 150px;}
 
   </style>
 
@@ -533,8 +557,9 @@
     "category": "Shopping", "dollars": 100 }, { "category": "Payments",
     "dollars": 210 }, { "category": "Travel", "dollars": 175 },]; var pieSeries
     = chart.series.push(new am4charts.PieSeries()); pieSeries.dataFields.value =
-    "dollars"; pieSeries.dataFields.category = "category";
-    pieSeries.slices.template.stroke = am4core.color("#fff");
+    "dollars"; pieSeries.labels.template.disabled = false;
+    pieSeries.ticks.template.disabled = false; pieSeries.dataFields.category =
+    "category"; pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
     pieSeries.hiddenState.properties.opacity = 1;
