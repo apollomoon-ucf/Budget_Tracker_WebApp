@@ -1,19 +1,3 @@
-{{! <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
-></script>
-<script>
-  (async ($) => { const fetchLinkToken = async () => { const response = await
-  fetch("/create-link-token"); const { linkToken } = await response.json();
-  return linkToken; }; const handler = Plaid.create({ token: await
-  fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
-  console.log(publicToken); console.log(metadata); await
-  fetch("/token-exchange", { method: "POST", body: JSON.stringify({ publicToken
-  }), headers: { "Content-Type": "application/json", }, }); }, onExit: async
-  (error, metadata) => { console.log(error); console.log(metadata); }, onEvent:
-  async (metadata) => { console.log(metadata); }, });
-  $("#plaid-button").on("click", function (e) { handler.open(); }); })(jQuery);
-</script> }}
 
 <title>Budget Tracker - Home</title>
 
@@ -56,14 +40,14 @@
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link
+    {{!-- <link
       href="assets/vendor/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
-    />
-    <link
+    /> --}}
+    {{!-- <link
       href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
       rel="stylesheet"
-    />
+    /> --}}
     <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
     <link
       href="assets/vendor/glightbox/css/glightbox.min.css"
@@ -133,7 +117,7 @@
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    {{!-- <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
     <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
@@ -145,49 +129,3 @@
   </body>
 
 </html>
-
-{{! <p>Budget Profile, Investment Profile, and Transaction History will be available
-  upon successful connection to your bank account.</p> }}
-
-{{!-- <div class="w3-row-padding w3-margin-bottom">
-  <div class="w3-quarter">
-    <div class="w3-container w3-red w3-padding-16">
-      <div class="w3-left"><i class="fa fa-money w3-xlarge"></i></div>
-      <div class="w3-right">
-        {{! <h3>52</h3> }}
-      </div>
-      <a href="/budget_profile" class="w3-clear"></a>
-      <h4>Budget Profile</h4>
-    </div>
-  </div>
-  <div class="w3-quarter">
-    <div class="w3-container w3-teal w3-padding-16">
-      <div class="w3-left"><i class="fa fa-history w3-xlarge"></i></div>
-      <div class="w3-right">
-        {{! <h3>23</h3> }}
-      </div>
-      <a href="/transaction_history" class="w3-clear"></a>
-      <h4>Transaction History</h4>
-    </div>
-  </div>
-  <div class="w3-quarter">
-    <div class="w3-container w3-blue w3-padding-16">
-      <div class="w3-left"><i class="fa fa-bank w3-xlarge"></i></div>
-      <div class="w3-right">
-        {{! <h3>99</h3> }}
-      </div>
-      <a href="/investment_profile" class="w3-clear"></a>
-      <h4>Investment Profile</h4>
-    </div>
-  </div>
-  <div class="w3-quarter">
-    <div class="w3-container w3-orange w3-text-white w3-padding-16">
-      <div class="w3-left"><i class="fa fa-cog w3-xlarge"></i></div>
-      <div class="w3-right">
-        {{! <h3>50</h3> }}
-      </div>
-      <a href="/account_settings" class="w3-clear"></a>
-      <h4>Account Settings</h4>
-    </div>
-  </div>
-</div> --}}
