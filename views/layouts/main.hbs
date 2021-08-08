@@ -1,21 +1,3 @@
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
-></script>
-<script>
-  (async ($) => { const fetchLinkToken = async () => { const response = await
-  fetch("/create-link-token"); const { linkToken } = await response.json();
-  return linkToken; }; const handler = Plaid.create({ token: await
-  fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
-  console.log(publicToken); console.log(metadata); setTimeout(function(){
-  window.location.href='budget_profile'; }, 1000); await
-  fetch("/token-exchange", { method: "POST", body: JSON.stringify({ publicToken
-  }), headers: { "Content-Type": "application/json", }, }); }, onExit: async
-  (error, metadata) => { console.log(error); console.log(metadata); }, onEvent:
-  async (metadata) => { console.log(metadata); }, });
-  $("#plaid-button").on("click", function (e) { handler.open(); if(yes === 1) {
-  window.location.href='budget_profile'; } }); })(jQuery);
-</script>
 <!-- <h1>Link Bank Account with Plaid</h1>
 <button id="plaid-button">Connect Bank</button> -->
 
@@ -176,16 +158,26 @@
     bar.draw(data, options); }
   </script>
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-    crossorigin="anonymous"
-  />
   <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-    crossorigin="anonymous"
+    src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
   ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
+  ></script>
+  <script>
+    (async ($) => { const fetchLinkToken = async () => { const response = await
+    fetch("/create-link-token"); const { linkToken } = await response.json();
+    return linkToken; }; const handler = Plaid.create({ token: await
+    fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
+    console.log(publicToken); console.log(metadata); setTimeout(function(){
+    window.location.href='budget_profile'; }, 1000); await
+    fetch("/token-exchange", { method: "POST", body: JSON.stringify({
+    publicToken }), headers: { "Content-Type": "application/json", }, }); },
+    onExit: async (error, metadata) => { console.log(error);
+    console.log(metadata); }, onEvent: async (metadata) => {
+    console.log(metadata); }, }); $("#plaid-button").on("click", function (e) {
+    handler.open(); if(yes === 1) { window.location.href='budget_profile'; } });
+    })(jQuery);
+  </script>
 
 </html>
