@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 // use json when using the body parser
 app.use(bodyParser.json());
 app.use(express.urlencoded());
+app.use(express.static(__dirname + "/"));
 
 const PORT = process.env.PORT || 3000;
 const exphbs = require("express-handlebars");
@@ -46,6 +47,8 @@ var payments_desired = 0.0;
 var payments_actual = 0.0;
 var travel_desired = 0.0;
 var travel_actual = 0.0;
+var transportation_desired = 0.0;
+var transportation_actual = 0.0;
 var over_under = "Budget Balanced";
 var over_under_by = 0.0;
 
@@ -197,6 +200,9 @@ app.post("/budget_profile", function (req, res) {
   travel_desired = req.body.desiredTravel
     ? req.body.desiredTravel
     : travel_desired;
+  transportation_desired = req.body.desiredTransportation
+    ? req.body.desiredTransportation
+    : travel_desired;
   payments_desired = req.body.desiredPayments
     ? req.body.desiredPayments
     : payments_desired;
@@ -206,6 +212,7 @@ app.post("/budget_profile", function (req, res) {
     +entertainment_desired +
     +shopping_desired +
     +travel_desired +
+    +transportation_desired +
     +payments_desired;
 
   res.render("budget_profile", {
@@ -222,6 +229,8 @@ app.post("/budget_profile", function (req, res) {
     actual_payments: formatter.format(payments_actual),
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
+    desired_transportation: formatter.format(transportation_desired),
+    actual_transportation: formatter.format(transportation_actual),
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "
@@ -235,7 +244,7 @@ app.post("/budget_profile", function (req, res) {
 
 // create route that will send the index.html and serve it
 app.get("/", (req, res) => {
-  // res.sendFile(path.join(__dirname, "/index.html"));
+  // res.sendFile(path.join(__dirname, "/home"));
   res.render("home");
   transactionResponse = {};
   investmentResponse = {};
@@ -290,6 +299,9 @@ app.get("/budget_profile", function (req, res) {
   travel_desired = req.body.desiredTravel
     ? req.body.desiredTravel
     : travel_desired;
+  transportation_desired = req.body.desiredTransportation
+    ? req.body.desiredTransportation
+    : travel_desired;
   payments_desired = req.body.desiredPayments
     ? req.body.desiredPayments
     : payments_desired;
@@ -299,6 +311,7 @@ app.get("/budget_profile", function (req, res) {
     +entertainment_desired +
     +shopping_desired +
     +travel_desired +
+    +transportation_desired +
     +payments_desired;
 
   res.render("budget_profile", {
@@ -315,6 +328,8 @@ app.get("/budget_profile", function (req, res) {
     actual_payments: formatter.format(payments_actual),
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
+    desired_transportation: formatter.format(transportation_desired),
+    actual_transportation: formatter.format(transportation_actual),
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "
@@ -348,6 +363,11 @@ app.get("/account_settings", function (req, res) {
     // investment: investmentResponse,
     // investment: JSON.stringify(investmentResponse.investment_transactions),
   });
+});
+
+// new_design
+app.get("/new_design", function (req, res) {
+  res.sendFile(path.join(__dirname, "/new_design.html"));
 });
 
 // user profile

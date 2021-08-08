@@ -17,32 +17,137 @@
 
 <title>Budget Tracker - Home</title>
 
-<div class="w3-container">
+<head>
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+    rel="stylesheet"
+  />
+</head>
+
+<html lang="en">
 
   <head>
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      rel="stylesheet"
-    />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
       rel="stylesheet"
     />
-    <!-- MDB -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <h1>Budget Tracker</h1>
-  <h3>Securely Connect Your Bank Account With Plaid To Get Started</h3>
 
-  <button id="plaid-button">Start Budgeting</button>
-  {{! <p>Budget Profile, Investment Profile, and Transaction History will be available
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+  </head>
+
+  <body>
+
+    <section id="hero">
+
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
+            data-aos="fade-up"
+          >
+            <div>
+              <h1>Budget Tracker</h1>
+              <h2>Welcome to the simple and easy budget tracking app, securely
+                link your bank account with Plaid to get started</h2>
+              <button id="plaid-button" href="/budget_profile" class="btn-get-started scrollto">Start
+                Budgeting</button>
+            </div>
+          </div>
+          <div
+            class="col-lg-6 order-1 order-lg-2 hero-img"
+            data-aos="fade-left"
+          >
+            <img src="assets/img/hero-img.png" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <main id="main">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+
+
+   <div class="container">
+      <h6><strong>Note: Web app currently in development.</strong><h6/>
+      <footer>For testing, use the following credentials for Chase Bank.</footer>
+      <footer> Username: user_good</footer> 
+      <footer>Password: pass_good</footer>
+  </div>
+
+
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+    ><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+  </body>
+
+</html>
+
+{{! <p>Budget Profile, Investment Profile, and Transaction History will be available
   upon successful connection to your bank account.</p> }}
-</div>
 
 {{!-- <div class="w3-row-padding w3-margin-bottom">
   <div class="w3-quarter">
