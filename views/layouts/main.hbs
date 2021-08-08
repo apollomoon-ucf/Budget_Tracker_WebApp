@@ -1,248 +1,22 @@
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-<script>
-  (async ($) => {
-    const fetchLinkToken = async () => {
-      const response = await fetch("/create-link-token");
-      const { linkToken } = await response.json();
-      return linkToken;
-    };
-    const handler = Plaid.create({
-      token: await fetchLinkToken(),
-      onSuccess: async (publicToken, metadata) => {
-        console.log(publicToken);
-        console.log(metadata);
-        setTimeout(function(){
-        window.location.href='budget_profile';
-        }, 1000);
-        await fetch("/token-exchange", {
-          method: "POST",
-          body: JSON.stringify({ publicToken }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      },
-      onExit: async (error, metadata) => {
-        console.log(error);
-        console.log(metadata);
-      },
-      onEvent: async (metadata) => {
-        console.log(metadata);
-        
-      },
-    });
-    $("#plaid-button").on("click", function (e) {
-      handler.open();
-      if(yes === 1) {
-        window.location.href='budget_profile';
-      }
-      
-    });
-  })(jQuery);
-</script>
-
-
-
 <!-- <h1>Link Bank Account with Plaid</h1>
 <button id="plaid-button">Connect Bank</button> -->
 
-
-<!DOCTYPE html>
 <html>
-{{!-- <title>Finance App</title> --}}
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-</style> 
-
-<style>
-#bardiv {
-  width: 100%;
-  height: 500px;
-}
-</style>
-
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-// Themes begin
-am4core.useTheme(am4themes_dataviz);
-am4core.useTheme(am4themes_animated);
-// Themes end
-// Create chart instance
-var chart = am4core.create("bardiv", am4charts.XYChart);
-// Add data
-chart.data = [{
-  "date": "2013-01-16",
-  "market1": 71,
-  "market2": 75,
-  "sales1": 5,
-  "sales2": 8
-}, {
-  "date": "2013-01-17",
-  "market1": 74,
-  "market2": 78,
-  "sales1": 4,
-  "sales2": 6
-}, {
-  "date": "2013-01-18",
-  "market1": 78,
-  "market2": 88,
-  "sales1": 5,
-  "sales2": 2
-}, {
-  "date": "2013-01-19",
-  "market1": 85,
-  "market2": 89,
-  "sales1": 8,
-  "sales2": 9
-}, {
-  "date": "2013-01-20",
-  "market1": 82,
-  "market2": 89,
-  "sales1": 9,
-  "sales2": 6
-}, {
-  "date": "2013-01-21",
-  "market1": 83,
-  "market2": 85,
-  "sales1": 3,
-  "sales2": 5
-}, {
-  "date": "2013-01-22",
-  "market1": 88,
-  "market2": 92,
-  "sales1": 5,
-  "sales2": 7
-}, {
-  "date": "2013-01-23",
-  "market1": 85,
-  "market2": 90,
-  "sales1": 7,
-  "sales2": 6
-}, {
-  "date": "2013-01-24",
-  "market1": 85,
-  "market2": 91,
-  "sales1": 9,
-  "sales2": 5
-}, {
-  "date": "2013-01-25",
-  "market1": 80,
-  "market2": 84,
-  "sales1": 5,
-  "sales2": 8
-}, {
-  "date": "2013-01-26",
-  "market1": 87,
-  "market2": 92,
-  "sales1": 4,
-  "sales2": 8
-}, {
-  "date": "2013-01-27",
-  "market1": 84,
-  "market2": 87,
-  "sales1": 3,
-  "sales2": 4
-}, {
-  "date": "2013-01-28",
-  "market1": 83,
-  "market2": 88,
-  "sales1": 5,
-  "sales2": 7
-}, {
-  "date": "2013-01-29",
-  "market1": 84,
-  "market2": 87,
-  "sales1": 5,
-  "sales2": 8
-}, {
-  "date": "2013-01-30",
-  "market1": 81,
-  "market2": 85,
-  "sales1": 4,
-  "sales2": 7
-}];
-// Create axes
-var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-//dateAxis.renderer.grid.template.location = 0;
-//dateAxis.renderer.minGridDistance = 30;
-var valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis1.title.text = "Sales";
-var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis2.title.text = "Market Days";
-valueAxis2.renderer.opposite = true;
-valueAxis2.renderer.grid.template.disabled = true;
-// Create series
-var series1 = chart.series.push(new am4charts.ColumnSeries());
-series1.dataFields.valueY = "sales1";
-series1.dataFields.dateX = "date";
-series1.yAxis = valueAxis1;
-series1.name = "Target Sales";
-series1.tooltipText = "{name}\n[bold font-size: 20]${valueY}M[/]";
-series1.fill = chart.colors.getIndex(0);
-series1.strokeWidth = 0;
-series1.clustered = false;
-series1.columns.template.width = am4core.percent(40);
-var series2 = chart.series.push(new am4charts.ColumnSeries());
-series2.dataFields.valueY = "sales2";
-series2.dataFields.dateX = "date";
-series2.yAxis = valueAxis1;
-series2.name = "Actual Sales";
-series2.tooltipText = "{name}\n[bold font-size: 20]${valueY}M[/]";
-series2.fill = chart.colors.getIndex(0).lighten(0.5);
-series2.strokeWidth = 0;
-series2.clustered = false;
-series2.toBack();
-var series3 = chart.series.push(new am4charts.LineSeries());
-series3.dataFields.valueY = "market1";
-series3.dataFields.dateX = "date";
-series3.name = "Market Days";
-series3.strokeWidth = 2;
-series3.tensionX = 0.7;
-series3.yAxis = valueAxis2;
-series3.tooltipText = "{name}\n[bold font-size: 20]{valueY}[/]";
-var bullet3 = series3.bullets.push(new am4charts.CircleBullet());
-bullet3.circle.radius = 3;
-bullet3.circle.strokeWidth = 2;
-bullet3.circle.fill = am4core.color("#fff");
-var series4 = chart.series.push(new am4charts.LineSeries());
-series4.dataFields.valueY = "market2";
-series4.dataFields.dateX = "date";
-series4.name = "Market Days ALL";
-series4.strokeWidth = 2;
-series4.tensionX = 0.7;
-series4.yAxis = valueAxis2;
-series4.tooltipText = "{name}\n[bold font-size: 20]{valueY}[/]";
-series4.stroke = chart.colors.getIndex(0).lighten(0.5);
-series4.strokeDasharray = "3,3";
-var bullet4 = series4.bullets.push(new am4charts.CircleBullet());
-bullet4.circle.radius = 3;
-bullet4.circle.strokeWidth = 2;
-bullet4.circle.fill = am4core.color("#fff");
-// Add cursor
-chart.cursor = new am4charts.XYCursor();
-// Add legend
-chart.legend = new am4charts.Legend();
-chart.legend.position = "top";
-// Add scrollbar
-chart.scrollbarX = new am4charts.XYChartScrollbar();
-chart.scrollbarX.series.push(series1);
-chart.scrollbarX.series.push(series3);
-chart.scrollbarX.parent = chart.bottomAxesContainer;
-}); // end am4core.ready()
-</script>
+  {{! <title>Finance App</title> }}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Raleway"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <style>
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+  </style>
 
   <!-- Resources -->
   <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
@@ -250,89 +24,91 @@ chart.scrollbarX.parent = chart.bottomAxesContainer;
   <script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
+  <body class="w3-light-grey">
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Budget Tracker</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          </ul>
+
+          <a class="nav-link" href="/home">Home</a>
+          <a class="nav-link" href="/budget_profile">Budget Profile</a>
+          <a class="nav-link" href="/profile">Account</a>
+        </div>
+      </div>
+    </nav>
+    {{! <body class="w3-light-grey"> }}
+    <!-- Top container -->
+
+    <style type="text/css">
+      .w3-dark-grey { color:#fff!important; background-color:
+      #1010109c!important; }
+    </style>
+
+    {{! <div class="w3-bar w3-top w3-black w3-large" style="z-index:4;height:40px">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <button onclick="window.location.href='/home'" class="w3-bar-item w3-button bg-black text-white w3-left">Budget Tracker</button>
+  <a href="/account_settings" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-cog fa-fw"></i>  Account Settings</a>
+  <a href="/profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-user fa-fw"></i>  User Profile</a>
+  <a href="/investment_profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-bank fa-fw"></i>  Investment Profile</a>
+  <a href="/transaction_history" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-history fa-fw"></i>  Transaction History</a>
+  <a href="/budget_profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-money fa-fw"></i>  Budget Profile</a>
+  <a href="/home" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-home fa-fw"></i>  Home</a>
+  
+</div> }}
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div
+      class="w3-overlay w3-hide-large w3-animate-opacity"
+      onclick="w3_close()"
+      style="cursor:pointer"
+      title="close side menu"
+      id="myOverlay"
+    ></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div
+      class="w3-main"
+      style="margin-left:0%;margin-right:0%;margin-top:50px;"
+    >
+      {{! <div class="w3-main" style="margin-left:225px;margin-top:70px;"></div> }}
+
+      <div class="w3-main">
+        {{! <h1>Link Bank Account with Plaid!!!!!</h1>
+    <button id="plaid-button">Connect Bank</button> }}
+        {{! <h5>Budget Details</h5> }}
+
+        {{{body}}}
+
+      </div>
+      {{! <hr>
+
+  <hr> }}
+
+      {{! <div class="w3-row">
 
 
-<body class="w3-light-grey">
-{{!-- <body class="w3-light-grey"> --}}
-<!-- Top container -->
+    </div> }}
+      <br />
 
-{{!-- <style type="text/css">
-.w3-dark-grey {
-    color:#fff!important; background-color:	#1010109c!important;
-}
-</style> --}}
-
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:3;height:7%">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars py-3"></i>  Menu</button>
-  <button onclick="window.location.href='/home'" class="w3-bar-item w3-button bg-black text-white w3-left py-4">Budget Tracker</button>
-</div>
-
-
-
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:4;width:auto + 9999999px;" id="mySidebar"><br>
-  {{!-- <div class="w3-container w3-row">
-    <div class="w3-col s4">
-      <img src="data:image/jpeg;base64,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" class="w3-circle w3-margin-right" style="width:75px">
     </div>
-    <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong>Username!</strong></span><br>
-      <a href="/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i></a>
-      <a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-      <a href="/account_settings" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
-    </div>
-  </div> --}}
-  <div class="w3-container">
-    <h5>Menu</h5>
-  </div> 
 
-  <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="/home" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Home</a>
-    <a href="/budget_profile" class="w3-bar-item w3-button w3-padding"><i class="fa fa-money fa-fw"></i>  Budget Profile</a>
-    <a href="/transaction_history" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Transaction History</a>
-    <a href="/investment_profile" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Investment Profile</a>
-    <a href="/profile" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw"></i>  User Profile</a>
-    <a href="/account_settings" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Account Settings</a><br><br>
-  </div>
-</nav>
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:225px;margin-top:70px;">
-
-
-
-
-
-
-
-
-  <div class="w3-main">
-    {{!-- <h1>Link Bank Account with Plaid!!!!!</h1>
-    <button id="plaid-button">Connect Bank</button> --}}
-    {{!-- <h5>Budget Details</h5> --}}
-    
-    {{{body}}}
-
-  </div>
-  {{!-- <hr>
-  <hr> --}}
-
-
-    {{!-- <div class="w3-row">
-    </div> --}}
-      <br>
-
-  </div>
-
-
-  <!-- Footer -->
-  {{!-- <footer class="w3-container w3-padding-16 w3-light-grey">
+    <!-- Footer -->
+    {{! <footer class="w3-container w3-padding-16 w3-light-grey">
     <h4>FOOTER</h4>
       <div class="w3-container w3-dark-grey">
     <div class="w3-row">
@@ -348,67 +124,59 @@ chart.scrollbarX.parent = chart.bottomAxesContainer;
       </div>
     </div>
   </div>
-  </footer> --}}
-
+  </footer> }}
+  </body>
   <!-- End page content -->
-</div>
 
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
-// Close the sidebar with the close button
-function w3_close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
-}
-</script>
+  <script>
+    var mySidebar = document.getElementById("mySidebar"); var overlayBg =
+    document.getElementById("myOverlay"); function w3_open() { if
+    (mySidebar.style.display === 'block') { mySidebar.style.display = 'none';
+    overlayBg.style.display = "none"; } else { mySidebar.style.display =
+    'block'; overlayBg.style.display = "block"; } } function w3_close() {
+    mySidebar.style.display = "none"; overlayBg.style.display = "none"; }
+  </script>
 
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Budget');
-        data.addColumn('number', 'Dollars');
-        data.addRows([
-          ['Food', 3],
-          ['Entertainment', 1],
-          ['Shopping', 1],
-          ['Payments', 1],
-          ['Travel', 2]
-        ]);
-        // Set chart options
-        var options = {'title':'Budget Profile',
-                       'width':400,
-                       'height':300};
-        // Instantiate and draw our chart, passing in some options.
-        var pie = new google.visualization.PieChart(document.getElementById('pie_div'));
-        pie.draw(data, options);
-                // Instantiate and draw our chart, passing in some options.
-        var bar = new google.visualization.BarChart(document.getElementById('bar_div'));
-        bar.draw(data, options);
-      }
-    </script>
+  <!--Load the AJAX API-->
+  <script
+    type="text/javascript"
+    src="https://www.gstatic.com/charts/loader.js"
+  ></script>
+  <script type="text/javascript">
 
-</body>
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart); function drawChart() { var data
+    = new google.visualization.DataTable(); data.addColumn('string', 'Budget');
+    data.addColumn('number', 'Dollars'); data.addRows([ ['Food', 3],
+    ['Entertainment', 1], ['Shopping', 1], ['Payments', 1], ['Travel', 2] ]);
+    var options = {'title':'Budget Profile', 'width':400, 'height':300}; var pie
+    = new google.visualization.PieChart(document.getElementById('pie_div'));
+    pie.draw(data, options); var bar = new
+    google.visualization.BarChart(document.getElementById('bar_div'));
+    bar.draw(data, options); }
+  </script>
+
+  <script
+    src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
+  ></script>
+  <script>
+    (async ($) => { const fetchLinkToken = async () => { const response = await
+    fetch("/create-link-token"); const { linkToken } = await response.json();
+    return linkToken; }; const handler = Plaid.create({ token: await
+    fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
+    console.log(publicToken); console.log(metadata); setTimeout(function(){
+    window.location.href='budget_profile'; }, 1000); await
+    fetch("/token-exchange", { method: "POST", body: JSON.stringify({
+    publicToken }), headers: { "Content-Type": "application/json", }, }); },
+    onExit: async (error, metadata) => { console.log(error);
+    console.log(metadata); }, onEvent: async (metadata) => {
+    console.log(metadata); }, }); $("#plaid-button").on("click", function (e) {
+    handler.open(); if(yes === 1) { window.location.href='budget_profile'; } });
+    })(jQuery);
+  </script>
+
 </html>

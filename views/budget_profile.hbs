@@ -724,11 +724,11 @@
         <script type="text/javascript">
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Day', 'Desired
-          Budget', 'Spending'], [5, 2940, 25], [15, 2940, 275], [25, 2940, 2058]
-          ]); var options = { title: '', curveType: 'function', legend: {
-          position: 'bottom' } }; var chart = new
-          google.visualization.LineChart(document.getElementById('total'));
+          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
+          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
+          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
+          curveType: 'function', legend: { position: 'bottom' } }; var chart =
+          new google.visualization.LineChart(document.getElementById('food'));
           chart.draw(data, options); }
         </script>
         <script type="text/javascript">
@@ -829,7 +829,8 @@
 
       </div>
 
-    </main><!-- End #main -->
+    </main>
+    <!-- End #main -->
 
     <a
       href="#"
