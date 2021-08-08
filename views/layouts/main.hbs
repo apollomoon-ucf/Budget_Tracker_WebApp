@@ -29,23 +29,44 @@
     {{! <body class="w3-light-grey"> }}
     <!-- Top container -->
 
-    {{! <style type="text/css">
-.w3-dark-grey {
-    color:#fff!important; background-color:	#1010109c!important;
-}
-</style> }}
+    <style type="text/css">
+      .w3-dark-grey { color:#fff!important; background-color:
+      #1010109c!important; }
+    </style>
 
-    {{! <div class="w3-bar w3-top w3-black w3-large" style="z-index:4;height:40px">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <button onclick="window.location.href='/home'" class="w3-bar-item w3-button bg-black text-white w3-left">Budget Tracker</button>
-  <a href="/account_settings" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-cog fa-fw"></i>  Account Settings</a>
-  <a href="/profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-user fa-fw"></i>  User Profile</a>
-  <a href="/investment_profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-bank fa-fw"></i>  Investment Profile</a>
-  <a href="/transaction_history" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-history fa-fw"></i>  Transaction History</a>
-  <a href="/budget_profile" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-money fa-fw"></i>  Budget Profile</a>
-  <a href="/home" class="w3-bar-item w3-button w3-padding w3-right"><i class="fa fa-home fa-fw"></i>  Home</a>
-  
-</div> }}
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4;height:40px">
+      <button
+        class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
+        onclick="w3_open();"
+      ><i class="fa fa-bars"></i>  Menu</button>
+      <button
+        onclick="window.location.href='/home'"
+        class="w3-bar-item w3-button bg-black text-white w3-left"
+      >Budget Tracker</button>
+      <a
+        href="/account_settings"
+        class="w3-bar-item w3-button w3-padding w3-right"
+      ><i class="fa fa-cog fa-fw"></i>  Account Settings</a>
+      <a href="/profile" class="w3-bar-item w3-button w3-padding w3-right"><i
+          class="fa fa-user fa-fw"
+        ></i>  User Profile</a>
+      <a
+        href="/investment_profile"
+        class="w3-bar-item w3-button w3-padding w3-right"
+      ><i class="fa fa-bank fa-fw"></i>  Investment Profile</a>
+      <a
+        href="/transaction_history"
+        class="w3-bar-item w3-button w3-padding w3-right"
+      ><i class="fa fa-history fa-fw"></i>  Transaction History</a>
+      <a
+        href="/budget_profile"
+        class="w3-bar-item w3-button w3-padding w3-right"
+      ><i class="fa fa-money fa-fw"></i>  Budget Profile</a>
+      <a href="/home" class="w3-bar-item w3-button w3-padding w3-right"><i
+          class="fa fa-home fa-fw"
+        ></i>  Home</a>
+
+    </div>
 
     <!-- Overlay effect when opening sidebar on small screens -->
     <div
@@ -132,18 +153,6 @@
     google.visualization.BarChart(document.getElementById('bar_div'));
     bar.draw(data, options); }
   </script>
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-    crossorigin="anonymous"
-  />
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-    crossorigin="anonymous"
-  ></script>
 
   <script
     src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
