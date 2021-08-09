@@ -109,26 +109,6 @@
     mySidebar.style.display = "none"; overlayBg.style.display = "none"; }
   </script>
 
-  <!--Load the AJAX API-->
-  <script
-    type="text/javascript"
-    src="https://www.gstatic.com/charts/loader.js"
-  ></script>
-  <script type="text/javascript">
-
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart); function drawChart() { var data
-    = new google.visualization.DataTable(); data.addColumn('string', 'Budget');
-    data.addColumn('number', 'Dollars'); data.addRows([ ['Food', 3],
-    ['Entertainment', 1], ['Shopping', 1], ['Payments', 1], ['Travel', 2] ]);
-    var options = {'title':'Budget Profile', 'width':400, 'height':300}; var pie
-    = new google.visualization.PieChart(document.getElementById('pie_div'));
-    pie.draw(data, options); var bar = new
-    google.visualization.BarChart(document.getElementById('bar_div'));
-    bar.draw(data, options); }
-  </script>
-
   <script
     src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
   ></script>

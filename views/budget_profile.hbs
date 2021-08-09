@@ -1,769 +1,663 @@
-<html lang="en">
+{{! <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
+></script>
+<script>
+  (async ($) => { const fetchLinkToken = async () => { const response = await
+  fetch("/create-link-token"); const { linkToken } = await response.json();
+  return linkToken; }; const handler = Plaid.create({ token: await
+  fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
+  console.log(publicToken); console.log(metadata); await
+  fetch("/token-exchange", { method: "POST", body: JSON.stringify({ publicToken
+  }), headers: { "Content-Type": "application/json", }, }); }, onExit: async
+  (error, metadata) => { console.log(error); console.log(metadata); }, onEvent:
+  async (metadata) => { console.log(metadata); }, });
+  $("#plaid-button").on("click", function (e) { handler.open(); }); })(jQuery);
+</script> }}
 
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<title>Budget Tracker - Home</title>
 
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+<head>
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+    rel="stylesheet"
+  />
+</head>
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon" />
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet"
+  />
 
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
-      rel="stylesheet"
-    />
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-  </head>
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet" />
 
-  <body>
-    <nav
-      class="navbar fixed-top navbar-expand-lg navbar-light bg-light"
-      style="height: 42px;"
+</head>
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home"><strong>Budget </strong>
+      Tracker</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/home"><strong>Budget </strong>
-          Tracker</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          </ul>
+      </ul>
 
-          <a class="nav-link" href="/transaction_history">Transactions</a>
-          <a class="nav-link" href="/investment_profile">Investments</a>
-          <a class="nav-link" href="/profile">Account</a>
-        </div>
-      </div>
-    </nav>
-    <main id="main">
-
-      <!-- ======= Breadcrumbs ======= -->
-      {{! <section id="breadcrumbs" class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="/home">Home</a></li>
-            <li>Budget Profile</li>
-          </ol>
-          <h2>Budget Profile</h2>
-        </div>
-      </section><!-- End Breadcrumbs --> }}
-
-      <title>Budget Tracker - Budget Profile</title>
-
-      <div>
-
-        {{! <h5>Budget Profile</h5> }}
-
-        {{! <div class="container" style="display: flex; height: 100px;">
-    <div style="width: 50%;">
-      <div id="bar_div"></div>
+      <a class="nav-link" href="/transaction_history">Transactions</a>
+      <a class="nav-link" href="/investment_profile">Investments</a>
+      <a class="nav-link" href="/profile">Account</a>
     </div>
-    <div style="flex-grow: 1;">
-      <div id="pie_div"></div>
-    </div>
-  </div> }}
+  </div>
+</nav>
 
-        {{! <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> }}
+<section>
 
-        {{! BEGIN MY OG TABLE }}
-        {{!-- <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <th style="text-align:left">Balance (desired):</th>
-      <th style="text-align:left">Balance (actual):</th>
-    </tr>
-    <tr>
-      <th style="text-align:left">
-        <form method="POST">
-          <input
-            type="text"
-            placeholder={{desired_balance}}
-            required
-            name="desiredBalance"
-          />
-        </form>
-      </th>
-      <th style="text-align:left">{{actual_balance}}</th>
-    </tr>
-  </table><br />
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <th style="text-align:left">Food (desired):</th>
-      <th style="text-align:left">Food (actual):</th>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <input type="numbers" id="desiredBalance" name="desiredBalance" />
-        </form>
-      </td>
-      <td>{{actual_food}}</td>
-    </tr>
-  </table><br />
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <td>Entertainment (desired):</td>
-      <td>Entertainment (actual):</td>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <input type="numbers" id="desiredBalance" name="desiredBalance" />
-        </form>
-      </td>
-      <td>{{actual_entertainment}}</td>
-    </tr>
-  </table><br />
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <td>Shopping (desired):</td>
-      <td>Shopping (actual):</td>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <input type="numbers" id="desiredBalance" name="desiredBalance" />
-        </form>
-      </td>
-      <td>{{actual_shopping}}</td>
-    </tr>
-  </table><br />
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <td>Payments (desired):</td>
-      <td>Payments (actual):</td>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <input type="numbers" id="desiredBalance" name="desiredBalance" />
-        </form>
-      </td>
-      <td>{{actual_payments}}</td>
-    </tr>
-  </table><br />
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <tr>
-      <td>Travel (desired):</td>
-      <td>Travel (actual):</td>
-    </tr>
-    <tr>
-      <td>
-        <form>
-          <input type="numbers" id="desiredBalance" name="desiredBalance" />
-        </form>
-      </td>
-      <td>{{actual_travel}}</td>
-    </tr>
-  </table><br /> --}}
-        {{! END MY OG TABLE }}
-        <br />
+  <div class="container">
+    <div class="row">
+      <div class="justify-content-center" data-aos="fade-up"><div>
+          <div
+            class="row"
+            style="margin-left:0%;margin-right:0%;margin-top:-2px;"
+          >
+            <!-- Sidebar/menu -->
 
-        <div
-          class="row"
-          style="margin-left:0%;margin-right:0%;margin-top:30px;"
-        >
-          <!-- Sidebar/menu -->
-
-          <style>
-            .container .box { width:100%;margin:0%; display:table; } .container
-            .box .box-row { display:table-row; } .container .box .box-cell {
-            display:table-cell; width:85px; height: 0%;padding:0px; } .container
-            .box .box-cell.box1 { background:rgb(240, 240, 240); color:black;
-            text-align:justify; } .container .box .box-cell.box2 {
-            background:rgb(240, 240, 240); text-align:justify } .container .box
-            .box-cell.box3 { background:rgb(240, 240, 240); text-align:justify;
-            }
-          </style>
-          <style>
-            .right { text-align: right; border: 3px solid green; }
-          </style>
-          <div class="container">
-            <div class="box">
-              <div class="box-row">
-                <p></p>
-                <div class="box-cell box1">
-
-                </div>
-                <style>.box{ display: flex; justify-content: right; align-items:
-                  right; }</style>
-                <div class="box">
-                  <h4 style="text-align:center">Username's Budget</h4>
-                </div>
-
-                <div class="box-cell box3">
+            <style>
+              .container .box { width:100%;margin:0%; height:0%;display:table; }
+              .container .box .box-row { display:table-row; height:0%}
+              .container .box .box-cell { display:table-cell; width:85px;
+              height: 0%;padding:0px; } .container .box .box-cell.box1 {
+              background:rgb(240, 240, 240); color:black; text-align:justify; }
+              .container .box .box-cell.box2 { background:rgb(240, 240, 240);
+              text-align:justify } .container .box .box-cell.box3 {
+              background:rgb(240, 240, 240); text-align:justify; }
+            </style>
+            <style>
+              .right { text-align: right; border: 3px solid green; }
+            </style>
+            <div class="container">
+              <div class="box">
+                <div class="box-row">
+                  <p></p>
                   <div class="box-cell box1">
-                    <img
-                      src="data:image/jpeg;base64,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"
-                      class="w3-circle"
-                      style="width:25px"
-                    />
-                    <span><a style="color: black" href="/profile">Log Out</a></span>
 
-                    <br />
-                    <div class="w3-col w3-bar">
+                  </div>
+                  <style>.box{ display: flex; justify-content: right;
+                    align-items: right; } .section-title{padding-bottom: 0px;
+                    margin-bottom: 0px;}
+                  </style>
+                  <div class="section-title box" data-aos="fade-up">
+                    <h2 style="text-align: center;">Username's Budget</h2>
+                  </div>
 
+                  <div class="box-cell box3">
+                    <div class="box-cell box1">
+                      <img
+                        src="data:image/jpeg;base64,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"
+                        class="w3-circle"
+                        style="width:25px"
+                      />
+                      <span><a style="color: black" href="/profile">Log Out</a></span>
+
+                      <br />
+                      <div class="w3-col w3-bar">
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <style>.card { padding-left: 20px; padding-right: 20px; box-shadow:
+              0 0px 10px 0 rgb(147, 145, 148); background-color: rgba(206, 206,
+              206, 0.212)!important; transition: 0.3s;}</style>
+            {{! TOTAL }}
+            <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
+              <hr />
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h3 class="text-success">Budget Overview- August 2021</h3>
+                      <p class="mb-0">Total Budget Goal: $2940</p>
+                      <p class="mb-0">Spent: $2058</p>
+                      <p class="mb-0">Remaining: $882</p>
+                      {{! <p class="mb-0">Total</p> }}
+                    </div>
+                    <div class="align-self-center">
+                      {{! <i class="fas fa-money text-success fa-3x"></i> }}
+                    </div>
+                  </div>
+                  <div class="px-md-1">
+                    <div
+                      class="progress position-relative mt-3 mb-1 rounded"
+                      style="height: 17px"
+                    >
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 70%"
+                        aria-valuenow="70"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      > 70% Spent</div>
+
+                    </div>
+                    <hr />
+                    <div id="chartdiv"></div>
+                    {{! <div id="chartdiv"></div> }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{! FOOD }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-success">Food</h4>
+                      <p class="mb-0">Budget Goal: $500</p>
+                      <p class="mb-0">Spent: $450</p>
+                      <p class="mb-0">Remaining: $50</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-mug-hot text-success fa-3x"></i>
+                    </div>
+                  </div>
+
+                  <div class="px-md-1">
+                    <div
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
+                    >
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 78%; font-size: 10px;"
+                        aria-valuenow="78"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >78%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="food" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
                     </div>
 
                   </div>
+
                 </div>
+
               </div>
             </div>
-          </div>
 
-          <hr />
-          <style>.card { padding-left: 20px; padding-right: 20px; box-shadow: 0
-            0px 10px 0 rgb(147, 145, 148); background-color: rgba(206, 206, 206,
-            0.212)!important; transition: 0.3s;}</style>
-          {{! TOTAL }}
-          <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h3 class="text-success">Budget - August 2021</h3>
-                    <p class="mb-0">Total Budget Goal: $2940</p>
-                    <p class="mb-0">Spent: $2058</p>
-                    <p class="mb-0">Remaining: $882</p>
-                    {{! <p class="mb-0">Total</p> }}
+            {{! TRANSPORTATION }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-danger">Transportation</h4>
+                      <p class="mb-0">Budget Goal: $280</p>
+                      <p class="mb-0">Spent: $250</p>
+                      <p class="mb-0">Remaining: $30</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-car text-danger fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    {{! <i class="fas fa-money text-success fa-3x"></i> }}
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div
-                    class="progress position-relative mt-3 mb-1 rounded"
-                    style="height: 17px"
-                  >
+                  <div class="px-md-1">
                     <div
-                      class="progress-bar bg-success"
-                      role="progressbar"
-                      style="width: 70%"
-                      aria-valuenow="70"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    > 70% Spent</div>
-
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
+                    >
+                      <div
+                        class="progress-bar bg-danger"
+                        role="progressbar"
+                        style="width: 90%; font-size: 10px; color:white"
+                        aria-valuenow="60"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >90%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="transportation" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
+                    </div>
                   </div>
-                  <hr />
-                  <div id="chartdiv"></div>
-                  {{! <div id="chartdiv"></div> }}
                 </div>
               </div>
             </div>
-          </div>
-
-          {{! <br /> }}
-          {{! <h4 style="text-align:center">Categories</h4> }}
-
-          {{! FOOD }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-success">Food</h4>
-                    <p class="mb-0">Budget Goal: $500</p>
-                    <p class="mb-0">Spent: $450</p>
-                    <p class="mb-0">Remaining: $50</p>
+            {{! SHOPPING }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-success">Shopping</h4>
+                      <p class="mb-0">Budget Goal: $250</p>
+                      <p class="mb-0">Spent: $100</p>
+                      <p class="mb-0">Remaining: $150</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-wallet text-success fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-mug-hot text-success fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
+                  <div class="px-md-1">
                     <div
-                      class="progress-bar bg-success"
-                      role="progressbar"
-                      style="width: 78%; font-size: 10px;"
-                      aria-valuenow="78"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >78%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="food" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
                     >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 60%; font-size: 10px;"
+                        aria-valuenow="60"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >60%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="shopping" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          {{! TRANSPORTATION }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-danger">Transportation</h4>
-                    <p class="mb-0">Budget Goal: $280</p>
-                    <p class="mb-0">Spent: $250</p>
-                    <p class="mb-0">Remaining: $30</p>
+            {{! ENTERTAINMENT }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-success">Entertainment</h4>
+                      <p class="mb-0">Budget Goal: $200</p>
+                      <p class="mb-0">Spent: $40</p>
+                      <p class="mb-0">Remaining: $160</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-tv text-success fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-car text-danger fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
+                  <div class="px-md-1">
                     <div
-                      class="progress-bar bg-danger"
-                      role="progressbar"
-                      style="width: 90%; font-size: 10px; color:white"
-                      aria-valuenow="60"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >90%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="transportation" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
                     >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 33%; font-size: 10px; font-color: black"
+                        aria-valuenow="33"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >33%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="entertainment" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          {{! SHOPPING }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-success">Shopping</h4>
-                    <p class="mb-0">Budget Goal: $250</p>
-                    <p class="mb-0">Spent: $100</p>
-                    <p class="mb-0">Remaining: $150</p>
+            {{! PAYMENTS }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-warning">Payments</h4>
+                      <p class="mb-0">Budget Goal: $210</p>
+                      <p class="mb-0">Spent: $150</p>
+                      <p class="mb-0">Remaining: $60</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-bank text-warning fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-wallet text-success fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
+                  <div class="px-md-1">
                     <div
-                      class="progress-bar bg-success"
-                      role="progressbar"
-                      style="width: 60%; font-size: 10px;"
-                      aria-valuenow="60"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >60%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="shopping" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
                     >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
+                      <div
+                        class="progress-bar bg-warning"
+                        role="progressbar"
+                        style="width: 80%; font-size: 10px;"
+                        aria-valuenow="80"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >80%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          {{! ENTERTAINMENT }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-success">Entertainment</h4>
-                    <p class="mb-0">Budget Goal: $200</p>
-                    <p class="mb-0">Spent: $40</p>
-                    <p class="mb-0">Remaining: $160</p>
+
+            {{! Travel }}
+            <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
+              <div class="card text-black bg-light mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <h4 class="text-success">Travel</h4>
+                      <p class="mb-0">Budget Goal: $175</p>
+                      <p class="mb-0">Spent: $10</p>
+                      <p class="mb-0">Remaining: $165</p>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fas fa-plane text-success fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-tv text-success fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
+                  <div class="px-md-1">
                     <div
-                      class="progress-bar bg-success"
-                      role="progressbar"
-                      style="width: 33%; font-size: 10px; font-color: black"
-                      aria-valuenow="33"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >33%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="entertainment" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      class="progress mt-3 mb-1 rounded"
+                      style="height: 13px"
                     >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 20%; font-size: 10px;"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >20%</div>
+                    </div>
+                    <hr />
+                    {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
+                    <p></p>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle btn-light"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        View Transactions
+                      </button>
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li><a class="dropdown-item" href="#">8/05/21 -
+                            McDonald's - $ 14.56</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
+                            fil a - $ 18.92</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">8/01/21 -
+                            Starbucks - $ 8.70</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {{! PAYMENTS }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-warning">Payments</h4>
-                    <p class="mb-0">Budget Goal: $210</p>
-                    <p class="mb-0">Spent: $150</p>
-                    <p class="mb-0">Remaining: $60</p>
-                  </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-bank text-warning fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
-                    <div
-                      class="progress-bar bg-warning"
-                      role="progressbar"
-                      style="width: 80%; font-size: 10px;"
-                      aria-valuenow="80"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >80%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{! Travel }}
-          <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
-            <div class="card text-black bg-light mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <h4 class="text-success">Travel</h4>
-                    <p class="mb-0">Budget Goal: $175</p>
-                    <p class="mb-0">Spent: $10</p>
-                    <p class="mb-0">Remaining: $165</p>
-                  </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-plane text-success fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 13px">
-                    <div
-                      class="progress-bar bg-success"
-                      role="progressbar"
-                      style="width: 20%; font-size: 10px;"
-                      aria-valuenow="20"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >20%</div>
-                  </div>
-                  <hr />
-                  {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
-                  <p></p>
-                  <div class="dropdown">
-                    <button
-                      class="btn btn-secondary btn-sm dropdown-toggle btn-light"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      View Transactions
-                    </button>
-                    <ul
-                      class="dropdown-menu dropdown-menu-dark"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li><a class="dropdown-item" href="#">8/05/21 - McDonald's
-                          - $ 14.56</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/03/21 - Chick fil
-                          a - $ 18.92</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#">8/01/21 - Starbucks
-                          - $ 8.70</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {{!-- <h4 style="text-align:center">Budget Visualizer</h4>
-        {{! TOTAL }}
-        <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
-          <div class="card text-black bg-light mb-3">
-            <div class="card-body">
-              <div class="d-flex justify-content-between px-md-1">
-                <div>
-                  {{! <h3 class="text-success">70% of Total Budget Spent</h3>
-              <p class="mb-0">Target Budget: $2940</p>
-              <p class="mb-0">$882 remaining</p> }}
-                  {{! <p class="mb-0">Total</p> }}
-                </div>
-                <div class="align-self-center">
-                  {{! <i class="fas fa-money text-success fa-3x"></i> }}
-                </div>
-              </div>
-              <div class="px-md-1">
-                <div id="chartdiv"></div>
-              </div>
-            </div>
-          </div>
-        </div> --}}
+          <footer><strong>Instructions: </strong></footer>
+          <footer>Current budget goals were determined using an average of your
+            monthly spending, minus outliers, in each budget category.</footer>
+          <footer>To edit budget goals, please type in desired amount, without
+            commas, for each category below:</footer>
 
-        <footer><strong>Instructions: </strong></footer>
-        <footer>Current budget goals were determined using an average of your
-          monthly spending, minus outliers, in each budget category.</footer>
-        <footer>To edit budget goals, please type in desired amount, without
-          commas, for each category below:</footer>
-        {{! <footer><strong>Note: </strong>Do not use commas when entering large
-          amounts.</footer> }}
+          <br />
+          <style>
+            input[type=text], select { width:75%; padding: 5% 0px; margin:15%;
+            display: inline-block; border: 1px solid #ccc; border-radius: 4px;
+            box-sizing: border-box; } #Submit { visibility: hidden; }
+          </style>
 
-        {{! <div id="chartdiv"></div> }}
+          <form method="POST">
 
-        {{! <br /> }}
-        <br />
-        <style>
-          input[type=text], select { width:75%; padding: 5% 0px; margin:15%;
-          display: inline-block; border: 1px solid #ccc; border-radius: 4px;
-          box-sizing: border-box; } #Submit { visibility: hidden; }
-        </style>
+            <table>
+              <tr>
+                <th style="text-align:center"> </th>
+                <th style="text-align:center">New Goal</th>
+              </tr>
+              <tr>
+                <td style="text-align:center"><strong>Food :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_food}}
+                    name="desiredFood"
+                    id="desiredFood"
+                    style="text-align:center"
+                  /></td>
+              </tr>
 
-        <form method="POST">
-          <table>
-            <tr>
-              <th style="text-align:center">Categories: </th>
-              <th style="text-align:center">Food</th>
-              <th style="text-align:center">Transportation</th>
-              <th style="text-align:center">Shopping</th>
-              <th style="text-align:center">Entertainment</th>
-              <th style="text-align:center">Payments</th>
-              <th style="text-align:center">Travel</th>
-            </tr>
-            <tr>
-              <td style="text-align:center">Desired $: </td>
-              <td style="text-align:center"><input
-                  type="text"
-                  placeholder={{desired_food}}
-                  name="desiredFood"
-                  id="desiredFood"
-                  style="text-align:center"
-                /></td>
-              <td style="text-align:center"><input
-                  type="text"
-                  placeholder={{desired_transportation}}
-                  name="desiredTransportation"
-                  style="text-align:center"
-                /></td>
-              <td style="text-align:center">
-                <input
-                  type="text"
-                  placeholder={{desired_shopping}}
-                  name="desiredShopping"
-                  style="text-align:center"
-                /></td>
-              <td style="text-align:center"><input
-                  type="text"
-                  placeholder={{desired_entertainment}}
-                  name="desiredEntertainment"
-                  style="text-align:center"
-                /></td>
-              <td style="text-align:center"><input
-                  type="text"
-                  placeholder={{desired_payments}}
-                  name="desiredPayments"
-                  style="text-align:center"
-                /></td>
-              <td style="text-align:center"><input
-                  type="text"
-                  placeholder={{desired_travel}}
-                  name="desiredTravel"
-                  style="text-align:center"
-                /></td>
+              <tr>
+                <td style="text-align:center"><strong>Transportation :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_transportation}}
+                    name="desiredTransportation"
+                    id="desiredTransportation"
+                    style="text-align:center"
+                  /></td>
+              </tr>
 
-            </tr>
-            {{!-- <tr>
+              <tr>
+                <td style="text-align:center"><strong>Shopping :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_shopping}}
+                    name="desiredShopping"
+                    id="desiredShopping"
+                    style="text-align:center"
+                  /></td>
+              </tr>
+
+              <tr>
+                <td style="text-align:center"><strong>Entertainment :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_entertainment}}
+                    name="desiredEntertainment"
+                    id="desiredEntertainment"
+                    style="text-align:center"
+                  /></td>
+              </tr>
+
+              <tr>
+                <td style="text-align:center"><strong>Payments :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_payments}}
+                    name="desiredPayments"
+                    id="desiredPayments"
+                    style="text-align:center"
+                  /></td>
+              </tr>
+
+              <tr>
+                <td style="text-align:center"><strong>Travel :</strong></td>
+                <td style="text-align:center"><input
+                    type="text"
+                    placeholder={{desired_travel}}
+                    name="desiredTravel"
+                    id="desiredTravel"
+                    style="text-align:center"
+                  /></td>
+              </tr>
+
+              {{!-- <tr>
               <td style="text-align:center">Actual $: </td>
               <td style="text-align:center">{{actual_food}}</td>
               <td style="text-align:center">{{actual_travel}}</td>
@@ -772,159 +666,192 @@
               <td style="text-align:center">{{actual_shopping}}</td>
             </tr> --}}
 
-            <tr>
+              <tr>
 
-            </tr>
-            <td>
-              <input
-                style="text-align:center"
-                type="submit"
-                value="Submit Budget"
-                id="Submit"
-              />
-            </td>
-          </table>
+              </tr>
+              <td>
+                <input
+                  style="text-align:center"
+                  type="submit"
+                  value="Submit Budget"
+                  id="Submit"
+                />
+              </td>
+            </table>
 
-        </form>
+          </form>
 
-        {{!-- <footer>Target Budget: {{desired_balance}}</footer>
-        <footer>Total Spent: {{actual_balance}}</footer>
-        <footer>{{over_or_under}}{{over_or_under_amount}}</footer><br /> --}}
-        <a href="/transaction_history" class="w3-button w3-dark-grey">View all
-          transactions for this budget
-          <i class="fa fa-arrow-right"></i></a>
+          <a href="/transaction_history" class="w3-button w3-dark-grey">View all
+            transactions for this budget
+            <i class="fa fa-arrow-right"></i></a>
 
-        <script
-          type="text/javascript"
-          src="https://www.gstatic.com/charts/loader.js"
-        ></script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new google.visualization.LineChart(document.getElementById('food'));
-          chart.draw(data, options); }
-        </script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new google.visualization.LineChart(document.getElementById('food'));
-          chart.draw(data, options); }
-        </script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new
-          google.visualization.LineChart(document.getElementById('transportation'));
-          chart.draw(data, options); }
-        </script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new
-          google.visualization.LineChart(document.getElementById('shopping'));
-          chart.draw(data, options); }
-        </script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new
-          google.visualization.LineChart(document.getElementById('entertainment'));
-          chart.draw(data, options); }
-        </script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart); function drawChart() { var
-          data = google.visualization.arrayToDataTable([ ['Year', 'Desired',
-          'Actual'], ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000,
-          1000], ['2007', 1000, 1100] ]); var options = { title: 'Total',
-          curveType: 'function', legend: { position: 'bottom' } }; var chart =
-          new
-          google.visualization.LineChart(document.getElementById('payments'));
-          chart.draw(data, options); }
-        </script>
-
-        <!-- Styles -->
-        <style>
-          #chartdiv { width: 100%; height: 150px;}
-        </style>
-
-        <!-- Chart code -->
-        <script>
-          am4core.ready(function() { // Themes begin
-          am4core.useTheme(am4themes_material);
-          am4core.useTheme(am4themes_animated); var chart =
-          am4core.create("chartdiv", am4charts.PieChart); chart.data = [ {
-          "category": "Food", "dollars": 500 }, { "category": "Entertainment",
-          "dollars": 200 },{ "category": "Transportation", "dollars": 280 }, {
-          "category": "Shopping", "dollars": 100 }, { "category": "Payments",
-          "dollars": 210 }, { "category": "Travel", "dollars": 175 },]; var
-          pieSeries = chart.series.push(new am4charts.PieSeries());
-          pieSeries.dataFields.value = "dollars"; pieSeries.labels.template.fill
-          = am4core.color("black"); pieSeries.labels.template.disabled = false;
-          pieSeries.ticks.template.disabled = false;
-          pieSeries.dataFields.category = "category";
-          pieSeries.slices.template.stroke = am4core.color("white");
-          pieSeries.slices.template.strokeWidth = 2;
-          pieSeries.slices.template.strokeOpacity = 1;
-          pieSeries.hiddenState.properties.opacity = 1;
-          pieSeries.hiddenState.properties.endAngle = -90;
-          pieSeries.hiddenState.properties.startAngle = -90; }); // end
-          am4core.ready()
-        </script>
-
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-          crossorigin="anonymous"
-        ></script>
-
+        </div>
       </div>
 
-    </main>
-    <!-- End #main -->
+    </div>
+  </div>
 
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-    ><i class="bi bi-arrow-up-short"></i></a>
+</section>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/aos/aos.js"></script>
-    {{! <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> }}
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+<a
+  href="#"
+  class="back-to-top d-flex align-items-center justify-content-center"
+><i class="bi bi-arrow-up-short"></i></a>
 
-  </body>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-</html>
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+{{! <p>Budget Profile, Investment Profile, and Transaction History will be available
+  upon successful connection to your bank account.</p> }}
+
+{{!-- <div class="w3-row-padding w3-margin-bottom">
+  <div class="w3-quarter">
+    <div class="w3-container w3-red w3-padding-16">
+      <div class="w3-left"><i class="fa fa-money w3-xlarge"></i></div>
+      <div class="w3-right">
+        {{! <h3>52</h3> }}
+      </div>
+      <a href="/budget_profile" class="w3-clear"></a>
+      <h4>Budget Profile</h4>
+    </div>
+  </div>
+  <div class="w3-quarter">
+    <div class="w3-container w3-teal w3-padding-16">
+      <div class="w3-left"><i class="fa fa-history w3-xlarge"></i></div>
+      <div class="w3-right">
+        {{! <h3>23</h3> }}
+      </div>
+      <a href="/transaction_history" class="w3-clear"></a>
+      <h4>Transaction History</h4>
+    </div>
+  </div>
+  <div class="w3-quarter">
+    <div class="w3-container w3-blue w3-padding-16">
+      <div class="w3-left"><i class="fa fa-bank w3-xlarge"></i></div>
+      <div class="w3-right">
+        {{! <h3>99</h3> }}
+      </div>
+      <a href="/investment_profile" class="w3-clear"></a>
+      <h4>Investment Profile</h4>
+    </div>
+  </div>
+  <div class="w3-quarter">
+    <div class="w3-container w3-orange w3-text-white w3-padding-16">
+      <div class="w3-left"><i class="fa fa-cog w3-xlarge"></i></div>
+      <div class="w3-right">
+        {{! <h3>50</h3> }}
+      </div>
+      <a href="/account_settings" class="w3-clear"></a>
+      <h4>Account Settings</h4>
+    </div>
+  </div>
+</div> --}}
+
+<script
+  type="text/javascript"
+  src="https://www.gstatic.com/charts/loader.js"
+></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('food'));
+  chart.draw(data, options); }
+</script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('food'));
+  chart.draw(data, options); }
+</script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('transportation'));
+  chart.draw(data, options); }
+</script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('shopping'));
+  chart.draw(data, options); }
+</script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('entertainment'));
+  chart.draw(data, options); }
+</script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
+  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
+  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
+  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
+  position: 'bottom' } }; var chart = new
+  google.visualization.LineChart(document.getElementById('payments'));
+  chart.draw(data, options); }
+</script>
+
+<!-- Styles -->
+<style>
+  #chartdiv { width: 100%; height: 150px;}
+</style>
+
+<!-- Chart code -->
+<script>
+  am4core.ready(function() { // Themes begin
+  am4core.useTheme(am4themes_material); am4core.useTheme(am4themes_animated);
+  var chart = am4core.create("chartdiv", am4charts.PieChart); chart.data = [ {
+  "category": "Food", "dollars": 500 }, { "category": "Entertainment",
+  "dollars": 200 },{ "category": "Transportation", "dollars": 280 }, {
+  "category": "Shopping", "dollars": 100 }, { "category": "Payments", "dollars":
+  210 }, { "category": "Travel", "dollars": 175 },]; var pieSeries =
+  chart.series.push(new am4charts.PieSeries()); pieSeries.dataFields.value =
+  "dollars"; pieSeries.labels.template.fill = am4core.color("black");
+  pieSeries.labels.template.disabled = false; pieSeries.ticks.template.disabled
+  = false; pieSeries.dataFields.category = "category";
+  pieSeries.slices.template.stroke = am4core.color("white");
+  pieSeries.slices.template.strokeWidth = 2;
+  pieSeries.slices.template.strokeOpacity = 1;
+  pieSeries.hiddenState.properties.opacity = 1;
+  pieSeries.hiddenState.properties.endAngle = -90;
+  pieSeries.hiddenState.properties.startAngle = -90; }); am4core.ready()
+</script>
