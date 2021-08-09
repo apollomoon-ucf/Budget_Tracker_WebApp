@@ -56,8 +56,36 @@
   </head>
 
   <body>
+    <nav
+      class="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+      style="height: 42px;"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/home"><strong>Budget </strong>
+          Tracker</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-    <main id="main" style="margin-left:0%;margin-right:0%;margin-top:50px;">
+          </ul>
+
+          <a class="nav-link" href="/transaction_history">Transactions</a>
+          <a class="nav-link" href="/investment_profile">Investments</a>
+          <a class="nav-link" href="/profile">Account</a>
+        </div>
+      </div>
+    </nav>
+    <main id="main">
 
       <!-- ======= Breadcrumbs ======= -->
       {{! <section id="breadcrumbs" class="breadcrumbs">
@@ -217,7 +245,7 @@
                     class="w3-circle"
                     style="width:25px"
                   />
-                  <span><strong>Username</strong></span>
+                  <span><a style="color: black" href="/profile">Log Out</a></span>
 
                   <br />
                   <div class="w3-col w3-bar">
@@ -228,7 +256,7 @@
                 <style>.box{ display: flex; justify-content: center;
                   align-items: center; }</style>
                 <div class="box">
-                  <h4 style="text-align:center">Budget Profile</h4>
+                  <h4 style="text-align:center">Username's Budget</h4>
                 </div>
 
                 <div class="box-cell box3">
@@ -247,8 +275,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
-                    <h3 class="text-success">Total Budget</h3>
-                    <p class="mb-0">Budget Goal: $2940</p>
+                    <h3 class="text-success">Budget - August 2021</h3>
+                    <p class="mb-0">Total Budget Goal: $2940</p>
                     <p class="mb-0">Spent: $2058</p>
                     <p class="mb-0">Remaining: $882</p>
                     {{! <p class="mb-0">Total</p> }}
@@ -290,9 +318,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-success">Food</h4>
-                    <p class="mb-0">Target Budget: $500</p>
+                    <p class="mb-0">Budget Goal: $500</p>
                     <p class="mb-0">Spent: $450</p>
-                    <p class="mb-0">$50 remaining</p>
+                    <p class="mb-0">Remaining: $50</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-mug-hot text-success fa-3x"></i>
@@ -349,9 +377,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-danger">Transportation</h4>
-                    <p class="mb-0">Target Budget: $280</p>
+                    <p class="mb-0">Budget Goal: $280</p>
                     <p class="mb-0">Spent: $250</p>
-                    <p class="mb-0">$30 remaining</p>
+                    <p class="mb-0">Remaining: $30</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-car text-danger fa-3x"></i>
@@ -407,9 +435,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-success">Shopping</h4>
-                    <p class="mb-0">Target Budget: $250</p>
+                    <p class="mb-0">Budget Goal: $250</p>
                     <p class="mb-0">Spent: $100</p>
-                    <p class="mb-0">$150 remaining</p>
+                    <p class="mb-0">Remaining: $150</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-wallet text-success fa-3x"></i>
@@ -465,9 +493,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-success">Entertainment</h4>
-                    <p class="mb-0">Target Budget: $200</p>
+                    <p class="mb-0">Budget Goal: $200</p>
                     <p class="mb-0">Spent: $40</p>
-                    <p class="mb-0">$160 remaining</p>
+                    <p class="mb-0">Remaining: $160</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-tv text-success fa-3x"></i>
@@ -523,9 +551,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-warning">Payments</h4>
-                    <p class="mb-0">Target Budget: $210</p>
+                    <p class="mb-0">Budget Goal: $210</p>
                     <p class="mb-0">Spent: $150</p>
-                    <p class="mb-0">$60 remaining</p>
+                    <p class="mb-0">Remaining: $60</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-bank text-warning fa-3x"></i>
@@ -581,9 +609,9 @@
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
                     <h4 class="text-success">Travel</h4>
-                    <p class="mb-0">Desired Budget: $175</p>
+                    <p class="mb-0">Budget Goal: $175</p>
                     <p class="mb-0">Spent: $10</p>
-                    <p class="mb-0">$165 remaining</p>
+                    <p class="mb-0">Remaining: $165</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-plane text-success fa-3x"></i>

@@ -1,3 +1,22 @@
+<title>Budget Tracker - Investment Profile</title>
+<head>
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+    rel="stylesheet"
+  />
+</head>
+
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -17,117 +36,118 @@
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-  {{! <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link
     href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
     rel="stylesheet"
-  /> }}
+  />
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet" />
+
 </head>
 
-<div class="w3-container">
-  <title>Budget Tracker - Investment Profile</title>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home"><strong>Budget </strong>
+      Tracker</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-  <h5>Investment Details</h5>
-  <footer>If any investment accounts are connected to the account you linked
-    with Plaid, their details will be displayed below:</footer>
-  {{#section "investment_chart"}}
-    <style>
-      #bardiv { width: 100%; height: 500px; }
+      </ul>
 
-    </style>
+      <a class="nav-link" href="/budget_profile">My Budget</a>
+      <a class="nav-link" href="/transaction_history">Transactions</a>
+      <a class="nav-link" href="/profile">Account</a>
+    </div>
+  </div>
+</nav>
 
-    <!-- Resources -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<section id="hero">
 
-    <!-- Chart code -->
-    <script>
-      am4core.ready(function() { // Themes begin
-      am4core.useTheme(am4themes_dataviz); am4core.useTheme(am4themes_animated);
-      // Themes end // Create chart instance var chart =
-      am4core.create("bardiv", am4charts.XYChart); // Add data chart.data = [{
-      "date": "2013-01-16", "market1": 71, "market2": 75, "sales1": 5, "sales2":
-      8 }, { "date": "2013-01-17", "market1": 74, "market2": 78, "sales1": 4,
-      "sales2": 6 }, { "date": "2013-01-18", "market1": 78, "market2": 88,
-      "sales1": 5, "sales2": 2 }, { "date": "2013-01-19", "market1": 85,
-      "market2": 89, "sales1": 8, "sales2": 9 }, { "date": "2013-01-20",
-      "market1": 82, "market2": 89, "sales1": 9, "sales2": 6 }, { "date":
-      "2013-01-21", "market1": 83, "market2": 85, "sales1": 3, "sales2": 5 }, {
-      "date": "2013-01-22", "market1": 88, "market2": 92, "sales1": 5, "sales2":
-      7 }, { "date": "2013-01-23", "market1": 85, "market2": 90, "sales1": 7,
-      "sales2": 6 }, { "date": "2013-01-24", "market1": 85, "market2": 91,
-      "sales1": 9, "sales2": 5 }, { "date": "2013-01-25", "market1": 80,
-      "market2": 84, "sales1": 5, "sales2": 8 }, { "date": "2013-01-26",
-      "market1": 87, "market2": 92, "sales1": 4, "sales2": 8 }, { "date":
-      "2013-01-27", "market1": 84, "market2": 87, "sales1": 3, "sales2": 4 }, {
-      "date": "2013-01-28", "market1": 83, "market2": 88, "sales1": 5, "sales2":
-      7 }, { "date": "2013-01-29", "market1": 84, "market2": 87, "sales1": 5,
-      "sales2": 8 }, { "date": "2013-01-30", "market1": 81, "market2": 85,
-      "sales1": 4, "sales2": 7 }]; // Create axes var dateAxis =
-      chart.xAxes.push(new am4charts.DateAxis());
-      //dateAxis.renderer.grid.template.location = 0;
-      //dateAxis.renderer.minGridDistance = 30; var valueAxis1 =
-      chart.yAxes.push(new am4charts.ValueAxis()); valueAxis1.title.text =
-      "Sales"; var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis2.title.text = "Market Days"; valueAxis2.renderer.opposite =
-      true; valueAxis2.renderer.grid.template.disabled = true; // Create series
-      var series1 = chart.series.push(new am4charts.ColumnSeries());
-      series1.dataFields.valueY = "sales1"; series1.dataFields.dateX = "date";
-      series1.yAxis = valueAxis1; series1.name = "Target Sales";
-      series1.tooltipText = "{name}\\\\\\\\\\\\\\\n[bold font-size:
-      20]${valueY}M[/]"; series1.fill = chart.colors.getIndex(0);
-      series1.strokeWidth = 0; series1.clustered = false;
-      series1.columns.template.width = am4core.percent(40); var series2 =
-      chart.series.push(new am4charts.ColumnSeries()); series2.dataFields.valueY
-      = "sales2"; series2.dataFields.dateX = "date"; series2.yAxis = valueAxis1;
-      series2.name = "Actual Sales"; series2.tooltipText = "{name}\n[bold
-      font-size: 20]${valueY}M[/]"; series2.fill =
-      chart.colors.getIndex(0).lighten(0.5); series2.strokeWidth = 0;
-      series2.clustered = false; series2.toBack(); var series3 =
-      chart.series.push(new am4charts.LineSeries()); series3.dataFields.valueY =
-      "market1"; series3.dataFields.dateX = "date"; series3.name = "Market
-      Days"; series3.strokeWidth = 2; series3.tensionX = 0.7; series3.yAxis =
-      valueAxis2; series3.tooltipText = "{name}\n[bold font-size:
-      20]{valueY}[/]"; var bullet3 = series3.bullets.push(new
-      am4charts.CircleBullet()); bullet3.circle.radius = 3;
-      bullet3.circle.strokeWidth = 2; bullet3.circle.fill =
-      am4core.color("#fff"); var series4 = chart.series.push(new
-      am4charts.LineSeries()); series4.dataFields.valueY = "market2";
-      series4.dataFields.dateX = "date"; series4.name = "Market Days ALL";
-      series4.strokeWidth = 2; series4.tensionX = 0.7; series4.yAxis =
-      valueAxis2; series4.tooltipText = "{name}\n[bold font-size:
-      20]{valueY}[/]"; series4.stroke = chart.colors.getIndex(0).lighten(0.5);
-      series4.strokeDasharray = "3,3"; var bullet4 = series4.bullets.push(new
-      am4charts.CircleBullet()); bullet4.circle.radius = 3;
-      bullet4.circle.strokeWidth = 2; bullet4.circle.fill =
-      am4core.color("#fff"); // Add cursor chart.cursor = new
-      am4charts.XYCursor(); // Add legend chart.legend = new am4charts.Legend();
-      chart.legend.position = "top"; // Add scrollbar chart.scrollbarX = new
-      am4charts.XYChartScrollbar(); chart.scrollbarX.series.push(series1);
-      chart.scrollbarX.series.push(series3); chart.scrollbarX.parent =
-      chart.bottomAxesContainer; }); // end am4core.ready()
-    </script>
-  {{/section}}
-  {{! <div id="bardiv"></div> }}
-  {{!-- <h5>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
+        data-aos="fade-up"
+      >
+        <div class="w3-container">
+          <h5>Investment Details</h5>
+          <footer>If any investment accounts are connected to the account you
+            linked with Plaid, their details will be displayed below:</footer>
+          {{#section "investment_chart"}}
+            <style>
+              #bardiv { width: 100%; height: 500px; }
+
+            </style>
+
+          {{/section}}
+
+          {{!-- <h5>
     {{#each message.transactions}} {{category}}: {{amount}}<br /> {{/each}}</h5> --}}
 
-  <table
-    class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
-  >
-    <td>
-      {{#each investment.investment_transactions}}
-        {{name}}<br />
-        Amount: ${{amount}}<br /><br />
-      {{/each}}
-    </td>
-  </table><br />
+          <table
+            class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
+          >
+            <td>
+              {{#each investment.investment_transactions}}
+                {{name}}<br />
+                Amount: ${{amount}}<br /><br />
+              {{/each}}
+            </td>
+          </table><br />
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+  {{! <h6><strong>Note: Web app currently in development.</strong><h6/> }}
+  {{! <footer>For testing, use the following credentials for Chase Bank.</footer>
+  <footer> Username: user_good</footer>
+  <footer>Password: pass_good</footer> }}
 </div>
+
+<a
+  href="#"
+  class="back-to-top d-flex align-items-center justify-content-center"
+><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
