@@ -131,7 +131,7 @@
                     margin-bottom: 0px;}
                   </style>
                   <div class="section-title box" data-aos="fade-up">
-                    <h2 style="text-align: center; font-size: 20px;">Username's
+                    <h2 style="text-align: center; font-size: 20px;">{{user}}'s
                       Budget</h2>
                   </div>
 
@@ -160,10 +160,12 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h3 class="text-success">Budget Overview- August 2021</h3>
-                      <p class="mb-0">Total Budget Goal: $2940</p>
-                      <p class="mb-0">Spent: $2058</p>
-                      <p class="mb-0">Remaining: $882</p>
+                      <h3 class="text-success">Budget Overview-
+                        {{month}}
+                        2021</h3>
+                      <p class="mb-0">Total Budget Goal: {{desired_balance}}</p>
+                      <p class="mb-0">Spent: {{actual_balance}}</p>
+                      <p class="mb-0">Remaining: {{remaining_balance}}</p>
                       {{! <p class="mb-0">Total</p> }}
                     </div>
                     <div class="align-self-center">
@@ -178,11 +180,11 @@
                       <div
                         class="progress-bar bg-success"
                         role="progressbar"
-                        style="width: 70%"
-                        aria-valuenow="70"
+                        style="width: {{percent_spent_balance}}%"
+                        aria-valuenow="{{percent_spent_balance}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      > 70% Spent</div>
+                      > {{percent_spent_balance}}% Spent</div>
 
                     </div>
                     <hr />
@@ -199,9 +201,9 @@
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
                       <h4 class="text-success">Food</h4>
-                      <p class="mb-0">Budget Goal: $500</p>
-                      <p class="mb-0">Spent: $450</p>
-                      <p class="mb-0">Remaining: $50</p>
+                      <p class="mb-0">Budget Goal: {{desired_food}}</p>
+                      <p class="mb-0">Spent: {{actual_food}}</p>
+                      <p class="mb-0">Remaining: {{remaining_food}}</p>
                     </div>
                     <div class="align-self-center">
                       <i class="fas fa-mug-hot text-success fa-3x"></i>
@@ -764,66 +766,6 @@
   type="text/javascript"
   src="https://www.gstatic.com/charts/loader.js"
 ></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('food'));
-  chart.draw(data, options); }
-</script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('food'));
-  chart.draw(data, options); }
-</script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('transportation'));
-  chart.draw(data, options); }
-</script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('shopping'));
-  chart.draw(data, options); }
-</script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('entertainment'));
-  chart.draw(data, options); }
-</script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart); function drawChart() { var data =
-  google.visualization.arrayToDataTable([ ['Year', 'Desired', 'Actual'],
-  ['2004', 1000, 400], ['2005', 1000, 460], ['2006', 1000, 1000], ['2007', 1000,
-  1100] ]); var options = { title: 'Total', curveType: 'function', legend: {
-  position: 'bottom' } }; var chart = new
-  google.visualization.LineChart(document.getElementById('payments'));
-  chart.draw(data, options); }
-</script>
 
 <!-- Styles -->
 <style>
@@ -834,16 +776,24 @@
 <script>
   am4core.ready(function() { // Themes begin
   am4core.useTheme(am4themes_material); am4core.useTheme(am4themes_animated);
-  var chart = am4core.create("chartdiv", am4charts.PieChart); chart.data = [ {
-  "category": "Food", "dollars": 500 }, { "category": "Entertainment",
-  "dollars": 200 },{ "category": "Transportation", "dollars": 280 }, {
-  "category": "Shopping", "dollars": 100 }, { "category": "Payments", "dollars":
-  210 }, { "category": "Travel", "dollars": 175 },]; var pieSeries =
-  chart.series.push(new am4charts.PieSeries()); pieSeries.dataFields.value =
-  "dollars"; pieSeries.labels.template.fill = am4core.color("black");
-  pieSeries.labels.template.disabled = false; pieSeries.ticks.template.disabled
-  = false; pieSeries.dataFields.category = "category";
-  pieSeries.slices.template.stroke = am4core.color("white");
+  var chart = am4core.create("chartdiv", am4charts.PieChart); chart.data = [
+  {"category": "Food", "dollars":
+  {{food_pie}}
+  }, { "category": "Entertainment", "dollars":
+  {{entertainment_pie}}
+  },{ "category": "Transportation", "dollars":
+  {{transportation_pie}}
+  }, { "category": "Shopping", "dollars":
+  {{shopping_pie}}
+  }, { "category": "Payments", "dollars":
+  {{payments_pie}}
+  }, { "category": "Travel", "dollars":
+  {{travel_pie}}
+  },]; var pieSeries = chart.series.push(new am4charts.PieSeries());
+  pieSeries.dataFields.value = "dollars"; pieSeries.labels.template.fill =
+  am4core.color("black"); pieSeries.labels.template.disabled = false;
+  pieSeries.ticks.template.disabled = false; pieSeries.dataFields.category =
+  "category"; pieSeries.slices.template.stroke = am4core.color("lightgrey");
   pieSeries.slices.template.strokeWidth = 2;
   pieSeries.slices.template.strokeOpacity = 1;
   pieSeries.hiddenState.properties.opacity = 1;

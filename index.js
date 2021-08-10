@@ -35,20 +35,20 @@ app.set("view engine", ".hbs");
 var transactionResponse = {};
 var investmentResponse = {};
 // init budget
-var budget_desired = 0.0;
-var budget_actual = 0.0;
-var food_desired = 0.0;
-var food_actual = 0.0;
-var entertainment_desired = 0.0;
-var entertainment_actual = 0.0;
-var shopping_desired = 0.0;
-var shopping_actual = 0.0;
-var payments_desired = 0.0;
-var payments_actual = 0.0;
-var travel_desired = 0.0;
-var travel_actual = 0.0;
-var transportation_desired = 0.0;
-var transportation_actual = 0.0;
+var budget_desired = 750.0;
+var budget_actual = 400.0;
+var food_desired = 500.0;
+var food_actual = 150.0;
+var entertainment_desired = 200.0;
+var entertainment_actual = 75.0;
+var shopping_desired = 250.0;
+var shopping_actual = 100.0;
+var payments_desired = 210.0;
+var payments_actual = 50.0;
+var travel_desired = 175.0;
+var travel_actual = 100.0;
+var transportation_desired = 180.0;
+var transportation_actual = 150.0;
 var over_under = "Budget Balanced";
 var over_under_by = 0.0;
 
@@ -187,9 +187,6 @@ app.post("/token-exchange", async (req, res) => {
 });
 
 app.post("/budget_profile", function (req, res) {
-  budget_desired = req.body.desiredBalance
-    ? req.body.desiredBalance
-    : budget_desired;
   food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
   entertainment_desired = req.body.desiredEntertainment
     ? req.body.desiredEntertainment
@@ -215,22 +212,52 @@ app.post("/budget_profile", function (req, res) {
     +transportation_desired +
     +payments_desired;
 
+  var budget_remaining = budget_desired - budget_actual;
+  var food_remaining = food_desired - food_actual;
+  var transportation_remaining = transportation_desired - transportation_actual;
+  var shopping_remaining = shopping_desired - shopping_actual;
+  var entertainment_remaining = entertainment_desired - entertainment_actual;
+  var payments_remaining = payments_desired - payments_actual;
+  var travel_remaining = travel_desired - travel_actual;
+
   res.render("budget_profile", {
     style: "budget.css",
+    user: "Username",
+    month: getMonthName(),
+    travel_pie: travel_actual,
+    food_pie: food_actual,
+    payments_pie: food_actual,
+    shopping_pie: shopping_actual,
+    transportation_pie: transportation_actual,
+    entertainment_pie: entertainment_actual,
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
+    remaining_balance: formatter.format(budget_remaining),
+    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
+    percent_spent_food: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_food: formatter.format(food_remaining),
     desired_entertainment: formatter.format(entertainment_desired),
     actual_entertainment: formatter.format(entertainment_actual),
+    remaining_entertainment: formatter.format(entertainment_remaining),
+    percent_spent_ent: ((budget_actual / budget_desired) * 100).toFixed(0),
     desired_shopping: formatter.format(shopping_desired),
     actual_shopping: formatter.format(shopping_actual),
+    percent_spent_shopping: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_shopping: formatter.format(shopping_remaining),
     desired_payments: formatter.format(payments_desired),
     actual_payments: formatter.format(payments_actual),
+    percent_spent_payments: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_payments: formatter.format(payments_remaining),
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
+    percent_spent_travel: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_travel: formatter.format(travel_remaining),
     desired_transportation: formatter.format(transportation_desired),
     actual_transportation: formatter.format(transportation_actual),
+    percent_spent_trans: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_transportation: formatter.format(transportation_remaining),
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "
@@ -250,18 +277,20 @@ app.get("/", (req, res) => {
   investmentResponse = {};
   budget_desired = 0.0;
   budget_actual = 0.0;
-  food_desired = 0.0;
-  food_actual = 0.0;
-  entertainment_desired = 0.0;
-  entertainment_actual = 0.0;
-  shopping_desired = 0.0;
-  shopping_actual = 0.0;
-  payments_desired = 0.0;
-  payments_actual = 0.0;
-  travel_desired = 0.0;
-  travel_actual = 0.0;
+  food_desired = 500.0;
+  food_actual = 150.0;
+  entertainment_desired = 200.0;
+  entertainment_actual = 75.0;
+  shopping_desired = 250.0;
+  shopping_actual = 100.0;
+  payments_desired = 210.0;
+  payments_actual = 50.0;
+  travel_desired = 175.0;
+  travel_actual = 100.0;
   over_under = "Budget Balanced";
   over_under_by = 0.0;
+  transportation_desired = 180.0;
+  transportation_actual = 150.0;
   // res.status(200).redirect("budget_profile");
   // res.status(401).render("home", {
   //   message: "sowwy, your email or password is incorrect :(",
@@ -284,11 +313,29 @@ var formatter = new Intl.NumberFormat("en-US", {
 // } else if (over_under_by > 0) {
 //   over_under = "Under Budget by: ";
 // }
+
+// function to get month name
+function getMonthName() {
+  var d = new Date();
+  var month = new Array();
+  month[0] = "January";
+  month[1] = "February";
+  month[2] = "March";
+  month[3] = "April";
+  month[4] = "May";
+  month[5] = "June";
+  month[6] = "July";
+  month[7] = "August";
+  month[8] = "September";
+  month[9] = "October";
+  month[10] = "November";
+  month[11] = "December";
+
+  return month[d.getMonth()];
+}
+
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
-  budget_desired = req.body.desiredBalance
-    ? req.body.desiredBalance
-    : budget_desired;
   food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
   entertainment_desired = req.body.desiredEntertainment
     ? req.body.desiredEntertainment
@@ -314,22 +361,52 @@ app.get("/budget_profile", function (req, res) {
     +transportation_desired +
     +payments_desired;
 
+  var budget_remaining = budget_desired - budget_actual;
+  var food_remaining = food_desired - food_actual;
+  var transportation_remaining = transportation_desired - transportation_actual;
+  var shopping_remaining = shopping_desired - shopping_actual;
+  var entertainment_remaining = entertainment_desired - entertainment_actual;
+  var payments_remaining = payments_desired - payments_actual;
+  var travel_remaining = travel_desired - travel_actual;
+
   res.render("budget_profile", {
     style: "budget.css",
+    user: "Username",
+    month: getMonthName(),
+    travel_pie: travel_actual,
+    food_pie: food_actual,
+    payments_pie: food_actual,
+    shopping_pie: shopping_actual,
+    transportation_pie: transportation_actual,
+    entertainment_pie: entertainment_actual,
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
+    remaining_balance: formatter.format(budget_remaining),
+    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
+    percent_spent_food: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_food: formatter.format(food_remaining),
     desired_entertainment: formatter.format(entertainment_desired),
     actual_entertainment: formatter.format(entertainment_actual),
+    remaining_entertainment: formatter.format(entertainment_remaining),
+    percent_spent_ent: ((budget_actual / budget_desired) * 100).toFixed(0),
     desired_shopping: formatter.format(shopping_desired),
     actual_shopping: formatter.format(shopping_actual),
+    percent_spent_shopping: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_shopping: formatter.format(shopping_remaining),
     desired_payments: formatter.format(payments_desired),
     actual_payments: formatter.format(payments_actual),
+    percent_spent_payments: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_payments: formatter.format(payments_remaining),
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
+    percent_spent_travel: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_travel: formatter.format(travel_remaining),
     desired_transportation: formatter.format(transportation_desired),
     actual_transportation: formatter.format(transportation_actual),
+    percent_spent_trans: ((budget_actual / budget_desired) * 100).toFixed(0),
+    remaining_transportation: formatter.format(transportation_remaining),
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "
@@ -366,9 +443,9 @@ app.get("/account_settings", function (req, res) {
 });
 
 // new_design
-app.get("/new_design", function (req, res) {
-  res.sendFile(path.join(__dirname, "/new_design.html"));
-});
+// app.get("/new_design", function (req, res) {
+//   res.sendFile(path.join(__dirname, "/new_design.html"));
+// });
 
 // user profile
 app.get("/profile", function (req, res) {
