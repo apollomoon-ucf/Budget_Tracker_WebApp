@@ -153,14 +153,14 @@
             <style>.card { padding-left: 20px; padding-right: 20px; box-shadow:
               0 0px 10px 0 rgb(147, 145, 148); background-color: rgba(206, 206,
               206, 0.212)!important; transition: 0.3s;}</style>
-            {{! TOTAL }}
+            {{! Budget Overview }}
             <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
 
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h3 class="text-success">Budget Overview-
+                      <h3 class="text-{{budget_text_color}}">Budget Overview-
                         {{month}}
                         2021</h3>
                       <p class="mb-0">Total Budget Goal: {{desired_balance}}</p>
@@ -178,7 +178,7 @@
                       style="height: 17px"
                     >
                       <div
-                        class="progress-bar bg-success"
+                        class="progress-bar bg-{{budget_text_color}}"
                         role="progressbar"
                         style="width: {{percent_spent_balance}}%"
                         aria-valuenow="{{percent_spent_balance}}"
@@ -194,19 +194,22 @@
                 </div>
               </div>
             </div>
+
             {{! FOOD }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-success">Food</h4>
+                      <h4 class="text-{{food_text_color}}">Food</h4>
                       <p class="mb-0">Budget Goal: {{desired_food}}</p>
                       <p class="mb-0">Spent: {{actual_food}}</p>
                       <p class="mb-0">Remaining: {{remaining_food}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-mug-hot text-success fa-3x"></i>
+                      <i
+                        class="fas fa-mug-hot text-{{food_text_color}} fa-3x"
+                      ></i>
                     </div>
                   </div>
 
@@ -216,13 +219,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-success"
+                        class="progress-bar bg-{{food_text_color}}"
                         role="progressbar"
-                        style="width: 78%; font-size: 10px;"
-                        aria-valuenow="78"
+                        style="width: {{percent_spent_food}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_food}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >78%</div>
+                      >{{percent_spent_food}}%</div>
                     </div>
                     <hr />
                     {{! <div id="food" style="width: 100%; height: 100%"></div> }}
@@ -241,15 +244,12 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
 
@@ -266,13 +266,15 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-danger">Transportation</h4>
-                      <p class="mb-0">Budget Goal: $280</p>
-                      <p class="mb-0">Spent: $250</p>
-                      <p class="mb-0">Remaining: $30</p>
+                      <h4 class="text-{{trans_text_color}}">Transportation</h4>
+                      <p class="mb-0">Budget Goal:
+                        {{desired_transportation}}</p>
+                      <p class="mb-0">Spent: {{actual_transportation}}</p>
+                      <p class="mb-0">Remaining:
+                        {{remaining_transportation}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-car text-danger fa-3x"></i>
+                      <i class="fas fa-car text-{{trans_text_color}} fa-3x"></i>
                     </div>
                   </div>
                   <div class="px-md-1">
@@ -281,13 +283,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-danger"
+                        class="progress-bar bg-{{trans_text_color}}"
                         role="progressbar"
-                        style="width: 90%; font-size: 10px; color:white"
-                        aria-valuenow="60"
+                        style="width: {{percent_spent_trans}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_trans}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >90%</div>
+                      >{{percent_spent_trans}}%</div>
                     </div>
                     <hr />
                     {{! <div id="transportation" style="width: 100%; height: 100%"></div> }}
@@ -306,34 +308,34 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             {{! SHOPPING }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-success">Shopping</h4>
-                      <p class="mb-0">Budget Goal: $250</p>
-                      <p class="mb-0">Spent: $100</p>
-                      <p class="mb-0">Remaining: $150</p>
+                      <h4 class="text-{{shopping_text_color}}">Shopping</h4>
+                      <p class="mb-0">Budget Goal: {{desired_shopping}}</p>
+                      <p class="mb-0">Spent: {{actual_shopping}}</p>
+                      <p class="mb-0">Remaining: {{remaining_shopping}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-wallet text-success fa-3x"></i>
+                      <i
+                        class="fas fa-wallet text-{{shopping_text_color}} fa-3x"
+                      ></i>
                     </div>
                   </div>
                   <div class="px-md-1">
@@ -342,13 +344,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-success"
+                        class="progress-bar bg-{{shopping_text_color}}"
                         role="progressbar"
-                        style="width: 60%; font-size: 10px;"
-                        aria-valuenow="60"
+                        style="width: {{percent_spent_shopping}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_shopping}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >60%</div>
+                      >{{percent_spent_shopping}}%</div>
                     </div>
                     <hr />
                     {{! <div id="shopping" style="width: 100%; height: 100%"></div> }}
@@ -367,34 +369,32 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             {{! ENTERTAINMENT }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-success">Entertainment</h4>
-                      <p class="mb-0">Budget Goal: $200</p>
-                      <p class="mb-0">Spent: $40</p>
-                      <p class="mb-0">Remaining: $160</p>
+                      <h4 class="text-{{ent_text_color}}">Entertainment</h4>
+                      <p class="mb-0">Budget Goal: {{desired_entertainment}}</p>
+                      <p class="mb-0">Spent: {{actual_entertainment}}</p>
+                      <p class="mb-0">Remaining: {{remaining_entertainment}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-tv text-success fa-3x"></i>
+                      <i class="fas fa-tv text-{{ent_text_color}} fa-3x"></i>
                     </div>
                   </div>
                   <div class="px-md-1">
@@ -403,13 +403,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-success"
+                        class="progress-bar bg-{{ent_text_color}}"
                         role="progressbar"
-                        style="width: 33%; font-size: 10px; font-color: black"
-                        aria-valuenow="33"
+                        style="width: {{percent_spent_ent}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_ent}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >33%</div>
+                      >{{percent_spent_ent}}%</div>
                     </div>
                     <hr />
                     {{! <div id="entertainment" style="width: 100%; height: 100%"></div> }}
@@ -428,34 +428,34 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             {{! PAYMENTS }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-warning">Payments</h4>
-                      <p class="mb-0">Budget Goal: $210</p>
-                      <p class="mb-0">Spent: $150</p>
-                      <p class="mb-0">Remaining: $60</p>
+                      <h4 class="text-{{payments_text_color}}">Payments</h4>
+                      <p class="mb-0">Budget Goal: {{desired_payments}}</p>
+                      <p class="mb-0">Spent: {{actual_payments}}</p>
+                      <p class="mb-0">Remaining: {{remaining_payments}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-bank text-warning fa-3x"></i>
+                      <i
+                        class="fas fa-bank text-{{payments_text_color}} fa-3x"
+                      ></i>
                     </div>
                   </div>
                   <div class="px-md-1">
@@ -464,13 +464,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-warning"
+                        class="progress-bar bg-{{payments_text_color}}"
                         role="progressbar"
-                        style="width: 80%; font-size: 10px;"
-                        aria-valuenow="80"
+                        style="width: {{percent_spent_payments}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_payments}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >80%</div>
+                      >{{percent_spent_payments}}%</div>
                     </div>
                     <hr />
                     {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
@@ -489,15 +489,12 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
                   </div>
@@ -511,13 +508,15 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-success">Travel</h4>
-                      <p class="mb-0">Budget Goal: $175</p>
-                      <p class="mb-0">Spent: $10</p>
-                      <p class="mb-0">Remaining: $165</p>
+                      <h4 class="text-{{travel_text_color}}">Travel</h4>
+                      <p class="mb-0">Budget Goal: {{desired_travel}}</p>
+                      <p class="mb-0">Spent: {{actual_travel}}</p>
+                      <p class="mb-0">Remaining: {{remaining_travel}}</p>
                     </div>
                     <div class="align-self-center">
-                      <i class="fas fa-plane text-success fa-3x"></i>
+                      <i
+                        class="fas fa-plane text-{{travel_text_color}} fa-3x"
+                      ></i>
                     </div>
                   </div>
                   <div class="px-md-1">
@@ -526,13 +525,13 @@
                       style="height: 13px"
                     >
                       <div
-                        class="progress-bar bg-success"
+                        class="progress-bar bg-{{travel_text_color}}"
                         role="progressbar"
-                        style="width: 20%; font-size: 10px;"
-                        aria-valuenow="20"
+                        style="width: {{percent_spent_travel}}%; font-size: 10px;"
+                        aria-valuenow="{{percent_spent_travel}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                      >20%</div>
+                      >{{percent_spent_travel}}%</div>
                     </div>
                     <hr />
                     {{! <div id="payments" style="width: 100%; height: 100%"></div> }}
@@ -551,15 +550,12 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li><a class="dropdown-item" href="#">8/05/21 -
-                            McDonald's - $ 14.56</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/03/21 - Chick
-                            fil a - $ 18.92</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">8/01/21 -
-                            Starbucks - $ 8.70</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        {{#each transaction.transactions}}
+                          <li><a class="dropdown-item" href="#">8/05/21 -
+                              {{category}}
+                              - ${{amount}}</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                        {{/each}}
                       </ul>
                     </div>
                   </div>
@@ -568,7 +564,49 @@
             </div>
           </div>
 
-          <footer><strong>Instructions: </strong></footer>
+          <footer style="text-align: center;"><strong>
+              - Legend for Budget Tracker -
+            </strong></footer>
+          <div class="progress rounded" style="width: 100px;">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 50%;"
+              aria-valuenow="20"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <span>less than 80% spent</span>
+          <div class="progress rounded" style="width: 100px;">
+            <div
+              class="progress-bar bg-warning"
+              role="progressbar"
+              style="width: 80%;"
+              aria-valuenow="80"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <span>80% or more spent</span>
+
+          <div class="progress rounded" style="width: 100px;">
+            <div
+              class="progress-bar bg-danger"
+              role="progressbar"
+              style="width: 100%;"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <span>Over budget, 100% spent</span>
+
+          <br />
+          <br />
+          <br />
+          <footer style="text-align: center;"><strong>Instructions:
+            </strong></footer>
           <footer>Current budget goals were determined using an average of your
             monthly spending, minus outliers, in each budget category.</footer>
           <footer>To edit budget goals, please type in desired amount, without

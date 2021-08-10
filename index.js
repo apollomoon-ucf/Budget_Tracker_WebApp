@@ -40,7 +40,7 @@ var budget_actual = 400.0;
 var food_desired = 500.0;
 var food_actual = 150.0;
 var entertainment_desired = 200.0;
-var entertainment_actual = 75.0;
+var entertainment_actual = 300.0;
 var shopping_desired = 250.0;
 var shopping_actual = 100.0;
 var payments_desired = 210.0;
@@ -224,40 +224,81 @@ app.post("/budget_profile", function (req, res) {
     style: "budget.css",
     user: "Username",
     month: getMonthName(),
-    travel_pie: travel_actual,
-    food_pie: food_actual,
-    payments_pie: food_actual,
-    shopping_pie: shopping_actual,
-    transportation_pie: transportation_actual,
-    entertainment_pie: entertainment_actual,
+    // transactions
+    transaction: transactionResponse,
+    // budget overview
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
     remaining_balance: formatter.format(budget_remaining),
     percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
+    budget_text_color: getBudgetTextColor(
+      (budget_actual / budget_desired) * 100
+    ),
+    // food
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
-    percent_spent_food: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(0),
     remaining_food: formatter.format(food_remaining),
+    food_pie: food_actual,
+    food_text_color: getBudgetTextColor((food_actual / food_desired) * 100),
+    // entertainment
     desired_entertainment: formatter.format(entertainment_desired),
     actual_entertainment: formatter.format(entertainment_actual),
     remaining_entertainment: formatter.format(entertainment_remaining),
-    percent_spent_ent: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_ent: (
+      (entertainment_actual / entertainment_desired) *
+      100
+    ).toFixed(0),
+    entertainment_pie: entertainment_actual,
+    ent_text_color: getBudgetTextColor(
+      (entertainment_actual / entertainment_desired) * 100
+    ),
+    // shopping
     desired_shopping: formatter.format(shopping_desired),
     actual_shopping: formatter.format(shopping_actual),
-    percent_spent_shopping: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_shopping: (
+      (shopping_actual / shopping_desired) *
+      100
+    ).toFixed(0),
     remaining_shopping: formatter.format(shopping_remaining),
+    shopping_pie: shopping_actual,
+    shopping_text_color: getBudgetTextColor(
+      (shopping_actual / shopping_desired) * 100
+    ),
+    // payments
     desired_payments: formatter.format(payments_desired),
     actual_payments: formatter.format(payments_actual),
-    percent_spent_payments: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_payments: (
+      (payments_actual / payments_desired) *
+      100
+    ).toFixed(0),
     remaining_payments: formatter.format(payments_remaining),
+    payments_pie: food_actual,
+    payments_text_color: getBudgetTextColor(
+      (payments_actual / payments_desired) * 100
+    ),
+    // travel
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
-    percent_spent_travel: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(0),
     remaining_travel: formatter.format(travel_remaining),
+    travel_pie: travel_actual,
+    travel_text_color: getBudgetTextColor(
+      (travel_actual / travel_desired) * 100
+    ),
+    // transportation
     desired_transportation: formatter.format(transportation_desired),
     actual_transportation: formatter.format(transportation_actual),
-    percent_spent_trans: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_trans: (
+      (transportation_actual / transportation_desired) *
+      100
+    ).toFixed(0),
     remaining_transportation: formatter.format(transportation_remaining),
+    transportation_pie: transportation_actual,
+    trans_text_color: getBudgetTextColor(
+      (transportation_actual / transportation_desired) * 100
+    ),
+    // over or under budget
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "
@@ -278,9 +319,9 @@ app.get("/", (req, res) => {
   budget_desired = 0.0;
   budget_actual = 0.0;
   food_desired = 500.0;
-  food_actual = 150.0;
+  food_actual = 250.0;
   entertainment_desired = 200.0;
-  entertainment_actual = 75.0;
+  entertainment_actual = 300.0;
   shopping_desired = 250.0;
   shopping_actual = 100.0;
   payments_desired = 210.0;
@@ -334,6 +375,12 @@ function getMonthName() {
   return month[d.getMonth()];
 }
 
+function getBudgetTextColor(percent) {
+  if (percent >= 80 && percent < 90) return "warning";
+  else if (percent >= 90) return "danger";
+  else return "success";
+}
+
 // routing to second dynamic page
 app.get("/budget_profile", function (req, res) {
   food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
@@ -373,40 +420,81 @@ app.get("/budget_profile", function (req, res) {
     style: "budget.css",
     user: "Username",
     month: getMonthName(),
-    travel_pie: travel_actual,
-    food_pie: food_actual,
-    payments_pie: food_actual,
-    shopping_pie: shopping_actual,
-    transportation_pie: transportation_actual,
-    entertainment_pie: entertainment_actual,
+    // transactions
+    transaction: transactionResponse,
+    // budget overview
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
     remaining_balance: formatter.format(budget_remaining),
     percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
+    budget_text_color: getBudgetTextColor(
+      (budget_actual / budget_desired) * 100
+    ),
+    // food
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
-    percent_spent_food: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(0),
     remaining_food: formatter.format(food_remaining),
+    food_pie: food_actual,
+    food_text_color: getBudgetTextColor((food_actual / food_desired) * 100),
+    // entertainment
     desired_entertainment: formatter.format(entertainment_desired),
     actual_entertainment: formatter.format(entertainment_actual),
     remaining_entertainment: formatter.format(entertainment_remaining),
-    percent_spent_ent: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_ent: (
+      (entertainment_actual / entertainment_desired) *
+      100
+    ).toFixed(0),
+    entertainment_pie: entertainment_actual,
+    ent_text_color: getBudgetTextColor(
+      (entertainment_actual / entertainment_desired) * 100
+    ),
+    // shopping
     desired_shopping: formatter.format(shopping_desired),
     actual_shopping: formatter.format(shopping_actual),
-    percent_spent_shopping: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_shopping: (
+      (shopping_actual / shopping_desired) *
+      100
+    ).toFixed(0),
     remaining_shopping: formatter.format(shopping_remaining),
+    shopping_pie: shopping_actual,
+    shopping_text_color: getBudgetTextColor(
+      (shopping_actual / shopping_desired) * 100
+    ),
+    // payments
     desired_payments: formatter.format(payments_desired),
     actual_payments: formatter.format(payments_actual),
-    percent_spent_payments: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_payments: (
+      (payments_actual / payments_desired) *
+      100
+    ).toFixed(0),
     remaining_payments: formatter.format(payments_remaining),
+    payments_pie: food_actual,
+    payments_text_color: getBudgetTextColor(
+      (payments_actual / payments_desired) * 100
+    ),
+    // travel
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
-    percent_spent_travel: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(0),
     remaining_travel: formatter.format(travel_remaining),
+    travel_pie: travel_actual,
+    travel_text_color: getBudgetTextColor(
+      (travel_actual / travel_desired) * 100
+    ),
+    // transportation
     desired_transportation: formatter.format(transportation_desired),
     actual_transportation: formatter.format(transportation_actual),
-    percent_spent_trans: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_trans: (
+      (transportation_actual / transportation_desired) *
+      100
+    ).toFixed(0),
     remaining_transportation: formatter.format(transportation_remaining),
+    transportation_pie: transportation_actual,
+    trans_text_color: getBudgetTextColor(
+      (transportation_actual / transportation_desired) * 100
+    ),
+    // over or under budget
     over_or_under:
       budget_desired - budget_actual < 0
         ? "Over budget by: "

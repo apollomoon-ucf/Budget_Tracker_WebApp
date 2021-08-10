@@ -121,7 +121,7 @@
     return linkToken; }; const handler = Plaid.create({ token: await
     fetchLinkToken(), onSuccess: async (publicToken, metadata) => {
     console.log(publicToken); console.log(metadata); setTimeout(function(){
-    window.location.href='budget_profile'; }, 1000); await
+    window.location.href='budget_profile'; }, 1800); await
     fetch("/token-exchange", { method: "POST", body: JSON.stringify({
     publicToken }), headers: { "Content-Type": "application/json", }, }); },
     onExit: async (error, metadata) => { console.log(error);
