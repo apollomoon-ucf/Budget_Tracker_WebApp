@@ -317,7 +317,7 @@ app.get("/", (req, res) => {
   transactionResponse = {};
   investmentResponse = {};
   budget_desired = 0.0;
-  budget_actual = 0.0;
+  budget_actual = 450.0;
   food_desired = 500.0;
   food_actual = 250.0;
   entertainment_desired = 200.0;
@@ -512,6 +512,8 @@ app.get("/home", function (req, res) {
 app.get("/transaction_history", function (req, res) {
   res.render("transaction_history", {
     transaction: transactionResponse,
+    month: getMonthName(),
+    user: "Username",
     // message: JSON.stringify(transactionResponse.transactions),
   });
 });
@@ -519,6 +521,7 @@ app.get("/transaction_history", function (req, res) {
 app.get("/investment_profile", function (req, res) {
   res.render("investment_profile", {
     investment: investmentResponse,
+    user: "Username",
     // investment: JSON.stringify(investmentResponse.investment_transactions),
   });
 });

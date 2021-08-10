@@ -15,7 +15,7 @@
   $("#plaid-button").on("click", function (e) { handler.open(); }); })(jQuery);
 </script> }}
 
-<title>Budget Tracker - Home</title>
+<title>Budget Tracker - Transaction History</title>
 
 <head>
   <!-- Font Awesome -->
@@ -95,16 +95,29 @@
   </div>
 </nav>
 
+<section id="contact" class="contact section-bg" style="height: 150px;">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2 style="font-size: 20px;">{{user}}'s Transactions</h2>
+      <h5>{{month}} 2021</h5>
+      <footer style="font-size: 1px;">Displaying all transactions for the month
+        of
+        {{month}}:</footer>
+    </div>
+  </div>
+</section>
+
 <section id="hero">
 
   <div class="container">
     <div class="row">
       <div class="justify-content-center" data-aos="fade-up">
         <div class="w3-container">
-          <title>Budget Tracker - Transaction History</title>
 
           <h5>Transaction History</h5>
-          <footer>Displaying all transactions for the month of August:</footer>
+          <footer>After linking bank account with Plaid, all transactions for
+            {{month}}
+            will be displayed below:</footer>
 
           {{!-- <h5>
               {{#each message.transactions}} {{category}}: {{amount}}<br /> {{/each}}</h5> --}}

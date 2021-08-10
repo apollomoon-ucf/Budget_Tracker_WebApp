@@ -142,7 +142,7 @@
                       class="w3-circle"
                       style="width:25px"
                     />
-                    <span><a style="color: black" href="/profile">Log Out</a></span>
+                    <span><a style="color: black" href="/profile">Log In</a></span>
 
                   </div>
                 </div>
@@ -154,7 +154,10 @@
               0 0px 10px 0 rgb(147, 145, 148); background-color: rgba(206, 206,
               206, 0.212)!important; transition: 0.3s;}</style>
             {{! Budget Overview }}
-            <div class="col-xxxl-3 col-sm-50% col-12 mb-4">
+            <div
+              class="col-xxxl-3 col-sm-50% col-12 mb-2"
+              style="margin-bottom: 0px; padding-bottom: 0px;"
+            >
 
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
@@ -195,14 +198,54 @@
               </div>
             </div>
 
+            {{! <footer style="text-align: center;"><strong>Instructions:
+              </strong></footer> }}
+            <footer style="text-align: center;">Current budget goals were
+              calculated using your monthly spending habits.</footer>
+            <footer style="text-align: center;">To edit goals, enter the desired
+              amount, without commas, for each category below:</footer>
+            <br />
+            <br />
             {{! FOOD }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
               <div class="card text-black bg-light mb-3">
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{food_text_color}}">Food</h4>
-                      <p class="mb-0">Budget Goal: {{desired_food}}</p>
+                      <h4
+                        class="text-{{food_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Food</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredFood"
+                              id="desiredFood"
+                              class="form-control"
+                              placeholder="{{desired_food}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
+                      {{!-- <p class="mb-0" id="texty">Budget Goal:
+                        {{desired_food}}</p> --}}
                       <p class="mb-0">Spent: {{actual_food}}</p>
                       <p class="mb-0">Remaining: {{remaining_food}}</p>
                     </div>
@@ -562,47 +605,49 @@
                 </div>
               </div>
             </div>
+            <footer
+              style="text-align: left; padding-bottom:5px; padding-left:50px"
+            ><strong>
+                - Legend -
+              </strong></footer>
+            <br />
+            <div class="progress rounded" style="width: 100px;">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 50%;"
+                aria-valuenow="20"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <span>less than 80% spent</span>
+            <div class="progress rounded" style="width: 100px;">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                style="width: 80%;"
+                aria-valuenow="80"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <span>80% or more spent</span>
+
+            <div class="progress rounded" style="width: 100px;">
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                style="width: 100%;"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <span>Over budget, 100% spent</span>
           </div>
 
-          <footer style="text-align: center;"><strong>
-              - Legend for Budget Tracker -
-            </strong></footer>
-          <div class="progress rounded" style="width: 100px;">
-            <div
-              class="progress-bar bg-success"
-              role="progressbar"
-              style="width: 50%;"
-              aria-valuenow="20"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span>less than 80% spent</span>
-          <div class="progress rounded" style="width: 100px;">
-            <div
-              class="progress-bar bg-warning"
-              role="progressbar"
-              style="width: 80%;"
-              aria-valuenow="80"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span>80% or more spent</span>
-
-          <div class="progress rounded" style="width: 100px;">
-            <div
-              class="progress-bar bg-danger"
-              role="progressbar"
-              style="width: 100%;"
-              aria-valuenow="100"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <span>Over budget, 100% spent</span>
-
-          <br />
+          {{! <br />
           <br />
           <br />
           <footer style="text-align: center;"><strong>Instructions:
@@ -610,11 +655,11 @@
           <footer>Current budget goals were determined using an average of your
             monthly spending, minus outliers, in each budget category.</footer>
           <footer>To edit budget goals, please type in desired amount, without
-            commas, for each category below:</footer>
+            commas, for each category below:</footer> }}
 
           <br />
           <style>
-            input[type=text], select { width:75%; padding: 5% 0px; margin:15%;
+            input[type=text], select { width:75%; padding: 0% 0px; margin:0%;
             display: inline-block; border: 1px solid #ccc; border-radius: 4px;
             box-sizing: border-box; } #Submit { visibility: hidden; }
           </style>
