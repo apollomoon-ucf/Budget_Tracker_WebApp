@@ -204,8 +204,7 @@
               calculated using your monthly spending habits.</footer>
             <footer
               style="text-align: center; padding-bottom:20px; margin-top:0px"
-            >To edit goals, enter the desired amount, without commas, for each
-              category below:</footer>
+            >To edit goals, type desired amount, without commas, then press enter for each category below:</footer>
 
             {{! FOOD }}
             <div class="col-xxxl-3 col-sm-6 col-12 mb-4">
@@ -260,7 +259,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{food_text_color}}"
@@ -288,9 +287,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each food_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -310,9 +310,38 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{trans_text_color}}">Transportation</h4>
-                      <p class="mb-0">Budget Goal:
-                        {{desired_transportation}}</p>
+                      <h4
+                        class="text-{{trans_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Transportation</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredTransportation"
+                              id="desiredTransportation"
+                              class="form-control"
+                              placeholder="{{desired_transportation}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <p class="mb-0">Spent: {{actual_transportation}}</p>
                       <p class="mb-0">Remaining:
                         {{remaining_transportation}}</p>
@@ -324,7 +353,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{trans_text_color}}"
@@ -352,9 +381,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each transportation_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -371,8 +401,38 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{shopping_text_color}}">Shopping</h4>
-                      <p class="mb-0">Budget Goal: {{desired_shopping}}</p>
+                      <h4
+                        class="text-{{shopping_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Shopping</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredShopping"
+                              id="desiredShopping"
+                              class="form-control"
+                              placeholder="{{desired_shopping}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <p class="mb-0">Spent: {{actual_shopping}}</p>
                       <p class="mb-0">Remaining: {{remaining_shopping}}</p>
                     </div>
@@ -385,7 +445,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{shopping_text_color}}"
@@ -413,9 +473,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each shopping_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -432,8 +493,38 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{ent_text_color}}">Entertainment</h4>
-                      <p class="mb-0">Budget Goal: {{desired_entertainment}}</p>
+                      <h4
+                        class="text-{{ent_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Entertainment</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredEntertainment"
+                              id="desiredEntertainment"
+                              class="form-control"
+                              placeholder="{{desired_entertainment}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <p class="mb-0">Spent: {{actual_entertainment}}</p>
                       <p class="mb-0">Remaining: {{remaining_entertainment}}</p>
                     </div>
@@ -444,7 +535,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{ent_text_color}}"
@@ -472,9 +563,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each entertainment_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -491,8 +583,38 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{payments_text_color}}">Payments</h4>
-                      <p class="mb-0">Budget Goal: {{desired_payments}}</p>
+                      <h4
+                        class="text-{{payments_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Payments</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredPayments"
+                              id="desiredPayments"
+                              class="form-control"
+                              placeholder="{{desired_payments}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <p class="mb-0">Spent: {{actual_payments}}</p>
                       <p class="mb-0">Remaining: {{remaining_payments}}</p>
                     </div>
@@ -505,7 +627,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{payments_text_color}}"
@@ -533,9 +655,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each payments_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -552,8 +675,38 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between px-md-1">
                     <div>
-                      <h4 class="text-{{travel_text_color}}">Travel</h4>
-                      <p class="mb-0">Budget Goal: {{desired_travel}}</p>
+                      <h4
+                        class="text-{{travel_text_color}}"
+                        style="margin-bottom: 15px;"
+                      >Travel</h4>
+                      <form method="POST" style="margin-bottom: 0px;">
+                        <div class="row g-3 align-items-center">
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; margin-bottom: -5px; padding-right: 0px"
+                          >
+                            <label
+                              style="color: black;"
+                              for="inputPassword6"
+                              class="col-form-label"
+                            >Budget Goal:</label>
+                          </div>
+                          <div
+                            class="col-auto"
+                            style="margin-left: 0px; padding-top: 0px; margin-top: 0px; padding-left: 2px"
+                          >
+                            <input
+                              type="text"
+                              name="desiredTravel"
+                              id="desiredTravel"
+                              class="form-control"
+                              placeholder="{{desired_travel}}"
+                              style="text-align: center; width:50%; height:25px;"
+                              aria-describedby="passwordHelpInline"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <p class="mb-0">Spent: {{actual_travel}}</p>
                       <p class="mb-0">Remaining: {{remaining_travel}}</p>
                     </div>
@@ -566,7 +719,7 @@
                   <div class="px-md-1">
                     <div
                       class="progress mt-3 mb-1 rounded"
-                      style="height: 13px"
+                      style="height: 13px; box-shadow: inset 0 0 0 0.2px black !important;background-color: white !important;"
                     >
                       <div
                         class="progress-bar bg-{{travel_text_color}}"
@@ -594,9 +747,10 @@
                         class="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        {{#each transaction.transactions}}
-                          <li><a class="dropdown-item" href="#">8/05/21 -
-                              {{category}}
+                        {{#each travel_transactions}}
+                          <li><a class="dropdown-item" href="#">{{date}}
+                              -
+                              {{name}}
                               - ${{amount}}</a></li>
                           <li><hr class="dropdown-divider" /></li>
                         {{/each}}
@@ -665,105 +819,8 @@
             box-sizing: border-box; } #Submit { visibility: hidden; }
           </style>
 
-          <form method="POST">
-
-            <table>
-              <tr>
-                <th style="text-align:center"> </th>
-                <th style="text-align:center">New Goal</th>
-              </tr>
-              <tr>
-                <td style="text-align:center"><strong>Food :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_food}}
-                    name="desiredFood"
-                    id="desiredFood"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center"><strong>Transportation :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_transportation}}
-                    name="desiredTransportation"
-                    id="desiredTransportation"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center"><strong>Shopping :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_shopping}}
-                    name="desiredShopping"
-                    id="desiredShopping"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center"><strong>Entertainment :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_entertainment}}
-                    name="desiredEntertainment"
-                    id="desiredEntertainment"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center"><strong>Payments :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_payments}}
-                    name="desiredPayments"
-                    id="desiredPayments"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center"><strong>Travel :</strong></td>
-                <td style="text-align:center"><input
-                    type="text"
-                    placeholder={{desired_travel}}
-                    name="desiredTravel"
-                    id="desiredTravel"
-                    style="text-align:center"
-                  /></td>
-              </tr>
-
-              {{!-- <tr>
-              <td style="text-align:center">Actual $: </td>
-              <td style="text-align:center">{{actual_food}}</td>
-              <td style="text-align:center">{{actual_travel}}</td>
-              <td style="text-align:center">{{actual_payments}}</td>
-              <td style="text-align:center">{{actual_entertainment}}</td>
-              <td style="text-align:center">{{actual_shopping}}</td>
-            </tr> --}}
-
-              <tr>
-
-              </tr>
-              <td>
-                <input
-                  style="text-align:center"
-                  type="submit"
-                  value="Submit Budget"
-                  id="Submit"
-                />
-              </td>
-            </table>
-
-          </form>
-
           <a href="/transaction_history" class="w3-button w3-dark-grey">View all
-            transactions for this budget
+            transactions for this account
             <i class="fa fa-arrow-right"></i></a>
 
         </div>
@@ -799,6 +856,35 @@
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+
+
+{{! To-Do: move these scripts to their respective js files }}
+{{!-- <script type="text/javascript">
+  var foodArray = []; var foodObject = {};
+  var d = new Date(); var i = 0;
+  transactionsID = document.getElementById("foodTransactionsID");
+  transactionsID.innerHTML = " ";
+  {{#each food_transactions}}
+    foodObject = {date: '{{date}}', name: '{{name}}', amount: '{{amount}}'}; foodArray.push(foodObject);
+    if(parseInt(foodArray[i].date.substring(5, 7)) > (d.getMonth() + 1) - 1) {
+      transactionsID.innerHTML += "<li><a class='dropdown-item' href='#'>" + foodArray[i].date + " - " +
+      foodArray[i].name + " - $" + foodArray[i].amount + "</a></li><li><hr class='dropdown-divider' /></li>"; }
+    i++;
+  {{/each}}
+</script> --}}
+
+{{!-- <script type="text/javascript">
+    var d = new Date();
+    transactionsID = document.getElementById("foodTransactionsID");
+      transactionsID.innerHTML = " "; for (var i = 0; i < foodArray.length; i++) { if(
+      parseInt(foodArray[i].date.substring(5, 7)) > (d.getMonth() + 1) - 1) {
+      transactionsID.innerHTML += "<li><a class='dropdown-item' href='#'>" + foodArray[i].date + " - " +
+      foodArray[i].name + " - $" + foodArray[i].amount + "</a></li><li><hr class='dropdown-divider' /></li>"; } }
+
+</script> --}}
+
+
+
 
 {{! <p>Budget Profile, Investment Profile, and Transaction History will be available
   upon successful connection to your bank account.</p> }}
@@ -853,7 +939,7 @@
 
 <!-- Styles -->
 <style>
-  #chartdiv { width: 100%; height: 150px;}
+  #chartdiv { width: 100%; height: 150px; color:#f44c36}
 </style>
 
 <!-- Chart code -->
@@ -875,10 +961,22 @@
   {{travel_pie}}
   },]; var pieSeries = chart.series.push(new am4charts.PieSeries());
   pieSeries.dataFields.value = "dollars"; pieSeries.labels.template.fill =
-  am4core.color("black"); pieSeries.labels.template.disabled = false;
-  pieSeries.ticks.template.disabled = false; pieSeries.dataFields.category =
-  "category"; pieSeries.slices.template.stroke = am4core.color("lightgrey");
-  pieSeries.slices.template.strokeWidth = 2;
+  am4core.color("black"); pieSeries.dataFields.category = "category";
+  pieSeries.colors.list = [ am4core.color("#f44c36"), am4core.color("#e91e73"),
+  am4core.color("#9c27b0"), am4core.color("#673ab7"), am4core.color("#3f51b5"),
+  am4core.color("#2196f3"), ]; chart.responsive.enabled = true;
+  chart.responsive.rules.push({ relevant: function(target) { if
+  (target.pixelWidth > 423) {pieSeries.fontSize = 14; return true; } else if
+  (target.pixelWidth < 300 && target.pixelWidth > 220) {pieSeries.fontSize = 5;
+  return true; } else if (target.pixelWidth < 220) {return false; } else
+  {pieSeries.fontSize = 10; labelState.properties.disabled = false; return
+  false;} }, state: function(target, stateId) { if (target instanceof
+  am4charts.PieSeries) { var state = target.states.create(stateId); var
+  labelState = target.labels.template.states.create(stateId);
+  labelState.properties.disabled = false; var tickState =
+  target.ticks.template.states.create(stateId); tickState.properties.disabled =
+  false; return state; } return null; } }); pieSeries.slices.template.stroke =
+  am4core.color("lightgrey"); pieSeries.slices.template.strokeWidth = 2;
   pieSeries.slices.template.strokeOpacity = 1;
   pieSeries.hiddenState.properties.opacity = 1;
   pieSeries.hiddenState.properties.endAngle = -90;

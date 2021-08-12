@@ -80,8 +80,8 @@
 <section id="contact" class="contact section-bg" style="height: 150px;">
   <div class="container">
     <div class="section-title" data-aos="fade-up">
-      <h2 style="font-size: 20px;">{{user}}'s Investments</h2>
-      <footer style="font-size: 13px;">Stock Searching Coming Soon!</footer>
+      <h2 style="font-size: 20px; margin-bottom:10px">{{user}}'s Investments</h2>
+      <footer style="font-size: 13px;">Stock Market Searching Coming Soon!</footer>
       <footer style="font-size: 13px;">Example Stock Search Process:
         <a href="https://github.com/apollomoon-ucf/Stock_Search_WebApp">GitHub:
           Stock Searcher by Brian Moon</a></footer>
@@ -89,7 +89,7 @@
   </div>
 </section>
 
-<section id="hero">
+<section id="hero" style="margin-top: 0; padding-top:3%">
 
   <div class="container">
 
@@ -99,8 +99,88 @@
         <div class="w3-container">
 
           <h5>Investment Details</h5>
-          <footer>If any investment accounts are connected to the account you
-            linked with Plaid, their details will be displayed below:</footer>
+          <footer>If any investment information is available for the account you
+            linked with Plaid, trades for the past 6 months will be displayed
+            below:</footer>
+            <footer style="font-size: 11px;">(More features coming soon! (binary search for multiple search efficiency, etc.)</footer>
+          <br style="line-height: 100%;" />
+          <form onkeydown="return event.key != 'Enter';" class="row g-3">
+            <div class="col-auto">
+              <label class="sr-only" for="inlineFormInputName">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inlineFormInputName"
+                placeholder="How many months?"
+                style="width:min-content; text-align:center; font-size:14px"
+              />
+            </div>
+            <div class="col-auto">
+              <button
+                style="color: rgb(129, 129, 129); font-size:13px"
+                type="button"
+                class="btn"
+                onclick="showNumMonthsOfTransactions(document.getElementById('inlineFormInputName').value)"
+              >Submit</button>
+            </div>
+            <div class="col-auto">
+              <input
+                type="text"
+                class="form-control"
+                id="inlineFormInputName2"
+                placeholder="Search Name"
+                style="width:min-content; text-align:center; font-size:14px"
+              />
+            </div>
+            <div class="col-auto">
+              <button
+                style="color: rgb(129, 129, 129); font-size:13px"
+                type="button"
+                class="btn"
+                onclick="searchForName(document.getElementById('inlineFormInputName2').value)"
+              >Submit</button>
+            </div>              
+            <div class="col-auto">
+              <button
+                style="color: rgb(129, 129, 129); font-size:13px"
+                type="button"
+                class="btn"
+                onclick="quickSortTransactions()"
+              >Quicksort By Amount</button>
+            </div>
+            <div class="col-auto">
+              <button
+                style="color: rgb(129, 129, 129); font-size:13px"
+                type="button"
+                class="btn"
+                onclick="sortTransactionsByDate()"
+              >Sort By Date</button>
+            </div>
+          </form>            
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                {{! <th scope="col">Category</th> }}
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+
+            <tbody id="investmentsID">
+              {{!-- {{#each transaction.transactions}}
+                <tr>
+                  <td>{{date}}</td>
+                  <td>{{name}}</td>
+                  <td>{{category}}</td>
+                  <td>{{amount}}</td>
+                </tr>
+              {{/each}} --}}
+            </tbody>
+          </table>
+
           {{#section "investment_chart"}}
             <style>
               #bardiv { width: 100%; height: 500px; }
@@ -112,7 +192,7 @@
           {{!-- <h5>
     {{#each message.transactions}} {{category}}: {{amount}}<br /> {{/each}}</h5> --}}
 
-          <table
+          {{!-- <table
             class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white"
           >
             <td>
@@ -121,7 +201,7 @@
                 Amount: ${{amount}}<br /><br />
               {{/each}}
             </td>
-          </table><br />
+          </table><br /> --}}
 
         </div>
       </div>
@@ -163,3 +243,107 @@
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+
+
+{{! To-Do: move these scripts to their respective js files }}
+<script type="text/javascript">
+  var array = []; var object = {}; var sortedByDate = [];
+  var numberOfMonthsFromUser = 2; var d = new Date(); month = d.getMonth();
+  var i = 0;
+  transactionsID = document.getElementById("investmentsID");
+  transactionsID.innerHTML = "";
+  {{#each investment.investment_transactions}}
+    object = {date: '{{date}}', name: '{{name}}', amount: '{{amount}}'}; 
+    array.push(object); sortedByDate.push(object);
+    if(parseInt(sortedByDate[i].date.substring(5, 7)) > (month + 1) - numberOfMonthsFromUser) {
+    transactionsID.innerHTML += "<tr><td>" + sortedByDate[i].date + "</td><td>" +
+    sortedByDate[i].name + "</td><td>" + sortedByDate[i].amount + "</td></tr>"; } 
+    i = i + 1;
+  {{/each}}
+</script>
+
+<script type="text/javascript">
+ function showNumMonthsOfTransactions(numberOfMonths) {
+    numberOfMonthsFromUser = numberOfMonths;
+  transactionsID = document.getElementById("investmentsID");
+  transactionsID.innerHTML = " "; for (var i = 0; i < array.length; i++) { if(
+  parseInt(array[i].date.substring(5, 7)) > (month + 1) - numberOfMonths) {
+  transactionsID.innerHTML += "<tr><td>" + array[i].date + "</td><td>" +
+  array[i].name + "</td><td>" + array[i].amount + "</td></tr>"; } } }
+</script>
+
+
+{{! using quick sort since we are dealing with arrays and not linked lists }}
+<script>
+  function quickSortTransactions() {
+    quickSort(array, 0, array.length - 1);
+
+    transactionsID = document.getElementById("investmentsID");
+      transactionsID.innerHTML = " "; for (var i = 0; i < array.length; i++) { if(
+      parseInt(array[i].date.substring(5, 7)) > (month + 1) - numberOfMonthsFromUser) {
+      transactionsID.innerHTML += "<tr><td>" + array[i].date + "</td><td>" +
+      array[i].name + "</td><td>" + array[i].amount + "</td></tr>"; } }
+
+
+  }
+
+   function quickSort(transactionArray, startIndex, endingIndex) {
+      if (startIndex >= endingIndex) {
+        return;
+      }
+      const pivotIndex = startIndex;
+      let leftIndex = startIndex + 1;
+      let rightIndex = endingIndex;
+      while(rightIndex >= leftIndex) {
+        if(parseFloat(transactionArray[leftIndex].amount) > parseFloat(transactionArray[pivotIndex].amount) && parseFloat(transactionArray[rightIndex].amount) < parseFloat(transactionArray[pivotIndex].amount)) {
+          swapThese(leftIndex, rightIndex, transactionArray);
+        }
+        if(parseFloat(transactionArray[leftIndex].amount) <= parseFloat(transactionArray[pivotIndex].amount)) {
+          leftIndex++;
+        }
+        if(parseFloat(transactionArray[rightIndex].amount) >= parseFloat(transactionArray[pivotIndex].amount)) {
+          rightIndex--;
+        }        
+      }
+      swapThese(pivotIndex, rightIndex, transactionArray);
+      const leftSubArraySmaller = rightIndex - 1 - startIndex < endingIndex - (rightIndex + 1);
+      if(leftSubArraySmaller) {
+        quickSort(transactionArray, startIndex, rightIndex - 1);
+        quickSort(transactionArray, rightIndex + 1, endingIndex);
+      } else {
+        quickSort(transactionArray, rightIndex + 1, endingIndex);
+        quickSort(transactionArray, startIndex, rightIndex - 1);
+      }
+   }
+
+   function swapThese (i, j , transactionArray) {
+     let temp = transactionArray[j];
+     transactionArray[j] = transactionArray[i];
+     transactionArray[i] = temp;
+   }
+
+  
+</script>
+
+
+{{!-- sort transactions by date --}}
+<script>
+  function sortTransactionsByDate() {
+    transactionsID = document.getElementById("investmentsID");
+      transactionsID.innerHTML = " "; for (var i = 0; i < sortedByDate.length; i++) { if(
+      parseInt(sortedByDate[i].date.substring(5, 7)) > (month + 1) - numberOfMonthsFromUser) {
+      transactionsID.innerHTML += "<tr><td>" + sortedByDate[i].date + "</td><td>" +
+      sortedByDate[i].name + "</td><td>" + sortedByDate[i].amount + "</td></tr>"; } }
+  }
+</script>
+
+<script>
+  function searchForName(name) {
+    transactionsID = document.getElementById("investmentsID");
+    transactionsID.innerHTML = " "; 
+    for (var i = 0; i < sortedByDate.length; i++) { if(
+      parseInt(sortedByDate[i].date.substring(5, 7)) > (month + 1) - numberOfMonthsFromUser && sortedByDate[i].name.toLowerCase().includes(name.toLowerCase()) == true) {
+      transactionsID.innerHTML += "<tr><td>" + sortedByDate[i].date + "</td><td>" +
+      sortedByDate[i].name + "</td><td>" + sortedByDate[i].amount + "</td></tr>"; } }    
+  }
+</script>

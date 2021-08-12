@@ -34,23 +34,37 @@ app.set("view engine", ".hbs");
 // init transactions
 var transactionResponse = {};
 var investmentResponse = {};
+var transactionHistoryDataForDefaultGoals = {};
 // init budget
-var budget_desired = 750.0;
-var budget_actual = 400.0;
-var food_desired = 500.0;
-var food_actual = 150.0;
-var entertainment_desired = 200.0;
-var entertainment_actual = 300.0;
-var shopping_desired = 250.0;
-var shopping_actual = 100.0;
-var payments_desired = 210.0;
-var payments_actual = 50.0;
-var travel_desired = 175.0;
-var travel_actual = 100.0;
-var transportation_desired = 180.0;
-var transportation_actual = 150.0;
+var budget_desired = 0.0;
+var budget_actual = 0.0;
+var food_desired = 0.0;
+var food_actual = 0.0;
+var foodRunningTotal = 0.0;
+var entertainment_desired = 0.0;
+var entertainment_actual = 0.0;
+var entertainmentRunningTotal = 0.0;
+var shopping_desired = 0.0;
+var shopping_actual = 0.0;
+var shoppingRunningTotal = 0.0;
+var payments_desired = 0.0;
+var payments_actual = 0.0;
+var paymentsRunningTotal = 0.0;
+var travel_desired = 0.0;
+var travel_actual = 0.0;
+var travelRunningTotal = 0.0;
+var transportation_desired = 0.0;
+var transportation_actual = 0.0;
+var transportationRunningTotal = 0.0;
 var over_under = "Budget Balanced";
 var over_under_by = 0.0;
+var food_transactions = [];
+var transportation_transactions = [];
+var shopping_transactions = [];
+var entertainment_transactions = [];
+var payments_transactions = [];
+var travel_transactions = [];
+var transactions = {};
 
 // this will allow us to easily concatanate paths
 const path = require("path");
@@ -84,6 +98,8 @@ app.get("/create-link-token", async (req, res) => {
 
 // create route after user goes to plaid link, exchanges public token for access token,
 app.post("/token-exchange", async (req, res) => {
+  transactionResponse = {};
+  investmentResponse = {};
   // res.render("budget_profile");
   // getting the token from the request body from front end
   const { publicToken } = req.body;
@@ -107,84 +123,216 @@ app.post("/token-exchange", async (req, res) => {
   //   console.log("------");
   //   console.log("Balance response: ");
   //   console.log(util.inspect(balanceResponse, false, null, true));
-  //   // balance endpoint
+  var today = new Date();
+  var date = String(today.getDate()).padStart(2, "0");
+  var month = String(today.getMonth() + 1).padStart(2, "0");
+  var year = today.getFullYear();
+
+  var adjustedYear = today.getFullYear();
+  var adjustedMonth = today.getMonth() + 1;
+  if (adjustedMonth < 7) {
+    adjustedYear += -1;
+    adjustedMonth += 6;
+  } else {
+    adjustedMonth += -6;
+  }
+  // investment endpoint
   investmentResponse = await plaidClient.getInvestmentTransactions(
     accessToken,
-    "2021-05-01",
-    "2021-06-01",
+    adjustedYear + "-" + String(adjustedMonth + 3).padStart(2, "0") + "-" + "01",
+    year + "-" + month + "-" + date,
     {}
   );
   // console.log("------");
   // console.log("Balance response: ");
   // console.log(util.inspect(balanceResponse, false, null, true));
   // transaction endpoint
+  // get monthly activity
   transactionResponse = await plaidClient.getTransactions(
     accessToken,
-    "2021-05-01",
-    "2021-06-01",
+    adjustedYear + "-" + String(adjustedMonth + 3).padStart(2, "0") + "-" + "01",
+    year + "-" + month + "-" + date,
     {}
   );
-  console.log("------");
+
+  // console.log("------");
   //   console.log("Transaction response: ");
-  console.log("Finance App v2");
-  console.log("Transactions: ");
-  var transaction_type = "other";
+  // console.log("Finance App v2");
+  // console.log("Transactions: ");
+
+  budget_desired = 0.0;
+  budget_actual = 0.0;
+  food_desired = 0.0;
+  food_actual = 0.0;
+  entertainment_desired = 0.0;
+  entertainment_actual = 0.0;
+  shopping_desired = 0.0;
+  shopping_actual = 0.0;
+  payments_desired = 0.0;
+  payments_actual = 0.0;
+  travel_desired = 0.0;
+  travel_actual = 0.0;
+  transportation_desired = 0.0;
+  transportation_actual = 0.0;
+  foodRunningTotal = 0.0;
+  entertainmentRunningTotal = 0.0;
+  shoppingRunningTotal = 0.0;
+  paymentsRunningTotal = 0.0;
+  travelRunningTotal = 0.0;
+  transportationRunningTotal = 0.0;
+  var date = new Date();
+  d = date.getMonth();
+  // var transaction_type = "other";
   for (var i = 0; i < transactionResponse.transactions.length; i++) {
-    const account_id = transactionResponse.transactions[i].account_id;
-    for (var j = 0; j < transactionResponse.accounts.length; j++) {
-      if (transactionResponse.accounts[j].account_id === account_id) {
-        transaction_type = transactionResponse.accounts[j].subtype;
+    // const account_id = transactionResponse.transactions[i].account_id;
+    // for (var j = 0; j < transactionResponse.accounts.length; j++) {
+    //   if (transactionResponse.accounts[j].account_id === account_id) {
+    //     transaction_type = transactionResponse.accounts[j].subtype;
+    //   }
+    // }
+    // console.log("Transaction " + i + ":");
+    // console.log("Category: " + transactionResponse.transactions[i].category[0]);
+
+    if (transactionResponse.transactions[i].amount >= 0) {
+      // Food
+      if (transactionResponse.transactions[i].category[0].includes("Food")) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          food_transactions.push(transactions);
+          food_actual += transactionResponse.transactions[i].amount;
+        }
+        foodRunningTotal += transactionResponse.transactions[i].amount;
+      }
+      // Entertainment
+      else if (
+        transactionResponse.transactions[i].category[0].includes("Recreation")
+      ) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          entertainment_transactions.push(transactions);
+          entertainment_actual += transactionResponse.transactions[i].amount;
+        }
+        entertainmentRunningTotal += transactionResponse.transactions[i].amount;
+      }
+      // Shopping
+      else if (
+        transactionResponse.transactions[i].category[0].includes("Shop")
+      ) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          shopping_transactions.push(transactions);
+          shopping_actual += transactionResponse.transactions[i].amount;
+        }
+        shoppingRunningTotal += transactionResponse.transactions[i].amount;
+      }
+      // Payments
+      else if (
+        transactionResponse.transactions[i].category[0].includes("Transfer") ||
+        transactionResponse.transactions[i].category[0].includes("Payment")
+      ) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          payments_transactions.push(transactions);
+          payments_actual += transactionResponse.transactions[i].amount;
+        }
+        paymentsRunningTotal += transactionResponse.transactions[i].amount;
+      }
+      // Travel
+      else if (
+        transactionResponse.transactions[i].category[0].includes("Travel") &&
+        transactionResponse.transactions[i].category[1].includes("Airlines")
+      ) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          travel_transactions.push(transactions);
+          travel_actual += transactionResponse.transactions[i].amount;
+        }
+        travelRunningTotal += transactionResponse.transactions[i].amount;
+      }
+      // Transportation
+      else if (
+        transactionResponse.transactions[i].category[0].includes("Travel") &&
+        !transactionResponse.transactions[i].category[1].includes("Airlines")
+      ) {
+        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+          transactions = {
+            date: transactionResponse.transactions[i].date,
+            name: transactionResponse.transactions[i].name,
+            amount: transactionResponse.transactions[i].amount,
+          };
+          transportation_transactions.push(transactions);
+          transportation_actual += transactionResponse.transactions[i].amount;
+        }
+        transportationRunningTotal += transactionResponse.transactions[i].amount;
       }
     }
-    console.log("Transaction " + i + ":");
-    console.log("Category: " + transactionResponse.transactions[i].category[0]);
-    if (transactionResponse.transactions[i].category[0].includes("Food")) {
-      food_actual += transactionResponse.transactions[i].amount;
-    } else if (
-      transactionResponse.transactions[i].category[0].includes("Recreation")
-    ) {
-      entertainment_actual += transactionResponse.transactions[i].amount;
-    } else if (
-      transactionResponse.transactions[i].category[0].includes("Shop")
-    ) {
-      shopping_actual += transactionResponse.transactions[i].amount;
-    } else if (
-      transactionResponse.transactions[i].category[0].includes("Transfer") ||
-      transactionResponse.transactions[i].category[0].includes("Payment")
-    ) {
-      payments_actual += transactionResponse.transactions[i].amount;
-    } else if (
-      transactionResponse.transactions[i].category[0].includes("Travel")
-    ) {
-      travel_actual += transactionResponse.transactions[i].amount;
-    }
-    console.log("Amount: $" + transactionResponse.transactions[i].amount);
-    budget_actual = budget_actual + transactionResponse.transactions[i].amount;
-    console.log("Date: " + transactionResponse.transactions[i].date);
-    console.log(
-      "Description: " +
-        transactionResponse.transactions[i].merchant_name +
-        " - " +
-        transactionResponse.transactions[i].category[1] +
-        " - " +
-        transactionResponse.transactions[i].category[2]
-    );
-    console.log("Type: " + transaction_type);
-    console.log("------");
+    // console.log("Amount: $" + transactionResponse.transactions[i].amount);
+    // budget_actual = budget_actual + transactionResponse.transactions[i].amount;
+    // console.log("Date: " + transactionResponse.transactions[i].date);
+    // console.log(
+    //   "Description: " +
+    //     transactionResponse.transactions[i].merchant_name +
+    //     " - " +
+    //     transactionResponse.transactions[i].category[1] +
+    //     " - " +
+    //     transactionResponse.transactions[i].category[2]
+    // );
+    // console.log("Type: " + transaction_type);
+    // console.log("------");
     // res.status(200).redirect("home.hbs");
     // res.status(200).redirect("/home");
     // res.status(401).render("index", { message: "TEST" });
     // res.status(401).render("/", { message: "TEST" });
+
   }
+  setDefaultDesiredBudgetGoals();
   // for (int i = 0; i < investmentResponse.investment_transactions; i++) {
   // investmentResponse.securities
   // }
-  console.log(investmentResponse);
+  // console.log(investmentResponse);
   //   console.log(util.inspect(transactionResponse, false, null, true));
   // tell front status is good
   // res.sendStatus(200);
   // res.status(200).render("budget_profile");
 });
+
+// function getAverageOfBudgetCategoryMinueOutliers(months) {
+//   foodRunningTotal
+//   entertainmentRunningTotal
+//   shoppingRunningTotal
+//   travelRunningTotal
+//   transportationRunningTotal
+//   paymentsRunningTotal
+// }
+// NOTE: temporary simple averages until clamping outliers is implemented above
+function setDefaultDesiredBudgetGoals(){
+  food_desired = foodRunningTotal / 3;
+  entertainment_desired = entertainmentRunningTotal / 3;
+  shopping_desired = shoppingRunningTotal / 3;
+  travel_desired = travelRunningTotal / 3;
+  transportation_desired = transportationRunningTotal / 3;
+  payments_desired = paymentsRunningTotal / 3;
+}
 
 app.post("/budget_profile", function (req, res) {
   food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
@@ -199,7 +347,7 @@ app.post("/budget_profile", function (req, res) {
     : travel_desired;
   transportation_desired = req.body.desiredTransportation
     ? req.body.desiredTransportation
-    : travel_desired;
+    : transportation_desired;
   payments_desired = req.body.desiredPayments
     ? req.body.desiredPayments
     : payments_desired;
@@ -211,6 +359,9 @@ app.post("/budget_profile", function (req, res) {
     +travel_desired +
     +transportation_desired +
     +payments_desired;
+
+  budget_actual =
+    food_actual + entertainment_actual + shopping_actual + travel_actual + transportation_actual + payments_actual;
 
   var budget_remaining = budget_desired - budget_actual;
   var food_remaining = food_desired - food_actual;
@@ -226,18 +377,24 @@ app.post("/budget_profile", function (req, res) {
     month: getMonthName(),
     // transactions
     transaction: transactionResponse,
+    food_transactions: food_transactions,
+    transportation_transactions: transportation_transactions,
+    shopping_transactions: shopping_transactions,
+    entertainment_transactions: entertainment_transactions,
+    payments_transactions: payments_transactions,
+    travel_transactions: travel_transactions,
     // budget overview
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
     remaining_balance: formatter.format(budget_remaining),
-    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(1),
     budget_text_color: getBudgetTextColor(
       (budget_actual / budget_desired) * 100
     ),
     // food
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
-    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(0),
+    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(1),
     remaining_food: formatter.format(food_remaining),
     food_pie: food_actual,
     food_text_color: getBudgetTextColor((food_actual / food_desired) * 100),
@@ -248,7 +405,7 @@ app.post("/budget_profile", function (req, res) {
     percent_spent_ent: (
       (entertainment_actual / entertainment_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     entertainment_pie: entertainment_actual,
     ent_text_color: getBudgetTextColor(
       (entertainment_actual / entertainment_desired) * 100
@@ -259,7 +416,7 @@ app.post("/budget_profile", function (req, res) {
     percent_spent_shopping: (
       (shopping_actual / shopping_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_shopping: formatter.format(shopping_remaining),
     shopping_pie: shopping_actual,
     shopping_text_color: getBudgetTextColor(
@@ -271,7 +428,7 @@ app.post("/budget_profile", function (req, res) {
     percent_spent_payments: (
       (payments_actual / payments_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_payments: formatter.format(payments_remaining),
     payments_pie: food_actual,
     payments_text_color: getBudgetTextColor(
@@ -280,7 +437,7 @@ app.post("/budget_profile", function (req, res) {
     // travel
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
-    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(0),
+    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(1),
     remaining_travel: formatter.format(travel_remaining),
     travel_pie: travel_actual,
     travel_text_color: getBudgetTextColor(
@@ -292,7 +449,7 @@ app.post("/budget_profile", function (req, res) {
     percent_spent_trans: (
       (transportation_actual / transportation_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_transportation: formatter.format(transportation_remaining),
     transportation_pie: transportation_actual,
     trans_text_color: getBudgetTextColor(
@@ -314,9 +471,16 @@ app.post("/budget_profile", function (req, res) {
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, "/home"));
   res.render("home");
+  food_transactions = [];
+  transportation_transactions = [];
+  shopping_transactions = [];
+  entertainment_transactions = [];
+  payments_transactions = [];
+  travel_transactions = [];
+  transactions = {};
   transactionResponse = {};
   investmentResponse = {};
-  budget_desired = 0.0;
+  budget_desired = 2000.0;
   budget_actual = 450.0;
   food_desired = 500.0;
   food_actual = 250.0;
@@ -328,10 +492,11 @@ app.get("/", (req, res) => {
   payments_actual = 50.0;
   travel_desired = 175.0;
   travel_actual = 100.0;
-  over_under = "Budget Balanced";
-  over_under_by = 0.0;
   transportation_desired = 180.0;
   transportation_actual = 150.0;
+  over_under = "Budget Balanced";
+  over_under_by = 0.0;
+
   // res.status(200).redirect("budget_profile");
   // res.status(401).render("home", {
   //   message: "sowwy, your email or password is incorrect :(",
@@ -376,8 +541,8 @@ function getMonthName() {
 }
 
 function getBudgetTextColor(percent) {
-  if (percent >= 80 && percent < 90) return "warning";
-  else if (percent >= 90) return "danger";
+  if (percent >= 80 && percent < 100) return "warning";
+  else if (percent >= 100) return "danger";
   else return "success";
 }
 
@@ -395,7 +560,7 @@ app.get("/budget_profile", function (req, res) {
     : travel_desired;
   transportation_desired = req.body.desiredTransportation
     ? req.body.desiredTransportation
-    : travel_desired;
+    : transportation_desired;
   payments_desired = req.body.desiredPayments
     ? req.body.desiredPayments
     : payments_desired;
@@ -407,6 +572,9 @@ app.get("/budget_profile", function (req, res) {
     +travel_desired +
     +transportation_desired +
     +payments_desired;
+
+    budget_actual =
+    food_actual + entertainment_actual + shopping_actual + travel_actual + transportation_actual + payments_actual;
 
   var budget_remaining = budget_desired - budget_actual;
   var food_remaining = food_desired - food_actual;
@@ -422,18 +590,24 @@ app.get("/budget_profile", function (req, res) {
     month: getMonthName(),
     // transactions
     transaction: transactionResponse,
+    food_transactions: food_transactions,
+    transportation_transactions: transportation_transactions,
+    shopping_transactions: shopping_transactions,
+    entertainment_transactions: entertainment_transactions,
+    payments_transactions: payments_transactions,
+    travel_transactions: travel_transactions,
     // budget overview
     desired_balance: formatter.format(budget_desired),
     actual_balance: formatter.format(budget_actual),
     remaining_balance: formatter.format(budget_remaining),
-    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(0),
+    percent_spent_balance: ((budget_actual / budget_desired) * 100).toFixed(1),
     budget_text_color: getBudgetTextColor(
       (budget_actual / budget_desired) * 100
     ),
     // food
     desired_food: formatter.format(food_desired),
     actual_food: formatter.format(food_actual),
-    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(0),
+    percent_spent_food: ((food_actual / food_desired) * 100).toFixed(1),
     remaining_food: formatter.format(food_remaining),
     food_pie: food_actual,
     food_text_color: getBudgetTextColor((food_actual / food_desired) * 100),
@@ -444,7 +618,7 @@ app.get("/budget_profile", function (req, res) {
     percent_spent_ent: (
       (entertainment_actual / entertainment_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     entertainment_pie: entertainment_actual,
     ent_text_color: getBudgetTextColor(
       (entertainment_actual / entertainment_desired) * 100
@@ -455,7 +629,7 @@ app.get("/budget_profile", function (req, res) {
     percent_spent_shopping: (
       (shopping_actual / shopping_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_shopping: formatter.format(shopping_remaining),
     shopping_pie: shopping_actual,
     shopping_text_color: getBudgetTextColor(
@@ -467,7 +641,7 @@ app.get("/budget_profile", function (req, res) {
     percent_spent_payments: (
       (payments_actual / payments_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_payments: formatter.format(payments_remaining),
     payments_pie: food_actual,
     payments_text_color: getBudgetTextColor(
@@ -476,7 +650,7 @@ app.get("/budget_profile", function (req, res) {
     // travel
     desired_travel: formatter.format(travel_desired),
     actual_travel: formatter.format(travel_actual),
-    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(0),
+    percent_spent_travel: ((travel_actual / travel_desired) * 100).toFixed(1),
     remaining_travel: formatter.format(travel_remaining),
     travel_pie: travel_actual,
     travel_text_color: getBudgetTextColor(
@@ -488,7 +662,7 @@ app.get("/budget_profile", function (req, res) {
     percent_spent_trans: (
       (transportation_actual / transportation_desired) *
       100
-    ).toFixed(0),
+    ).toFixed(1),
     remaining_transportation: formatter.format(transportation_remaining),
     transportation_pie: transportation_actual,
     trans_text_color: getBudgetTextColor(
@@ -514,6 +688,7 @@ app.get("/transaction_history", function (req, res) {
     transaction: transactionResponse,
     month: getMonthName(),
     user: "Username",
+    food_transactions: food_transactions,
     // message: JSON.stringify(transactionResponse.transactions),
   });
 });
