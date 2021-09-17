@@ -1,6 +1,6 @@
 # Budget Tracker Web App w/Plaid API
 
-For one of my summer projects, while learning full stack development, I will be building a budget tracking app using the Plaid API. This project is currenty in the development phase, exciting updates coming soon! -Brian Moon
+For one of my summer projects, while learning full stack development, I will be building a budget tracking app using the Plaid API. This project is currently in the development phase, exciting updates coming soon! -Brian Moon
 
 Tech Used: Node.js, Express, Handlebars, Plaid API, Heroku, JavaScript, HTML, CSS, SQL
 
