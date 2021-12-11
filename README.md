@@ -4,10 +4,10 @@ For one of my summer projects, while learning full stack development, I will be 
 
 - Update (12/2021) -
   Features to be released this month:
-- •connection to MySQL database for saved user sessions
-- •registration/login
-- •user profiles
-- •extended transaction history
+  - connection to MySQL database for saved user sessions
+  - registration/login
+  - user profiles
+  - extended transaction history
 
 Tech Used: Node.js, Express, Handlebars, Plaid API, Heroku, JavaScript, HTML, CSS, SQL
 
