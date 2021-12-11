@@ -31,6 +31,7 @@ var hbs = exphbs.create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
+// TEMP VARIABLES UNTIL THE DATABASE HAS BEEN CONNECTED
 // init transactions
 var transactionResponse = {};
 var investmentResponse = {};
@@ -139,7 +140,11 @@ app.post("/token-exchange", async (req, res) => {
   // investment endpoint
   investmentResponse = await plaidClient.getInvestmentTransactions(
     accessToken,
-    adjustedYear + "-" + String(adjustedMonth + 3).padStart(2, "0") + "-" + "01",
+    adjustedYear +
+      "-" +
+      String(adjustedMonth + 3).padStart(2, "0") +
+      "-" +
+      "01",
     year + "-" + month + "-" + date,
     {}
   );
@@ -150,7 +155,11 @@ app.post("/token-exchange", async (req, res) => {
   // get monthly activity
   transactionResponse = await plaidClient.getTransactions(
     accessToken,
-    adjustedYear + "-" + String(adjustedMonth + 3).padStart(2, "0") + "-" + "01",
+    adjustedYear +
+      "-" +
+      String(adjustedMonth + 3).padStart(2, "0") +
+      "-" +
+      "01",
     year + "-" + month + "-" + date,
     {}
   );
@@ -196,7 +205,10 @@ app.post("/token-exchange", async (req, res) => {
     if (transactionResponse.transactions[i].amount >= 0) {
       // Food
       if (transactionResponse.transactions[i].category[0].includes("Food")) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -211,7 +223,10 @@ app.post("/token-exchange", async (req, res) => {
       else if (
         transactionResponse.transactions[i].category[0].includes("Recreation")
       ) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -226,7 +241,10 @@ app.post("/token-exchange", async (req, res) => {
       else if (
         transactionResponse.transactions[i].category[0].includes("Shop")
       ) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -242,7 +260,10 @@ app.post("/token-exchange", async (req, res) => {
         transactionResponse.transactions[i].category[0].includes("Transfer") ||
         transactionResponse.transactions[i].category[0].includes("Payment")
       ) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -258,7 +279,10 @@ app.post("/token-exchange", async (req, res) => {
         transactionResponse.transactions[i].category[0].includes("Travel") &&
         transactionResponse.transactions[i].category[1].includes("Airlines")
       ) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -274,7 +298,10 @@ app.post("/token-exchange", async (req, res) => {
         transactionResponse.transactions[i].category[0].includes("Travel") &&
         !transactionResponse.transactions[i].category[1].includes("Airlines")
       ) {
-        if(parseInt(transactionResponse.transactions[i].date.substring(5, 7)) > (d + 1) - 1){
+        if (
+          parseInt(transactionResponse.transactions[i].date.substring(5, 7)) >
+          d + 1 - 1
+        ) {
           transactions = {
             date: transactionResponse.transactions[i].date,
             name: transactionResponse.transactions[i].name,
@@ -283,7 +310,8 @@ app.post("/token-exchange", async (req, res) => {
           transportation_transactions.push(transactions);
           transportation_actual += transactionResponse.transactions[i].amount;
         }
-        transportationRunningTotal += transactionResponse.transactions[i].amount;
+        transportationRunningTotal +=
+          transactionResponse.transactions[i].amount;
       }
     }
     // console.log("Amount: $" + transactionResponse.transactions[i].amount);
@@ -303,7 +331,6 @@ app.post("/token-exchange", async (req, res) => {
     // res.status(200).redirect("/home");
     // res.status(401).render("index", { message: "TEST" });
     // res.status(401).render("/", { message: "TEST" });
-
   }
   setDefaultDesiredBudgetGoals();
   // for (int i = 0; i < investmentResponse.investment_transactions; i++) {
@@ -325,7 +352,7 @@ app.post("/token-exchange", async (req, res) => {
 //   paymentsRunningTotal
 // }
 // NOTE: temporary simple averages until clamping outliers is implemented above
-function setDefaultDesiredBudgetGoals(){
+function setDefaultDesiredBudgetGoals() {
   food_desired = foodRunningTotal / 3;
   entertainment_desired = entertainmentRunningTotal / 3;
   shopping_desired = shoppingRunningTotal / 3;
@@ -361,7 +388,12 @@ app.post("/budget_profile", function (req, res) {
     +payments_desired;
 
   budget_actual =
-    food_actual + entertainment_actual + shopping_actual + travel_actual + transportation_actual + payments_actual;
+    food_actual +
+    entertainment_actual +
+    shopping_actual +
+    travel_actual +
+    transportation_actual +
+    payments_actual;
 
   var budget_remaining = budget_desired - budget_actual;
   var food_remaining = food_desired - food_actual;
@@ -573,8 +605,13 @@ app.get("/budget_profile", function (req, res) {
     +transportation_desired +
     +payments_desired;
 
-    budget_actual =
-    food_actual + entertainment_actual + shopping_actual + travel_actual + transportation_actual + payments_actual;
+  budget_actual =
+    food_actual +
+    entertainment_actual +
+    shopping_actual +
+    travel_actual +
+    transportation_actual +
+    payments_actual;
 
   var budget_remaining = budget_desired - budget_actual;
   var food_remaining = food_desired - food_actual;
