@@ -3,10 +3,11 @@
 For one of my summer projects, while learning full stack development, I will be building a budget tracking app using the Plaid API. This project is currently in the development phase, exciting updates coming soon! -Brian Moon
 
 - Update (12/2021) -
-  Features to be released this month: •connection to MySQL database for saved user sessions
-  •registration/login
-  •user profiles
-  •extended transaction history
+  Features to be released this month:
+- •connection to MySQL database for saved user sessions
+- •registration/login
+- •user profiles
+- •extended transaction history
 
 Tech Used: Node.js, Express, Handlebars, Plaid API, Heroku, JavaScript, HTML, CSS, SQL
 
