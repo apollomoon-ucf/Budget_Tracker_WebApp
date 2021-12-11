@@ -91,39 +91,22 @@ app.get("/create-link-token", async (req, res) => {
     country_codes: ["US"],
     language: "en",
   });
-  // res.render("budget_profile");
+
   // pass the created link token back to the front end
   res.json({ linkToken });
-  // res.status(200).render("budget_profile");
 });
 
 // create route after user goes to plaid link, exchanges public token for access token,
 app.post("/token-exchange", async (req, res) => {
   transactionResponse = {};
   investmentResponse = {};
-  // res.render("budget_profile");
+
   // getting the token from the request body from front end
   const { publicToken } = req.body;
   const { access_token: accessToken } = await plaidClient.exchangePublicToken(
     publicToken
   );
 
-  // call api endpoints
-  //   // auth endpoint
-  //   const authResponse = await plaidClient.getAuth(accessToken);
-  //   console.log("-------");
-  //   console.log("Auth response: ");
-  //   console.log(util.inspect(authResponse, false, null, true));
-  //   // identity endpoint
-  //   const identityResponse = await plaidClient.getIdentity(accessToken);
-  //   console.log("------");
-  //   console.log("Identity response: ");
-  //   console.log(util.inspect(identityResponse, false, null, true));
-  //   // balance endpoint
-  //   const balanceResponse = await plaidClient.getBalance(accessToken);
-  //   console.log("------");
-  //   console.log("Balance response: ");
-  //   console.log(util.inspect(balanceResponse, false, null, true));
   var today = new Date();
   var date = String(today.getDate()).padStart(2, "0");
   var month = String(today.getMonth() + 1).padStart(2, "0");
@@ -148,9 +131,7 @@ app.post("/token-exchange", async (req, res) => {
     year + "-" + month + "-" + date,
     {}
   );
-  // console.log("------");
-  // console.log("Balance response: ");
-  // console.log(util.inspect(balanceResponse, false, null, true));
+
   // transaction endpoint
   // get monthly activity
   transactionResponse = await plaidClient.getTransactions(
@@ -164,11 +145,7 @@ app.post("/token-exchange", async (req, res) => {
     {}
   );
 
-  // console.log("------");
-  //   console.log("Transaction response: ");
-  // console.log("Finance App v2");
-  // console.log("Transactions: ");
-
+  // init temp variables (these will be retrieved from the DB after update)
   budget_desired = 0.0;
   budget_actual = 0.0;
   food_desired = 0.0;
@@ -189,19 +166,12 @@ app.post("/token-exchange", async (req, res) => {
   paymentsRunningTotal = 0.0;
   travelRunningTotal = 0.0;
   transportationRunningTotal = 0.0;
+
+  // get date
   var date = new Date();
   d = date.getMonth();
-  // var transaction_type = "other";
-  for (var i = 0; i < transactionResponse.transactions.length; i++) {
-    // const account_id = transactionResponse.transactions[i].account_id;
-    // for (var j = 0; j < transactionResponse.accounts.length; j++) {
-    //   if (transactionResponse.accounts[j].account_id === account_id) {
-    //     transaction_type = transactionResponse.accounts[j].subtype;
-    //   }
-    // }
-    // console.log("Transaction " + i + ":");
-    // console.log("Category: " + transactionResponse.transactions[i].category[0]);
 
+  for (var i = 0; i < transactionResponse.transactions.length; i++) {
     if (transactionResponse.transactions[i].amount >= 0) {
       // Food
       if (transactionResponse.transactions[i].category[0].includes("Food")) {
@@ -314,35 +284,12 @@ app.post("/token-exchange", async (req, res) => {
           transactionResponse.transactions[i].amount;
       }
     }
-    // console.log("Amount: $" + transactionResponse.transactions[i].amount);
-    // budget_actual = budget_actual + transactionResponse.transactions[i].amount;
-    // console.log("Date: " + transactionResponse.transactions[i].date);
-    // console.log(
-    //   "Description: " +
-    //     transactionResponse.transactions[i].merchant_name +
-    //     " - " +
-    //     transactionResponse.transactions[i].category[1] +
-    //     " - " +
-    //     transactionResponse.transactions[i].category[2]
-    // );
-    // console.log("Type: " + transaction_type);
-    // console.log("------");
-    // res.status(200).redirect("home.hbs");
-    // res.status(200).redirect("/home");
-    // res.status(401).render("index", { message: "TEST" });
-    // res.status(401).render("/", { message: "TEST" });
   }
+  // set default values for budget
   setDefaultDesiredBudgetGoals();
-  // for (int i = 0; i < investmentResponse.investment_transactions; i++) {
-  // investmentResponse.securities
-  // }
-  // console.log(investmentResponse);
-  //   console.log(util.inspect(transactionResponse, false, null, true));
-  // tell front status is good
-  // res.sendStatus(200);
-  // res.status(200).render("budget_profile");
 });
 
+// function coming soon
 // function getAverageOfBudgetCategoryMinueOutliers(months) {
 //   foodRunningTotal
 //   entertainmentRunningTotal
@@ -351,6 +298,7 @@ app.post("/token-exchange", async (req, res) => {
 //   transportationRunningTotal
 //   paymentsRunningTotal
 // }
+
 // NOTE: temporary simple averages until clamping outliers is implemented above
 function setDefaultDesiredBudgetGoals() {
   food_desired = foodRunningTotal / 3;
@@ -361,7 +309,9 @@ function setDefaultDesiredBudgetGoals() {
   payments_desired = paymentsRunningTotal / 3;
 }
 
+// post budget profile
 app.post("/budget_profile", function (req, res) {
+  // desired budget for each category
   food_desired = req.body.desiredFood ? req.body.desiredFood : food_desired;
   entertainment_desired = req.body.desiredEntertainment
     ? req.body.desiredEntertainment
@@ -379,6 +329,7 @@ app.post("/budget_profile", function (req, res) {
     ? req.body.desiredPayments
     : payments_desired;
 
+  // calculate desired budget
   budget_desired =
     +food_desired +
     +entertainment_desired +
@@ -387,6 +338,7 @@ app.post("/budget_profile", function (req, res) {
     +transportation_desired +
     +payments_desired;
 
+  // calculate actual budget
   budget_actual =
     food_actual +
     entertainment_actual +
@@ -395,6 +347,7 @@ app.post("/budget_profile", function (req, res) {
     transportation_actual +
     payments_actual;
 
+  // calculate and set remaining for each category
   var budget_remaining = budget_desired - budget_actual;
   var food_remaining = food_desired - food_actual;
   var transportation_remaining = transportation_desired - transportation_actual;
@@ -403,6 +356,7 @@ app.post("/budget_profile", function (req, res) {
   var payments_remaining = payments_desired - payments_actual;
   var travel_remaining = travel_desired - travel_actual;
 
+  // render the budget profile
   res.render("budget_profile", {
     style: "budget.css",
     user: "Username",
@@ -499,10 +453,11 @@ app.post("/budget_profile", function (req, res) {
   });
 });
 
-// create route that will send the index.html and serve it
+// home page
 app.get("/", (req, res) => {
-  // res.sendFile(path.join(__dirname, "/home"));
   res.render("home");
+
+  // temp clearing values until DB is connected
   food_transactions = [];
   transportation_transactions = [];
   shopping_transactions = [];
@@ -528,20 +483,11 @@ app.get("/", (req, res) => {
   transportation_actual = 150.0;
   over_under = "Budget Balanced";
   over_under_by = 0.0;
-
-  // res.status(200).redirect("budget_profile");
-  // res.status(401).render("home", {
-  //   message: "sowwy, your email or password is incorrect :(",
-  // });
 });
 // Create our number formatter.
 var formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-
-  // These options are needed to round to whole numbers if that's what you want.
-  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 // compare budget
 // over_under_by = budget_desired - budget_actual;
@@ -745,11 +691,6 @@ app.get("/account_settings", function (req, res) {
   });
 });
 
-// new_design
-// app.get("/new_design", function (req, res) {
-//   res.sendFile(path.join(__dirname, "/new_design.html"));
-// });
-
 // user profile
 app.get("/profile", function (req, res) {
   res.render("profile", {
@@ -758,12 +699,6 @@ app.get("/profile", function (req, res) {
   });
 });
 
-// app.get("/", function (req, res) {
-//   // res.render("home", { message: "TEST" });
-//   res.status(401).render("home", {
-//     message: "sowwy, your email or password is incorrect :(",
-//   });
-// });
 app.listen(PORT, () => {
   console.log("listening on port: ", PORT);
 });
